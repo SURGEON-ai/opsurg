@@ -1,0 +1,2331 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="OpSurg">
+<meta name="theme-color" content="#0a1628">
+<meta name="description" content="Comptes rendus opératoires — OpSurg">
+<meta name="mobile-web-app-capable" content="yes">
+
+<!-- PWA Manifest inline -->
+<link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22OpSurg%20%E2%80%94%20Comptes%20rendus%22%2C%22short_name%22%3A%22OpSurg%22%2C%22description%22%3A%22Comptes%20rendus%20op%C3%A9ratoires%22%2C%22start_url%22%3A%22.%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23fafaf7%22%2C%22theme_color%22%3A%22%230a1628%22%2C%22orientation%22%3A%22portrait-primary%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%2520xmlns%3D%2527http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%2527%2520viewBox%3D%25270%25200%2520512%2520512%2527%253E%253Crect%2520width%3D%2527512%2527%2520height%3D%2527512%2527%2520rx%3D%252780%2527%2520fill%3D%2527%25230a1628%2527%2F%253E%253Ctext%2520x%3D%2527256%2527%2520y%3D%2527340%2527%2520font-family%3D%2527serif%2527%2520font-size%3D%2527280%2527%2520fill%3D%2527%25231f5f4a%2527%2520text-anchor%3D%2527middle%2527%253E%25E2%259A%25A1%253C%2Ftext%253E%253C%2Fsvg%253E%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%2C%22purpose%22%3A%22any%20maskable%22%7D%5D%7D">
+
+<!-- Apple Touch Icon (SVG inline as data URI) -->
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='80' fill='%230a1628'/><text x='256' y='340' font-family='serif' font-size='280' fill='%231f5f4a' text-anchor='middle'>⚡</text></svg>">
+
+<title>OpSurg — Comptes rendus opératoires</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+
+<style>
+  :root {
+    --ink: #0a1628;
+    --ink-soft: #1a2942;
+    --ink-mute: #4a5b78;
+    --paper: #fafaf7;
+    --paper-warm: #f4f1ea;
+    --line: #e3e0d8;
+    --line-strong: #c9c5b8;
+    --accent: #1f5f4a;
+    --accent-light: #2d8366;
+    --accent-bg: #e8f0ec;
+    --alert: #a8421f;
+    --alert-bg: #f5e6e0;
+    --gold: #b8893a;
+    --shadow-sm: 0 1px 2px rgba(10,22,40,.04), 0 1px 3px rgba(10,22,40,.06);
+    --shadow-md: 0 4px 12px rgba(10,22,40,.06), 0 2px 4px rgba(10,22,40,.04);
+    --shadow-lg: 0 12px 32px rgba(10,22,40,.10), 0 4px 8px rgba(10,22,40,.06);
+    --radius: 4px;
+    --radius-lg: 8px;
+  }
+
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overscroll-behavior-y: none;
+  }
+
+  body {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  h1, h2, h3 { font-family: 'Fraunces', Georgia, serif; font-weight: 500; letter-spacing: -0.02em; margin: 0; }
+
+  button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+
+  input, textarea, select {
+    font-family: inherit;
+    font-size: inherit;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 10px 12px;
+    width: 100%;
+    transition: border-color .15s, box-shadow .15s;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: var(--ink);
+    box-shadow: 0 0 0 3px rgba(10,22,40,.08);
+  }
+  textarea { resize: vertical; min-height: 80px; font-family: inherit; line-height: 1.6; }
+
+  /* ============ HEADER ============ */
+  .app-header {
+    position: sticky;
+    top: 0;
+    top: env(safe-area-inset-top);
+    z-index: 50;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--ink-soft);
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .brand-mark {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    background: linear-gradient(135deg, var(--accent-light), var(--accent));
+    display: grid;
+    place-items: center;
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--paper);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.15);
+  }
+  .brand-name {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .brand-name em { font-style: italic; color: var(--gold); font-weight: 400; }
+  .header-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: rgba(250,250,247,.5);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* ============ NAV ============ */
+  .app-nav {
+    background: var(--paper-warm);
+    border-bottom: 1px solid var(--line);
+    padding: 0 20px;
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    position: sticky;
+    top: 0;
+    z-index: 40;
+  }
+  .nav-tab {
+    padding: 14px 18px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink-mute);
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: color .15s, border-color .15s;
+    letter-spacing: -0.005em;
+  }
+  .nav-tab.active {
+    color: var(--ink);
+    border-bottom-color: var(--ink);
+  }
+  .nav-tab:hover { color: var(--ink); }
+
+  /* ============ MAIN ============ */
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 28px 20px 100px;
+  }
+  .view { display: none; }
+  .view.active { display: block; animation: fadeIn .25s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+  /* ============ HOME ============ */
+  .hero {
+    background: linear-gradient(180deg, var(--paper-warm) 0%, var(--paper) 100%);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 36px 32px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, var(--accent-bg) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 42px);
+    line-height: 1.1;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  .hero h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
+  .hero-sub {
+    color: var(--ink-mute);
+    font-size: 15px;
+    max-width: 540px;
+    margin-bottom: 24px;
+  }
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 14px 24px;
+    border-radius: var(--radius);
+    font-weight: 500;
+    font-size: 15px;
+    transition: transform .15s, box-shadow .15s;
+  }
+  .hero-cta:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
+  .hero-cta:active { transform: translateY(0); }
+
+  .home-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .stat-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    transition: border-color .15s;
+  }
+  .stat-card:hover { border-color: var(--line-strong); }
+  .stat-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-mute);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .stat-value {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .stat-unit { font-size: 13px; color: var(--ink-mute); }
+
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .section-title .count {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-mute);
+    font-weight: 400;
+  }
+
+  /* ============ CRO LIST ============ */
+  .cro-list { display: grid; gap: 10px; }
+  .cro-item {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    transition: border-color .15s, transform .15s;
+  }
+  .cro-item:hover { border-color: var(--ink-mute); transform: translateX(2px); }
+  .cro-item-date {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-mute);
+    min-width: 80px;
+    letter-spacing: 0.05em;
+  }
+  .cro-item-main { flex: 1; min-width: 0; }
+  .cro-item-title {
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .cro-item-meta {
+    font-size: 13px;
+    color: var(--ink-mute);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .cro-item-badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    padding: 4px 8px;
+    border-radius: 3px;
+    background: var(--accent-bg);
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--ink-mute);
+  }
+  .empty-state-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: .3;
+  }
+  .empty-state-title {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  /* ============ EDITOR ============ */
+  .editor-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: var(--radius);
+    font-size: 14px;
+    font-weight: 500;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    color: var(--ink);
+    transition: all .15s;
+    white-space: nowrap;
+  }
+  .btn:hover { border-color: var(--ink-mute); }
+  .btn-primary {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+  .btn-primary:hover { background: var(--ink-soft); border-color: var(--ink-soft); }
+  .btn-accent {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+  }
+  .btn-accent:hover { background: var(--accent-light); border-color: var(--accent-light); }
+  .btn-danger {
+    color: var(--alert);
+    border-color: var(--alert-bg);
+  }
+  .btn-danger:hover { background: var(--alert-bg); }
+  .btn-icon {
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    display: grid;
+    place-items: center;
+  }
+
+  /* DICTATION BAR */
+  .dictation-bar {
+    background: linear-gradient(135deg, var(--ink) 0%, var(--ink-soft) 100%);
+    color: var(--paper);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: var(--shadow-md);
+    position: relative;
+    overflow: hidden;
+  }
+  .dictation-bar::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 80% 50%, rgba(45,131,102,.2) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .mic-button {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--paper);
+    color: var(--ink);
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    transition: all .2s;
+    position: relative;
+    z-index: 1;
+  }
+  .mic-button:hover { transform: scale(1.05); }
+  .mic-button.recording {
+    background: var(--alert);
+    color: white;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(168,66,31,.5); }
+    50% { box-shadow: 0 0 0 16px rgba(168,66,31,0); }
+  }
+  .mic-button svg { width: 28px; height: 28px; }
+  .dictation-info {
+    flex: 1;
+    min-width: 0;
+    z-index: 1;
+  }
+  .dictation-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(250,250,247,.6);
+    margin-bottom: 4px;
+  }
+  .dictation-status {
+    font-size: 16px;
+    font-weight: 500;
+  }
+  .dictation-status em {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    color: var(--gold);
+  }
+  .dictation-target {
+    font-size: 13px;
+    color: rgba(250,250,247,.7);
+    margin-top: 2px;
+  }
+
+  /* TEMPLATE SELECTOR */
+  .template-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .template-chip {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 14px 12px;
+    text-align: left;
+    transition: all .15s;
+    cursor: pointer;
+  }
+  .template-chip:hover { border-color: var(--ink); }
+  .template-chip.active {
+    border-color: var(--accent);
+    background: var(--accent-bg);
+  }
+  .template-chip-name {
+    font-weight: 500;
+    font-size: 14px;
+    margin-bottom: 2px;
+  }
+  .template-chip-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-mute);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* FORM SECTIONS */
+  .form-section {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    margin-bottom: 14px;
+    overflow: hidden;
+  }
+  .form-section-header {
+    padding: 14px 18px;
+    background: var(--paper-warm);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    user-select: none;
+  }
+  .form-section-title {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .form-section-number {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-mute);
+    background: var(--paper);
+    padding: 2px 7px;
+    border-radius: 3px;
+    border: 1px solid var(--line);
+  }
+  .form-section-toggle {
+    color: var(--ink-mute);
+    transition: transform .2s;
+  }
+  .form-section.collapsed .form-section-toggle { transform: rotate(-90deg); }
+  .form-section-body { padding: 18px; }
+  .form-section.collapsed .form-section-body { display: none; }
+
+  .field-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .field-grid:last-child { margin-bottom: 0; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-mute);
+    letter-spacing: 0.02em;
+  }
+  .field-label .field-target {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: var(--accent);
+    margin-left: 6px;
+    opacity: 0;
+    transition: opacity .15s;
+  }
+  .field.is-target .field-label .field-target { opacity: 1; }
+  .field.is-target input,
+  .field.is-target textarea,
+  .field.is-target select {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-bg);
+  }
+
+  /* APPROACH SELECTOR */
+  .approach-selector {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .approach-btn {
+    padding: 10px 14px;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    border-radius: var(--radius);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-mute);
+    transition: all .15s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .approach-btn:hover { border-color: var(--ink); color: var(--ink); }
+  .approach-btn.active {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+  .approach-btn .ico {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    padding: 2px 5px;
+    border-radius: 2px;
+    background: rgba(255,255,255,.1);
+  }
+  .approach-btn:not(.active) .ico {
+    background: var(--paper-warm);
+  }
+
+  /* FAB FOR DICTATION TARGET */
+  .target-hint {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 10px 14px;
+    border-radius: 24px;
+    font-size: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    box-shadow: var(--shadow-lg);
+    z-index: 100;
+    display: none;
+    align-items: center;
+    gap: 8px;
+  }
+  .target-hint.show { display: flex; }
+  .target-hint .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--alert);
+    animation: pulse-dot 1s ease-in-out infinite;
+  }
+  @keyframes pulse-dot { 0%,100% { opacity: 1;} 50% { opacity: .3; } }
+
+  /* MODAL */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(10,22,40,.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    padding: 20px;
+  }
+  .modal-backdrop.show { display: flex; }
+  .modal {
+    background: var(--paper);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: var(--shadow-lg);
+  }
+  .modal h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    margin-bottom: 12px;
+  }
+  .modal p { color: var(--ink-mute); margin-bottom: 20px; }
+  .modal-actions { display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; }
+
+  /* DASHBOARD */
+  .chart-wrap {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .chart-wrap h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+  .chart-container { position: relative; height: 280px; }
+
+  /* SEARCH */
+  .search-bar {
+    position: relative;
+    margin-bottom: 20px;
+  }
+  .search-bar input {
+    padding-left: 40px;
+    background: var(--paper);
+    font-size: 15px;
+  }
+  .search-bar::before {
+    content: '⌕';
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: var(--ink-mute);
+    pointer-events: none;
+  }
+
+  .filter-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  .filter-chip {
+    padding: 6px 12px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-mute);
+    cursor: pointer;
+    transition: all .15s;
+    background: var(--paper);
+  }
+  .filter-chip.active {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--ink);
+    color: var(--paper);
+    padding: 12px 20px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    z-index: 300;
+    opacity: 0;
+    transition: all .3s;
+    font-size: 14px;
+    font-weight: 500;
+    pointer-events: none;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  .toast.success { background: var(--accent); }
+  .toast.error { background: var(--alert); }
+
+  /* MOBILE OPTIMIZATIONS */
+  @media (max-width: 640px) {
+    main { padding: 20px 14px 100px; }
+    .hero { padding: 26px 20px; }
+    .stat-value { font-size: 28px; }
+    .editor-toolbar .btn span { display: none; }
+    .editor-toolbar .btn { padding: 10px; width: 42px; height: 42px; justify-content: center; }
+    .editor-toolbar .btn-primary span,
+    .editor-toolbar .btn-accent span { display: inline; }
+    .editor-toolbar .btn-primary,
+    .editor-toolbar .btn-accent { width: auto; height: auto; padding: 10px 14px; }
+    .dictation-bar { padding: 16px; gap: 12px; }
+    .mic-button { width: 56px; height: 56px; }
+    .nav-tab { padding: 12px 14px; font-size: 13px; }
+  }
+
+  /* PRINT */
+  @media print {
+    body { background: white; }
+    .app-header, .app-nav, .editor-toolbar, .dictation-bar, .target-hint { display: none !important; }
+    main { padding: 0; }
+    .form-section { border: none; box-shadow: none; page-break-inside: avoid; }
+    .form-section-header { background: white; border-bottom: 2px solid var(--ink); }
+  }
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <div class="brand">
+    <div class="brand-mark">Ω</div>
+    <div>
+      <div class="brand-name">Op<em>Surg</em></div>
+    </div>
+  </div>
+  <div class="header-meta" id="header-meta">v0.1 · LOCAL</div>
+</header>
+
+<nav class="app-nav">
+  <button class="nav-tab active" data-view="home">Accueil</button>
+  <button class="nav-tab" data-view="editor">Nouveau CRO</button>
+  <button class="nav-tab" data-view="list">Mes CRO</button>
+  <button class="nav-tab" data-view="dashboard">Tableau de bord</button>
+  <button class="nav-tab" data-view="settings">Paramètres</button>
+</nav>
+
+<main>
+
+  <!-- ============ HOME ============ -->
+  <section class="view active" id="view-home">
+    <div class="hero">
+      <div class="hero-label">— Compte rendu opératoire</div>
+      <h1>Dictez. <em>L'app structure.</em></h1>
+      <p class="hero-sub">Vos comptes rendus opératoires, organisés, exportables et toujours sous la main. Conçu pour le chirurgien qui n'a pas une minute à perdre entre deux blocs.</p>
+      <button class="hero-cta" onclick="App.go('editor')">
+        Nouveau compte rendu
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+
+    <div class="home-grid" id="home-stats"></div>
+
+    <h2 class="section-title">
+      Récents
+      <span class="count" id="recent-count">—</span>
+    </h2>
+    <div class="cro-list" id="recent-list"></div>
+  </section>
+
+  <!-- ============ EDITOR ============ -->
+  <section class="view" id="view-editor">
+    <div class="editor-toolbar">
+      <button class="btn btn-primary" onclick="App.saveCRO()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        <span>Enregistrer</span>
+      </button>
+      <button class="btn btn-accent" onclick="App.exportPDF()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <span>Exporter PDF</span>
+      </button>
+      <button class="btn" onclick="App.copyText()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        <span>Copier le texte</span>
+      </button>
+      <button class="btn btn-danger" onclick="App.confirmDelete()" id="btn-delete" style="display:none">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L5 6"/></svg>
+        <span>Supprimer</span>
+      </button>
+    </div>
+
+    <!-- DICTATION -->
+    <div class="dictation-bar">
+      <button class="mic-button" id="mic-btn" onclick="Dictation.toggle()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+          <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+          <line x1="12" y1="19" x2="12" y2="23"/>
+          <line x1="8" y1="23" x2="16" y2="23"/>
+        </svg>
+      </button>
+      <div class="dictation-info">
+        <div class="dictation-label">Dictée vocale</div>
+        <div class="dictation-status" id="dict-status">Touchez le micro · <em>parlez naturellement</em></div>
+        <div class="dictation-target" id="dict-target"></div>
+      </div>
+    </div>
+
+    <!-- TEMPLATE -->
+    <h3 class="section-title" style="font-size:16px; margin-bottom:10px;">Template</h3>
+    <div class="template-grid" id="template-grid"></div>
+
+    <!-- FORM SECTIONS -->
+    <div id="form-container"></div>
+  </section>
+
+  <!-- ============ LIST ============ -->
+  <section class="view" id="view-list">
+    <h2 class="section-title">Mes comptes rendus</h2>
+    <div class="search-bar">
+      <input type="text" id="search-input" placeholder="Rechercher par patient, diagnostic, geste…">
+    </div>
+    <div class="filter-row" id="filter-row"></div>
+    <div class="cro-list" id="full-list"></div>
+  </section>
+
+  <!-- ============ DASHBOARD ============ -->
+  <section class="view" id="view-dashboard">
+    <h2 class="section-title">Tableau de bord opératoire</h2>
+    <div class="home-grid" id="dashboard-stats"></div>
+    <div class="chart-wrap">
+      <h3>Activité mensuelle</h3>
+      <div class="chart-container"><canvas id="chart-monthly"></canvas></div>
+    </div>
+    <div class="chart-wrap">
+      <h3>Répartition par intervention</h3>
+      <div class="chart-container"><canvas id="chart-types"></canvas></div>
+    </div>
+    <div class="chart-wrap">
+      <h3>Voies d'abord</h3>
+      <div class="chart-container"><canvas id="chart-approaches"></canvas></div>
+    </div>
+  </section>
+
+  <!-- ============ SETTINGS ============ -->
+  <section class="view" id="view-settings">
+    <h2 class="section-title">Paramètres</h2>
+
+    <div class="form-section">
+      <div class="form-section-header">
+        <div class="form-section-title">Mon profil</div>
+      </div>
+      <div class="form-section-body">
+        <div class="field-grid">
+          <div class="field">
+            <label class="field-label">Nom du chirurgien</label>
+            <input type="text" id="setting-surgeon" placeholder="Dr. ...">
+          </div>
+          <div class="field">
+            <label class="field-label">Service / Hôpital</label>
+            <input type="text" id="setting-hospital" placeholder="Service de chirurgie générale...">
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="Settings.save()" style="margin-top:12px">Enregistrer le profil</button>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-header">
+        <div class="form-section-title">Données</div>
+      </div>
+      <div class="form-section-body">
+        <p style="color:var(--ink-mute); font-size:14px; margin-top:0">Vos CRO sont stockés localement sur cet appareil (IndexedDB). Pour les transférer ou les sauvegarder, utilisez l'export ci-dessous.</p>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px">
+          <button class="btn" onclick="Backup.exportAll()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Exporter sauvegarde (JSON)
+          </button>
+          <button class="btn" onclick="document.getElementById('import-file').click()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            Importer sauvegarde
+          </button>
+          <input type="file" id="import-file" accept=".json" style="display:none" onchange="Backup.importFile(event)">
+          <button class="btn btn-danger" onclick="Backup.confirmWipe()">
+            Tout effacer
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-header">
+        <div class="form-section-title">Installer l'app sur iPhone</div>
+      </div>
+      <div class="form-section-body">
+        <ol style="color:var(--ink); font-size:14px; line-height:1.8; padding-left:20px; margin:0">
+          <li>Ouvrez cette page dans <strong>Safari</strong> sur votre iPhone</li>
+          <li>Touchez le bouton <strong>Partager</strong> (carré avec flèche vers le haut)</li>
+          <li>Faites défiler et touchez <strong>« Sur l'écran d'accueil »</strong></li>
+          <li>L'app OpSurg apparaît comme une icône native</li>
+        </ol>
+        <p style="color:var(--ink-mute); font-size:13px; margin-top:12px">
+          Sur iPhone, utilisez le <strong>micro du clavier iOS</strong> (bouton micro à côté de la barre d'espace) pour une dictée médicale française de qualité supérieure. Le bouton micro intégré utilise la Web Speech API (excellente sur Chrome PC).
+        </p>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-header">
+        <div class="form-section-title">À propos</div>
+      </div>
+      <div class="form-section-body">
+        <p style="margin:0; font-size:14px; color:var(--ink-mute)">
+          <strong style="color:var(--ink)">OpSurg v0.1</strong> · Application web autonome pour chirurgien.<br>
+          Stockage local. Aucun serveur. Aucune télémétrie.<br>
+          Données 100% privées sur cet appareil.
+        </p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- TARGET HINT -->
+<div class="target-hint" id="target-hint">
+  <span class="dot"></span>
+  <span id="target-hint-text">Dictée → ...</span>
+</div>
+
+<!-- MODAL -->
+<div class="modal-backdrop" id="modal">
+  <div class="modal">
+    <h3 id="modal-title">Confirmer</h3>
+    <p id="modal-body">Êtes-vous sûr ?</p>
+    <div class="modal-actions">
+      <button class="btn" onclick="App.closeModal()">Annuler</button>
+      <button class="btn btn-danger" id="modal-confirm">Confirmer</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ============================================================
+// TEMPLATES CHIRURGICAUX
+// ============================================================
+const TEMPLATES = {
+  none: {
+    name: 'CRO libre',
+    code: 'LIB',
+    defaults: {}
+  },
+  appendicectomie: {
+    name: 'Appendicectomie',
+    code: 'APP',
+    defaults: {
+      motif: "Douleurs de la fosse iliaque droite évoluant depuis [X] heures.",
+      antecedents: "Pas d'antécédent chirurgical abdominal notable.",
+      examen: "Patient en bon état général, apyrétique / fébrile à [X]°C. Abdomen souple par ailleurs. Défense de la fosse iliaque droite. Signe de Blumberg positif. Psoïtis. McBurney douloureux.",
+      biologie: "GB : [X]/mm³ avec polynucléose. CRP : [X] mg/L. Bilan préopératoire sans particularité.",
+      imagerie: "Échographie / TDM abdominale : appendice augmenté de calibre (>6mm), épaissi, avec infiltration de la graisse péri-appendiculaire. Pas d'épanchement libre.",
+      diagnostic: "Appendicite aiguë.",
+      indication: "Indication opératoire posée pour appendicectomie en urgence.",
+      anesthesie: "Anesthésie générale avec intubation orotrachéale.",
+      equipe: "Opérateur : [Nom]. Aide : [Nom]. Anesthésiste : [Nom]. Instrumentiste : [Nom].",
+      voie: "coelioscopie",
+      voie_detail: "Coelioscopie à 3 trocarts : optique ombilical 10mm, trocart sus-pubien 5mm, trocart fosse iliaque gauche 5mm. Pneumopéritoine établi par open-coelio ombilicale, pression 12 mmHg.",
+      constatations: "Exploration de la cavité péritonéale. Appendice rétrocaecal / pelvien / latéro-caecal, inflammatoire, congestif, sans perforation visible. Pas de liquide libre / liquide louche en quantité modérée. Reste de l'exploration sans particularité.",
+      geste: "Section du méso-appendice à la pince bipolaire. Ligature de la base appendiculaire par double endoloop. Section de l'appendice et extraction dans un endobag par le trocart ombilical. Lavage abondant au sérum physiologique tiède.",
+      incidents: "Aucun incident per-opératoire.",
+      drainage: "Pas de drainage.",
+      fermeture: "Exsufflation. Fermeture aponévrotique des orifices de 10mm au fil résorbable. Suture cutanée par points séparés / agrafes.",
+      pertes: "Minimes, estimées à moins de 50 mL.",
+      suites: "Suites postopératoires simples envisagées. Reprise d'une alimentation légère à J0-J1. Sortie envisagée à J1.",
+      traitement: "Antalgiques de palier 1 systématiques. Antibioprophylaxie peropératoire par Augmentin 2g. Pas d'antibiothérapie postopératoire en l'absence de perforation.",
+      conclusion: "Appendicectomie coelioscopique pour appendicite aiguë non compliquée. Pièce envoyée pour examen anatomopathologique."
+    }
+  },
+  hernie_inguinale: {
+    name: 'Hernie inguinale',
+    code: 'HRN',
+    defaults: {
+      motif: "Tuméfaction inguinale [droite/gauche] réductible, évoluant depuis [X] mois, gênante / douloureuse.",
+      antecedents: "Pas d'antécédent chirurgical pariétal.",
+      examen: "Patient en bon état général. Hernie inguinale [droite/gauche], [directe/indirecte], réductible, impulsive à la toux, non étranglée. Orifice controlatéral libre.",
+      biologie: "Bilan préopératoire sans particularité.",
+      imagerie: "Échographie pariétale confirmant le diagnostic. Pas d'imagerie complémentaire nécessaire.",
+      diagnostic: "Hernie inguinale [droite/gauche] non compliquée.",
+      indication: "Indication de cure herniaire à froid.",
+      anesthesie: "Anesthésie générale.",
+      equipe: "Opérateur : [Nom]. Aide : [Nom]. Anesthésiste : [Nom].",
+      voie: "coelioscopie",
+      voie_detail: "Coelioscopie TAPP : optique sous-ombilical 10mm, deux trocarts opérateurs 5mm en pararectal droit et gauche. Pneumopéritoine 12 mmHg.",
+      constatations: "Hernie inguinale [directe/indirecte] [droite/gauche], collet [X] cm. Sac herniaire contenant [graisse pré-péritonéale / épiploon / anse grêle]. Orifice controlatéral exploré : [libre / hernie associée].",
+      geste: "Incision péritonéale en arc au-dessus de l'orifice herniaire. Décollement de l'espace de Bogros. Réduction du sac. Mise en place d'une plaque de polypropylène 15x10 cm couvrant largement l'orifice myo-pectinéal. Fixation par tackers / colle. Péritonisation au surjet de Vicryl 2/0.",
+      incidents: "Aucun incident.",
+      drainage: "Pas de drainage.",
+      fermeture: "Exsufflation. Fermeture aponévrotique du trocart 10mm. Suture cutanée.",
+      pertes: "Négligeables.",
+      suites: "Suites simples. Sortie envisagée à J0 / J1.",
+      traitement: "Antalgiques de palier 1. Antibioprophylaxie peropératoire. Port de slip de contention 1 mois. Pas de port de charges lourdes 4 semaines.",
+      conclusion: "Cure de hernie inguinale [droite/gauche] par coelioscopie TAPP avec mise en place d'une prothèse."
+    }
+  },
+  cholecystectomie: {
+    name: 'Cholécystectomie',
+    code: 'CHO',
+    defaults: {
+      motif: "Douleurs de l'hypochondre droit récurrentes, post-prandiales, évocatrices de coliques hépatiques.",
+      antecedents: "Pas d'antécédent chirurgical sus-mésocolique.",
+      examen: "Patient en bon état général, apyrétique. Murphy positif / négatif. Pas de défense, pas d'ictère.",
+      biologie: "Bilan hépatique : ASAT, ALAT, PAL, GGT, bilirubine sans particularité / perturbé. Lipasémie normale. NFS, CRP normales. Bilan préopératoire standard.",
+      imagerie: "Échographie abdominale : vésicule biliaire lithiasique, paroi fine, voie biliaire principale fine non dilatée. Pas de lithiase de la VBP visible.",
+      diagnostic: "Lithiase vésiculaire symptomatique.",
+      indication: "Cholécystectomie à froid par coelioscopie.",
+      anesthesie: "Anesthésie générale avec intubation orotrachéale.",
+      equipe: "Opérateur : [Nom]. Aide : [Nom]. Anesthésiste : [Nom]. Instrumentiste : [Nom].",
+      voie: "coelioscopie",
+      voie_detail: "Coelioscopie à 4 trocarts (technique américaine) : optique ombilical 10mm par open-coelio, trocart épigastrique 10mm, deux trocarts 5mm en sous-costal droit. Pneumopéritoine 12 mmHg.",
+      constatations: "Vésicule biliaire de taille normale / hydrocholécyste, à paroi fine / épaissie. Adhérences épiplooïques modérées. Triangle de Calot bien identifié. Foie d'aspect normal. Reste de l'exploration sans particularité.",
+      geste: "Libération des adhérences. Ouverture du péritoine viscéral au niveau du triangle de Calot. Dissection prudente identifiant le canal cystique et l'artère cystique selon la 'critical view of safety'. Clipage triple du canal cystique et double de l'artère cystique. Section. Décollement de la vésicule du lit vésiculaire à l'électrocoagulation. Hémostase soigneuse. Extraction de la pièce dans un endobag par l'orifice ombilical.",
+      incidents: "Aucun incident. Pas de plaie biliaire, pas de saignement significatif.",
+      drainage: "Pas de drainage / drain de Redon dans le lit vésiculaire.",
+      fermeture: "Exsufflation. Fermeture aponévrotique des orifices de 10mm. Suture cutanée.",
+      pertes: "Minimes, < 50 mL.",
+      suites: "Suites simples envisagées. Reprise alimentaire à J0. Sortie à J1.",
+      traitement: "Antalgiques de palier 1. Antibioprophylaxie peropératoire. Pas d'antibiothérapie postopératoire.",
+      conclusion: "Cholécystectomie coelioscopique pour lithiase vésiculaire symptomatique. Pièce envoyée pour examen anatomopathologique."
+    }
+  },
+  peritonite: {
+    name: 'Péritonite',
+    code: 'PER',
+    defaults: {
+      motif: "Douleurs abdominales diffuses d'aggravation progressive, syndrome infectieux.",
+      antecedents: "À préciser.",
+      examen: "Patient algique, fébrile à [X]°C, tachycarde. Abdomen tendu, douloureux, défense généralisée / contracture. Signes de choc septique : [oui/non].",
+      biologie: "Hyperleucocytose à [X]/mm³. CRP élevée à [X] mg/L. Lactates [X]. Insuffisance rénale aiguë / fonction rénale conservée. Bilan préopératoire en urgence.",
+      imagerie: "TDM abdomino-pelvienne avec injection : pneumopéritoine / épanchement intra-péritonéal de moyenne abondance / collection. Aspect évocateur de perforation [origine].",
+      diagnostic: "Péritonite aiguë généralisée par [perforation appendiculaire / ulcère perforé / perforation diverticulaire / autre].",
+      indication: "Laparotomie / coelioscopie en urgence.",
+      anesthesie: "Anesthésie générale, remplissage, vasopresseurs si besoin.",
+      equipe: "Opérateur : [Nom]. Aide : [Nom]. Anesthésiste : [Nom].",
+      voie: "laparotomie",
+      voie_detail: "Laparotomie médiane à cheval sur l'ombilic / coelioscopie exploratrice à 3 trocarts convertie en laparotomie.",
+      constatations: "Épanchement péritonéal purulent / stercoral en quantité [modérée/abondante], prélevé pour bactériologie. Fausses membranes diffuses. Foyer de perforation identifié au niveau de [siège]. Reste de l'exploration : [...].",
+      geste: "Traitement du foyer : [appendicectomie / suture de l'ulcère avec épiploonplastie / résection-anastomose / stomie de protection]. Toilette péritonéale abondante au sérum physiologique tiède (>10L). Aspiration soigneuse des recessus.",
+      incidents: "Aucun incident per-opératoire majeur.",
+      drainage: "Drainage de Douglas / des espaces sous-phréniques par drain multitubulé.",
+      fermeture: "Fermeture pariétale plan par plan. Surjet de l'aponévrose au PDS. Suture cutanée par agrafes.",
+      pertes: "Estimées à [X] mL.",
+      suites: "Suites prévisibles compliquées. Surveillance en USC / réanimation. Antibiothérapie probabiliste poursuivie. Reprise alimentaire différée.",
+      traitement: "Antibiothérapie IV probabiliste (Tazocilline + Amiklin / autre selon protocole). Antalgiques. Anticoagulation préventive. Inhibiteur de la pompe à protons. Nutrition parentérale si jeûne prolongé.",
+      conclusion: "Péritonite aiguë généralisée d'origine [...]. Traitement chirurgical en urgence. Évolution à surveiller."
+    }
+  },
+  laparotomie_exploratrice: {
+    name: 'Laparotomie exploratrice',
+    code: 'LAP',
+    defaults: {
+      motif: "Tableau abdominal aigu / suspicion de [pathologie].",
+      antecedents: "À préciser.",
+      examen: "À préciser.",
+      biologie: "À préciser.",
+      imagerie: "À préciser.",
+      diagnostic: "Diagnostic préopératoire : [...]. À confirmer en per-opératoire.",
+      indication: "Laparotomie exploratrice.",
+      anesthesie: "Anesthésie générale.",
+      equipe: "Opérateur : [Nom]. Aide : [Nom]. Anesthésiste : [Nom].",
+      voie: "laparotomie",
+      voie_detail: "Laparotomie médiane.",
+      constatations: "Exploration complète de la cavité abdominale : [...]. Foie, vésicule, estomac, duodénum, grêle de l'angle de Treitz au carrefour iléo-caecal, côlon, rectum, organes pelviens : [...].",
+      geste: "Geste réalisé : [...].",
+      incidents: "[...]",
+      drainage: "[...]",
+      fermeture: "Fermeture pariétale plan par plan.",
+      pertes: "[...]",
+      suites: "[...]",
+      traitement: "[...]",
+      conclusion: "[...]"
+    }
+  },
+  occlusion: {
+    name: 'Occlusion intestinale',
+    code: 'OCC',
+    defaults: {
+      motif: "Syndrome occlusif : douleurs abdominales, vomissements, arrêt des matières et des gaz depuis [X].",
+      antecedents: "Antécédent chirurgical abdominal : [...].",
+      examen: "Distension abdominale. Cicatrices. Tympanisme. Bruits hydroaériques [augmentés/abolis]. Pas de défense.",
+      biologie: "Ionogramme : déshydratation, troubles ioniques. NFS, CRP. Bilan préopératoire.",
+      imagerie: "TDM abdomino-pelvienne : occlusion mécanique du [grêle/côlon] avec disparité de calibre au niveau de [siège]. Mécanisme évocateur de [bride / volvulus / tumeur / hernie étranglée].",
+      diagnostic: "Occlusion intestinale [haute/basse] par [...].",
+      indication: "Laparotomie en urgence après réanimation hydro-électrolytique.",
+      anesthesie: "Anesthésie générale, sonde nasogastrique, sondage urinaire.",
+      equipe: "Opérateur : [Nom]. Aide : [Nom]. Anesthésiste : [Nom].",
+      voie: "laparotomie",
+      voie_detail: "Laparotomie médiane à cheval sur l'ombilic.",
+      constatations: "Anses grêles dilatées en amont, plates en aval. Obstacle identifié : [bride / volvulus / sténose / tumeur]. Viabilité intestinale : [bonne / souffrance / nécrose].",
+      geste: "Section de bride / détorsion / résection-anastomose / dérivation. Vidange douce des anses dilatées.",
+      incidents: "[...]",
+      drainage: "[...]",
+      fermeture: "Fermeture plan par plan.",
+      pertes: "[...]",
+      suites: "Reprise du transit à surveiller. Sonde nasogastrique en aspiration.",
+      traitement: "Réhydratation, correction des troubles ioniques, antalgiques, anticoagulation préventive.",
+      conclusion: "Occlusion mécanique levée chirurgicalement. Évolution à surveiller."
+    }
+  },
+  trauma_abdominal: {
+    name: 'Trauma abdominal',
+    code: 'TRA',
+    defaults: {
+      motif: "Traumatisme abdominal [fermé/ouvert] dans un contexte de [AVP / chute / agression].",
+      antecedents: "À préciser.",
+      examen: "Patient [conscient / GCS X]. Hémodynamique : [stable / instable]. Abdomen : douleur, défense, marques pariétales. Examen complet à la recherche de lésions associées.",
+      biologie: "NFS : hémoglobine à [X] g/dL. Bilan d'hémostase. Groupe-RAI. Lactates. Bilan préopératoire en urgence.",
+      imagerie: "FAST écho : épanchement intra-péritonéal positif / TDM corps entier avec injection : [lésions identifiées].",
+      diagnostic: "Traumatisme abdominal avec [lésion(s) viscérale(s)].",
+      indication: "Laparotomie en urgence pour [hémopéritoine / lésion viscérale / instabilité hémodynamique].",
+      anesthesie: "Anesthésie générale, accès veineux de gros calibre, transfusion si nécessaire.",
+      equipe: "Opérateur : [Nom]. Aide : [Nom]. Anesthésiste : [Nom].",
+      voie: "laparotomie",
+      voie_detail: "Laparotomie médiane xipho-pubienne.",
+      constatations: "Hémopéritoine de [X] mL. Lésion identifiée : [rate / foie / mésentère / grêle / autre]. Exploration systématique des 4 quadrants.",
+      geste: "[Splénectomie / suture hépatique / packing / résection intestinale / suture mésentérique]. Hémostase. Toilette.",
+      incidents: "[...]",
+      drainage: "Drainage selon les lésions.",
+      fermeture: "Fermeture plan par plan / damage control avec laparostomie temporaire.",
+      pertes: "Importantes, estimées à [X] mL. Transfusion de [X] CGR.",
+      suites: "Surveillance en réanimation.",
+      traitement: "Réanimation, antibiothérapie si lésion digestive, antalgiques, anticoagulation préventive secondaire, vaccination post-splénectomie si applicable.",
+      conclusion: "Traumatisme abdominal traité chirurgicalement. Évolution à surveiller."
+    }
+  }
+};
+
+// ============================================================
+// STRUCTURE DES SECTIONS DU CRO
+// ============================================================
+const SECTIONS = [
+  {
+    id: 'identite',
+    title: 'Identité du patient',
+    fields: [
+      { id: 'patient_nom', label: 'Nom / Initiales', type: 'text', dictTargets: ['nom', 'patient', 'identité'] },
+      { id: 'patient_age', label: 'Âge', type: 'text', dictTargets: ['âge', 'age'] },
+      { id: 'patient_sexe', label: 'Sexe', type: 'select', options: ['', 'M', 'F'], dictTargets: ['sexe'] },
+      { id: 'patient_id', label: 'N° dossier (optionnel)', type: 'text', dictTargets: ['dossier', 'numéro'] },
+      { id: 'date_intervention', label: 'Date d\'intervention', type: 'date', dictTargets: ['date'] }
+    ]
+  },
+  {
+    id: 'clinique',
+    title: 'Contexte clinique',
+    fields: [
+      { id: 'motif', label: 'Motif d\'admission', type: 'textarea', dictTargets: ['motif', 'admission'] },
+      { id: 'antecedents', label: 'Antécédents', type: 'textarea', dictTargets: ['antécédent', 'antécédents'] },
+      { id: 'examen', label: 'Examen clinique', type: 'textarea', dictTargets: ['examen', 'clinique'] }
+    ]
+  },
+  {
+    id: 'paraclinique',
+    title: 'Examens complémentaires',
+    fields: [
+      { id: 'biologie', label: 'Examens biologiques', type: 'textarea', dictTargets: ['biologie', 'biologique', 'bilan'] },
+      { id: 'imagerie', label: 'Examens d\'imagerie', type: 'textarea', dictTargets: ['imagerie', 'scanner', 'échographie', 'tdm'] }
+    ]
+  },
+  {
+    id: 'diagnostic',
+    title: 'Diagnostic et indication',
+    fields: [
+      { id: 'diagnostic', label: 'Diagnostic préopératoire', type: 'textarea', dictTargets: ['diagnostic'] },
+      { id: 'indication', label: 'Indication opératoire', type: 'textarea', dictTargets: ['indication'] }
+    ]
+  },
+  {
+    id: 'preop',
+    title: 'Préparation opératoire',
+    fields: [
+      { id: 'anesthesie', label: 'Type d\'anesthésie', type: 'textarea', dictTargets: ['anesthésie'] },
+      { id: 'equipe', label: 'Équipe opératoire', type: 'textarea', dictTargets: ['équipe', 'opérateur', 'aide'] }
+    ]
+  },
+  {
+    id: 'voie',
+    title: 'Voie d\'abord',
+    special: 'approach',
+    fields: [
+      { id: 'voie_detail', label: 'Détails techniques de la voie d\'abord', type: 'textarea', dictTargets: ['voie', 'abord', 'trocart', 'incision'] }
+    ]
+  },
+  {
+    id: 'peroperatoire',
+    title: 'Per-opératoire',
+    fields: [
+      { id: 'constatations', label: 'Constatations per-opératoires', type: 'textarea', dictTargets: ['constatation', 'constatations', 'exploration'] },
+      { id: 'geste', label: 'Geste réalisé', type: 'textarea', dictTargets: ['geste', 'technique', 'réalisé'] },
+      { id: 'incidents', label: 'Incidents per-opératoires', type: 'textarea', dictTargets: ['incident', 'incidents'] },
+      { id: 'drainage', label: 'Drainage', type: 'textarea', dictTargets: ['drainage', 'drain'] },
+      { id: 'fermeture', label: 'Fermeture', type: 'textarea', dictTargets: ['fermeture'] },
+      { id: 'pertes', label: 'Pertes sanguines', type: 'text', dictTargets: ['perte', 'pertes', 'saignement'] }
+    ]
+  },
+  {
+    id: 'postop',
+    title: 'Suites et conclusion',
+    fields: [
+      { id: 'suites', label: 'Suites postopératoires prévues', type: 'textarea', dictTargets: ['suite', 'suites', 'postopératoire'] },
+      { id: 'traitement', label: 'Traitement postopératoire', type: 'textarea', dictTargets: ['traitement', 'prescription'] },
+      { id: 'conclusion', label: 'Conclusion', type: 'textarea', dictTargets: ['conclusion'] }
+    ]
+  }
+];
+
+const APPROACHES = [
+  { id: 'coelioscopie', label: 'Cœlioscopie', icon: 'CŒL' },
+  { id: 'laparotomie', label: 'Laparotomie', icon: 'LAP' },
+  { id: 'coelio_convertie', label: 'Cœlio convertie', icon: 'C→L' },
+  { id: 'robot', label: 'Robot-assistée', icon: 'ROB' },
+  { id: 'autre', label: 'Autre', icon: '···' }
+];
+
+// ============================================================
+// DATABASE (IndexedDB)
+// ============================================================
+const DB = {
+  name: 'opsurg_db',
+  version: 1,
+  db: null,
+
+  async open() {
+    return new Promise((resolve, reject) => {
+      const req = indexedDB.open(this.name, this.version);
+      req.onupgradeneeded = e => {
+        const db = e.target.result;
+        if (!db.objectStoreNames.contains('cros')) {
+          const store = db.createObjectStore('cros', { keyPath: 'id' });
+          store.createIndex('date', 'date_intervention');
+          store.createIndex('template', 'template');
+        }
+        if (!db.objectStoreNames.contains('settings')) {
+          db.createObjectStore('settings', { keyPath: 'key' });
+        }
+      };
+      req.onsuccess = e => { this.db = e.target.result; resolve(); };
+      req.onerror = e => reject(e.target.error);
+    });
+  },
+
+  async saveCRO(cro) {
+    return new Promise((resolve, reject) => {
+      const tx = this.db.transaction('cros', 'readwrite');
+      const req = tx.objectStore('cros').put(cro);
+      req.onsuccess = () => resolve(cro);
+      req.onerror = e => reject(e.target.error);
+    });
+  },
+
+  async getCRO(id) {
+    return new Promise((resolve, reject) => {
+      const tx = this.db.transaction('cros', 'readonly');
+      const req = tx.objectStore('cros').get(id);
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = e => reject(e.target.error);
+    });
+  },
+
+  async allCROs() {
+    return new Promise((resolve, reject) => {
+      const tx = this.db.transaction('cros', 'readonly');
+      const req = tx.objectStore('cros').getAll();
+      req.onsuccess = () => {
+        const result = req.result || [];
+        result.sort((a, b) => (b.date_intervention || '').localeCompare(a.date_intervention || ''));
+        resolve(result);
+      };
+      req.onerror = e => reject(e.target.error);
+    });
+  },
+
+  async deleteCRO(id) {
+    return new Promise((resolve, reject) => {
+      const tx = this.db.transaction('cros', 'readwrite');
+      const req = tx.objectStore('cros').delete(id);
+      req.onsuccess = () => resolve();
+      req.onerror = e => reject(e.target.error);
+    });
+  },
+
+  async setSetting(key, value) {
+    return new Promise((resolve, reject) => {
+      const tx = this.db.transaction('settings', 'readwrite');
+      const req = tx.objectStore('settings').put({ key, value });
+      req.onsuccess = () => resolve();
+      req.onerror = e => reject(e.target.error);
+    });
+  },
+
+  async getSetting(key) {
+    return new Promise((resolve, reject) => {
+      const tx = this.db.transaction('settings', 'readonly');
+      const req = tx.objectStore('settings').get(key);
+      req.onsuccess = () => resolve(req.result ? req.result.value : null);
+      req.onerror = e => reject(e.target.error);
+    });
+  },
+
+  async wipeAll() {
+    return new Promise((resolve, reject) => {
+      const tx = this.db.transaction(['cros', 'settings'], 'readwrite');
+      tx.objectStore('cros').clear();
+      tx.objectStore('settings').clear();
+      tx.oncomplete = () => resolve();
+      tx.onerror = e => reject(e.target.error);
+    });
+  }
+};
+
+// ============================================================
+// DICTATION (Web Speech API)
+// ============================================================
+const Dictation = {
+  recognition: null,
+  isRecording: false,
+  currentTarget: null,
+
+  init() {
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SR) {
+      document.getElementById('dict-status').innerHTML = 'Dictée intégrée indisponible · <em>utilisez le micro du clavier iOS</em>';
+      return;
+    }
+    this.recognition = new SR();
+    this.recognition.lang = 'fr-FR';
+    this.recognition.continuous = true;
+    this.recognition.interimResults = true;
+
+    let lastFinal = '';
+
+    this.recognition.onresult = (e) => {
+      let interim = '';
+      let final = '';
+      for (let i = e.resultIndex; i < e.results.length; i++) {
+        const transcript = e.results[i][0].transcript;
+        if (e.results[i].isFinal) final += transcript + ' ';
+        else interim += transcript;
+      }
+
+      if (final) {
+        this.insertText(final);
+        lastFinal = final;
+      }
+
+      const targetName = this.currentTarget ? this.getFieldLabel(this.currentTarget) : 'CRO';
+      document.getElementById('dict-status').innerHTML = `Écoute active · <em>${this.escape(interim || lastFinal || '…')}</em>`;
+      document.getElementById('target-hint-text').textContent = `Dictée → ${targetName}`;
+    };
+
+    this.recognition.onend = () => {
+      if (this.isRecording) {
+        // restart if still meant to be recording
+        try { this.recognition.start(); } catch(e) {}
+      }
+    };
+
+    this.recognition.onerror = (e) => {
+      if (e.error === 'no-speech') return;
+      this.stop();
+      Toast.show('Erreur dictée : ' + e.error, 'error');
+    };
+  },
+
+  escape(s) {
+    return (s || '').replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]));
+  },
+
+  getFieldLabel(id) {
+    for (const s of SECTIONS) {
+      for (const f of s.fields) {
+        if (f.id === id) return f.label;
+      }
+    }
+    return 'CRO';
+  },
+
+  setTarget(fieldId) {
+    document.querySelectorAll('.field').forEach(el => el.classList.remove('is-target'));
+    this.currentTarget = fieldId;
+    if (fieldId) {
+      const el = document.querySelector(`.field[data-field="${fieldId}"]`);
+      if (el) el.classList.add('is-target');
+      document.getElementById('dict-target').textContent = '→ ' + this.getFieldLabel(fieldId);
+    } else {
+      document.getElementById('dict-target').textContent = '';
+    }
+  },
+
+  toggle() {
+    if (this.isRecording) this.stop();
+    else this.start();
+  },
+
+  start() {
+    if (!this.recognition) {
+      Toast.show('Sur iPhone, utilisez le micro du clavier iOS', 'error');
+      return;
+    }
+    try {
+      this.recognition.start();
+      this.isRecording = true;
+      document.getElementById('mic-btn').classList.add('recording');
+      document.getElementById('dict-status').innerHTML = 'Écoute active · <em>parlez naturellement</em>';
+      document.getElementById('target-hint').classList.add('show');
+      if (!this.currentTarget) {
+        // pick first text field if no target
+        const first = document.querySelector('textarea, input[type="text"]');
+        if (first) {
+          first.focus();
+        }
+      }
+    } catch(e) {
+      Toast.show('Impossible de démarrer la dictée', 'error');
+    }
+  },
+
+  stop() {
+    this.isRecording = false;
+    try { this.recognition.stop(); } catch(e) {}
+    document.getElementById('mic-btn').classList.remove('recording');
+    document.getElementById('dict-status').innerHTML = 'Touchez le micro · <em>parlez naturellement</em>';
+    document.getElementById('target-hint').classList.remove('show');
+  },
+
+  insertText(text) {
+    text = this.applyPunctuation(text.trim());
+    if (!text) return;
+
+    const target = this.currentTarget
+      ? document.getElementById('field-' + this.currentTarget)
+      : document.activeElement;
+
+    if (target && (target.tagName === 'TEXTAREA' || target.tagName === 'INPUT')) {
+      const cur = target.value;
+      const sep = cur && !cur.endsWith(' ') && !cur.endsWith('\n') ? ' ' : '';
+      target.value = cur + sep + text;
+      target.dispatchEvent(new Event('input', { bubbles: true }));
+
+      // smart focus restore
+      target.focus();
+      target.setSelectionRange(target.value.length, target.value.length);
+    }
+  },
+
+  applyPunctuation(text) {
+    // Voice commands for punctuation in French
+    return text
+      .replace(/\bvirgule\b/gi, ',')
+      .replace(/\bpoint virgule\b/gi, ';')
+      .replace(/\bdeux points\b/gi, ':')
+      .replace(/\bpoint d'interrogation\b/gi, '?')
+      .replace(/\bpoint d'exclamation\b/gi, '!')
+      .replace(/\bnouvelle ligne\b/gi, '\n')
+      .replace(/\bà la ligne\b/gi, '\n')
+      .replace(/\bpoint\b/gi, '.')
+      .replace(/\s+([,.;:!?])/g, '$1')
+      .replace(/([.!?])\s*([a-zà-ÿ])/g, (m, p, c) => p + ' ' + c.toUpperCase())
+      .replace(/^\s*([a-zà-ÿ])/, (m, c) => c.toUpperCase());
+  }
+};
+
+// ============================================================
+// APP STATE & VIEWS
+// ============================================================
+const App = {
+  currentCRO: null,
+  currentTemplate: 'none',
+
+  async init() {
+    await DB.open();
+    Dictation.init();
+    this.bindNav();
+    this.bindSearch();
+    await Settings.load();
+    this.renderHome();
+    this.renderEditor();
+    this.bindGlobalDictationTargeting();
+  },
+
+  bindGlobalDictationTargeting() {
+    document.addEventListener('focusin', (e) => {
+      const field = e.target.closest('.field');
+      if (field && field.dataset.field) {
+        Dictation.setTarget(field.dataset.field);
+      }
+    });
+  },
+
+  bindNav() {
+    document.querySelectorAll('.nav-tab').forEach(btn => {
+      btn.addEventListener('click', () => this.go(btn.dataset.view));
+    });
+  },
+
+  bindSearch() {
+    document.getElementById('search-input').addEventListener('input', () => this.renderList());
+  },
+
+  go(view) {
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.toggle('active', t.dataset.view === view));
+    document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v.id === 'view-' + view));
+    window.scrollTo(0, 0);
+
+    if (view === 'home') this.renderHome();
+    if (view === 'list') this.renderList();
+    if (view === 'dashboard') Dashboard.render();
+    if (view === 'editor') {
+      if (!this.currentCRO) this.newCRO();
+    }
+  },
+
+  newCRO() {
+    this.currentCRO = {
+      id: 'cro_' + Date.now() + '_' + Math.random().toString(36).slice(2,8),
+      created_at: new Date().toISOString(),
+      template: 'none',
+      approach: 'coelioscopie',
+      fields: {
+        date_intervention: new Date().toISOString().slice(0, 10)
+      }
+    };
+    this.currentTemplate = 'none';
+    document.getElementById('btn-delete').style.display = 'none';
+    this.renderEditor();
+  },
+
+  async loadCRO(id) {
+    const cro = await DB.getCRO(id);
+    if (!cro) return;
+    this.currentCRO = cro;
+    this.currentTemplate = cro.template || 'none';
+    document.getElementById('btn-delete').style.display = '';
+    this.renderEditor();
+    this.go('editor');
+  },
+
+  selectTemplate(key) {
+    this.currentTemplate = key;
+    this.currentCRO.template = key;
+    const t = TEMPLATES[key];
+    if (t && t.defaults) {
+      // merge defaults only into empty fields
+      for (const fid in t.defaults) {
+        if (!this.currentCRO.fields[fid] || this.currentCRO.fields[fid].trim() === '') {
+          this.currentCRO.fields[fid] = t.defaults[fid];
+        }
+      }
+      if (t.defaults.voie) {
+        this.currentCRO.approach = t.defaults.voie;
+      }
+    }
+    this.renderEditor();
+    Toast.show('Template appliqué : ' + t.name, 'success');
+  },
+
+  selectApproach(key) {
+    this.currentCRO.approach = key;
+    document.querySelectorAll('.approach-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.approach === key);
+    });
+  },
+
+  renderHome() {
+    DB.allCROs().then(async cros => {
+      // Stats
+      const stats = [
+        { label: 'Total CRO', value: cros.length, unit: 'interventions' },
+        { label: 'Ce mois', value: cros.filter(c => this.isThisMonth(c.date_intervention)).length, unit: 'interventions' },
+        { label: 'Cœlioscopies', value: cros.filter(c => c.approach && c.approach.startsWith('coelio')).length, unit: 'au total' },
+        { label: 'Laparotomies', value: cros.filter(c => c.approach === 'laparotomie').length, unit: 'au total' }
+      ];
+      document.getElementById('home-stats').innerHTML = stats.map(s => `
+        <div class="stat-card">
+          <div class="stat-label">${s.label}</div>
+          <div class="stat-value">${s.value}</div>
+          <div class="stat-unit">${s.unit}</div>
+        </div>
+      `).join('');
+
+      // Recent
+      const recent = cros.slice(0, 5);
+      document.getElementById('recent-count').textContent = cros.length + ' total';
+      const listEl = document.getElementById('recent-list');
+      if (recent.length === 0) {
+        listEl.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-state-icon">⊕</div>
+            <div class="empty-state-title">Aucun CRO encore</div>
+            <p>Commencez par créer votre premier compte rendu.</p>
+          </div>`;
+      } else {
+        listEl.innerHTML = recent.map(c => this.croItemHTML(c)).join('');
+      }
+    });
+  },
+
+  croItemHTML(cro) {
+    const date = cro.date_intervention || cro.created_at.slice(0,10);
+    const patient = cro.fields.patient_nom || 'Sans nom';
+    const age = cro.fields.patient_age ? `, ${cro.fields.patient_age} ans` : '';
+    const sexe = cro.fields.patient_sexe ? `, ${cro.fields.patient_sexe}` : '';
+    const dx = cro.fields.diagnostic ? cro.fields.diagnostic.slice(0, 100) : '—';
+    const tpl = TEMPLATES[cro.template] || TEMPLATES.none;
+    return `
+      <div class="cro-item" onclick="App.loadCRO('${cro.id}')">
+        <div class="cro-item-date">${this.formatDate(date)}</div>
+        <div class="cro-item-main">
+          <div class="cro-item-title">${this.escape(patient)}${age}${sexe}</div>
+          <div class="cro-item-meta">${this.escape(dx)}</div>
+        </div>
+        <div class="cro-item-badge">${tpl.code}</div>
+      </div>`;
+  },
+
+  renderList() {
+    const query = (document.getElementById('search-input').value || '').toLowerCase().trim();
+    const activeFilter = document.querySelector('.filter-chip.active')?.dataset.filter || 'all';
+
+    DB.allCROs().then(cros => {
+      // filter chips
+      const tplCounts = {};
+      cros.forEach(c => { tplCounts[c.template] = (tplCounts[c.template] || 0) + 1; });
+
+      const chipsHTML = ['<button class="filter-chip ' + (activeFilter === 'all' ? 'active' : '') + '" data-filter="all" onclick="App.setFilter(\'all\')">Tous · ' + cros.length + '</button>']
+        .concat(Object.entries(TEMPLATES).map(([k, t]) => {
+          const n = tplCounts[k] || 0;
+          if (n === 0) return '';
+          return `<button class="filter-chip ${activeFilter === k ? 'active' : ''}" data-filter="${k}" onclick="App.setFilter('${k}')">${t.name} · ${n}</button>`;
+        }))
+        .filter(Boolean)
+        .join('');
+      document.getElementById('filter-row').innerHTML = chipsHTML;
+
+      let list = cros;
+      if (activeFilter !== 'all') list = list.filter(c => c.template === activeFilter);
+
+      if (query) {
+        list = list.filter(c => {
+          const blob = JSON.stringify(c.fields).toLowerCase();
+          return blob.includes(query);
+        });
+      }
+
+      const el = document.getElementById('full-list');
+      if (list.length === 0) {
+        el.innerHTML = `<div class="empty-state"><div class="empty-state-title">Aucun résultat</div></div>`;
+      } else {
+        el.innerHTML = list.map(c => this.croItemHTML(c)).join('');
+      }
+    });
+  },
+
+  setFilter(f) {
+    document.querySelectorAll('.filter-chip').forEach(c => c.classList.toggle('active', c.dataset.filter === f));
+    this.renderList();
+  },
+
+  renderEditor() {
+    if (!this.currentCRO) this.newCRO();
+
+    // templates
+    const tplHTML = Object.entries(TEMPLATES).map(([k, t]) => `
+      <button class="template-chip ${this.currentTemplate === k ? 'active' : ''}" onclick="App.selectTemplate('${k}')">
+        <div class="template-chip-name">${t.name}</div>
+        <div class="template-chip-meta">${t.code}</div>
+      </button>
+    `).join('');
+    document.getElementById('template-grid').innerHTML = tplHTML;
+
+    // sections
+    const form = document.getElementById('form-container');
+    form.innerHTML = SECTIONS.map((section, idx) => {
+      const isCollapsed = ['paraclinique', 'preop'].includes(section.id) && !this.hasContent(section);
+      let inner = '';
+
+      if (section.special === 'approach') {
+        inner += `<div style="margin-bottom: 14px"><div class="field-label" style="margin-bottom:8px">Voie d'abord</div><div class="approach-selector">` +
+          APPROACHES.map(a => `
+            <button class="approach-btn ${this.currentCRO.approach === a.id ? 'active' : ''}" data-approach="${a.id}" onclick="App.selectApproach('${a.id}')">
+              <span class="ico">${a.icon}</span>
+              ${a.label}
+            </button>`).join('') +
+          `</div></div>`;
+      }
+
+      inner += '<div class="field-grid">';
+      section.fields.forEach(field => {
+        const val = this.escape(this.currentCRO.fields[field.id] || '');
+        const isFullWidth = field.type === 'textarea';
+        const style = isFullWidth ? ' style="grid-column: 1 / -1"' : '';
+
+        let input = '';
+        if (field.type === 'textarea') {
+          input = `<textarea id="field-${field.id}" rows="3" oninput="App.updateField('${field.id}', this.value)">${val}</textarea>`;
+        } else if (field.type === 'select') {
+          input = `<select id="field-${field.id}" onchange="App.updateField('${field.id}', this.value)">` +
+            field.options.map(o => `<option value="${o}" ${o === this.currentCRO.fields[field.id] ? 'selected' : ''}>${o || '—'}</option>`).join('') +
+            `</select>`;
+        } else {
+          input = `<input type="${field.type}" id="field-${field.id}" value="${val}" oninput="App.updateField('${field.id}', this.value)">`;
+        }
+
+        inner += `
+          <div class="field" data-field="${field.id}"${style}>
+            <label class="field-label" for="field-${field.id}">${field.label}<span class="field-target">● dictée</span></label>
+            ${input}
+          </div>`;
+      });
+      inner += '</div>';
+
+      return `
+        <div class="form-section ${isCollapsed ? 'collapsed' : ''}" data-section="${section.id}">
+          <div class="form-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+            <div class="form-section-title">
+              <span class="form-section-number">§ ${idx + 1}</span>
+              ${section.title}
+            </div>
+            <div class="form-section-toggle">▾</div>
+          </div>
+          <div class="form-section-body">${inner}</div>
+        </div>`;
+    }).join('');
+  },
+
+  hasContent(section) {
+    return section.fields.some(f => this.currentCRO.fields[f.id] && this.currentCRO.fields[f.id].trim());
+  },
+
+  updateField(id, value) {
+    if (!this.currentCRO) return;
+    this.currentCRO.fields[id] = value;
+  },
+
+  async saveCRO() {
+    if (!this.currentCRO) return;
+    this.currentCRO.updated_at = new Date().toISOString();
+    await DB.saveCRO(this.currentCRO);
+    document.getElementById('btn-delete').style.display = '';
+    Toast.show('CRO enregistré', 'success');
+  },
+
+  confirmDelete() {
+    if (!this.currentCRO) return;
+    this.openModal('Supprimer ce CRO ?', 'Cette action est définitive. Le compte rendu sera retiré de votre appareil.', async () => {
+      await DB.deleteCRO(this.currentCRO.id);
+      this.closeModal();
+      Toast.show('CRO supprimé', 'success');
+      this.newCRO();
+      this.go('list');
+    });
+  },
+
+  openModal(title, body, onConfirm) {
+    document.getElementById('modal-title').textContent = title;
+    document.getElementById('modal-body').textContent = body;
+    const btn = document.getElementById('modal-confirm');
+    const fresh = btn.cloneNode(true);
+    btn.parentNode.replaceChild(fresh, btn);
+    fresh.addEventListener('click', onConfirm);
+    document.getElementById('modal').classList.add('show');
+  },
+
+  closeModal() {
+    document.getElementById('modal').classList.remove('show');
+  },
+
+  formatDate(iso) {
+    if (!iso) return '—';
+    try {
+      const d = new Date(iso);
+      const day = String(d.getDate()).padStart(2, '0');
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      return `${day}.${month}.${d.getFullYear()}`;
+    } catch { return iso; }
+  },
+
+  isThisMonth(iso) {
+    if (!iso) return false;
+    const d = new Date(iso);
+    const now = new Date();
+    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+  },
+
+  escape(s) {
+    return (s || '').toString().replace(/[<>&"]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]));
+  },
+
+  buildCROText() {
+    if (!this.currentCRO) return '';
+    const tpl = TEMPLATES[this.currentCRO.template] || TEMPLATES.none;
+    const approach = APPROACHES.find(a => a.id === this.currentCRO.approach) || APPROACHES[0];
+    const f = this.currentCRO.fields;
+
+    let txt = `COMPTE RENDU OPÉRATOIRE\n`;
+    txt += `${'='.repeat(50)}\n\n`;
+    txt += `Type d'intervention : ${tpl.name}\n`;
+    txt += `Voie d'abord : ${approach.label}\n`;
+    txt += `Date : ${this.formatDate(f.date_intervention)}\n\n`;
+
+    SECTIONS.forEach((section, idx) => {
+      const sectionContent = section.fields
+        .filter(field => f[field.id] && f[field.id].trim())
+        .map(field => `${field.label} : ${f[field.id]}`)
+        .join('\n\n');
+      if (sectionContent) {
+        txt += `\n${idx + 1}. ${section.title.toUpperCase()}\n${'-'.repeat(50)}\n${sectionContent}\n`;
+      }
+    });
+
+    return txt;
+  },
+
+  async copyText() {
+    const txt = this.buildCROText();
+    try {
+      await navigator.clipboard.writeText(txt);
+      Toast.show('CRO copié dans le presse-papier', 'success');
+    } catch {
+      // fallback
+      const ta = document.createElement('textarea');
+      ta.value = txt;
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); Toast.show('CRO copié', 'success'); }
+      catch { Toast.show('Impossible de copier', 'error'); }
+      document.body.removeChild(ta);
+    }
+  },
+
+  async exportPDF() {
+    if (!this.currentCRO) return;
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+    const tpl = TEMPLATES[this.currentCRO.template] || TEMPLATES.none;
+    const approach = APPROACHES.find(a => a.id === this.currentCRO.approach) || APPROACHES[0];
+    const f = this.currentCRO.fields;
+    const surgeon = await DB.getSetting('surgeon') || '';
+    const hospital = await DB.getSetting('hospital') || '';
+
+    const pageWidth = 210;
+    const pageHeight = 297;
+    const margin = 18;
+    const maxWidth = pageWidth - 2 * margin;
+    let y = margin;
+
+    const checkPage = (lineHeight) => {
+      if (y + lineHeight > pageHeight - margin) {
+        doc.addPage();
+        y = margin;
+      }
+    };
+
+    // Header
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(16);
+    doc.text('COMPTE RENDU OPÉRATOIRE', pageWidth / 2, y, { align: 'center' });
+    y += 7;
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(10);
+    doc.setTextColor(80);
+    if (hospital) {
+      doc.text(hospital, pageWidth / 2, y, { align: 'center' });
+      y += 5;
+    }
+    doc.setTextColor(0);
+    y += 4;
+    doc.setDrawColor(180);
+    doc.line(margin, y, pageWidth - margin, y);
+    y += 6;
+
+    // Meta block
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Intervention :', margin, y);
+    doc.setFont('helvetica', 'normal');
+    doc.text(tpl.name, margin + 30, y);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Voie d\'abord :', margin + 100, y);
+    doc.setFont('helvetica', 'normal');
+    doc.text(approach.label, margin + 130, y);
+    y += 5;
+    doc.setFont('helvetica', 'bold');
+    doc.text('Date :', margin, y);
+    doc.setFont('helvetica', 'normal');
+    doc.text(this.formatDate(f.date_intervention), margin + 30, y);
+    if (surgeon) {
+      doc.setFont('helvetica', 'bold');
+      doc.text('Chirurgien :', margin + 100, y);
+      doc.setFont('helvetica', 'normal');
+      doc.text(surgeon, margin + 130, y);
+    }
+    y += 8;
+
+    // Sections
+    SECTIONS.forEach((section, idx) => {
+      const sectionFields = section.fields.filter(field => f[field.id] && f[field.id].trim());
+      if (sectionFields.length === 0) return;
+
+      checkPage(10);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(11);
+      doc.setTextColor(31, 95, 74);
+      doc.text(`${idx + 1}. ${section.title.toUpperCase()}`, margin, y);
+      y += 5;
+      doc.setDrawColor(31, 95, 74);
+      doc.setLineWidth(0.3);
+      doc.line(margin, y, pageWidth - margin, y);
+      y += 4;
+      doc.setTextColor(0);
+      doc.setLineWidth(0.2);
+      doc.setDrawColor(180);
+
+      sectionFields.forEach(field => {
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(9);
+        doc.setTextColor(60);
+        checkPage(5);
+        doc.text(field.label + ' :', margin, y);
+        y += 4;
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(10);
+        doc.setTextColor(0);
+        const lines = doc.splitTextToSize(f[field.id], maxWidth);
+        lines.forEach(line => {
+          checkPage(5);
+          doc.text(line, margin, y);
+          y += 4.5;
+        });
+        y += 2;
+      });
+      y += 3;
+    });
+
+    // Footer
+    const pageCount = doc.internal.getNumberOfPages();
+    for (let i = 1; i <= pageCount; i++) {
+      doc.setPage(i);
+      doc.setFontSize(8);
+      doc.setTextColor(150);
+      doc.text(`OpSurg · ${this.formatDate(new Date().toISOString())} · Page ${i}/${pageCount}`,
+        pageWidth / 2, pageHeight - 10, { align: 'center' });
+    }
+
+    const patientName = (f.patient_nom || 'patient').replace(/[^a-zA-Z0-9]/g, '_');
+    const dateStr = (f.date_intervention || new Date().toISOString().slice(0,10)).replace(/-/g, '');
+    doc.save(`CRO_${dateStr}_${patientName}.pdf`);
+    Toast.show('PDF exporté', 'success');
+  }
+};
+
+// ============================================================
+// DASHBOARD
+// ============================================================
+const Dashboard = {
+  charts: {},
+
+  async render() {
+    const cros = await DB.allCROs();
+    const stats = [
+      { label: 'Total interventions', value: cros.length, unit: '' },
+      { label: 'Temps moyen', value: this.avgDuration(cros), unit: 'min (estim.)' },
+      { label: 'Mois en cours', value: cros.filter(c => App.isThisMonth(c.date_intervention)).length, unit: 'interventions' },
+      { label: 'Templates utilisés', value: new Set(cros.map(c => c.template)).size, unit: 'types' }
+    ];
+    document.getElementById('dashboard-stats').innerHTML = stats.map(s => `
+      <div class="stat-card">
+        <div class="stat-label">${s.label}</div>
+        <div class="stat-value">${s.value}</div>
+        <div class="stat-unit">${s.unit}</div>
+      </div>`).join('');
+
+    this.renderMonthly(cros);
+    this.renderTypes(cros);
+    this.renderApproaches(cros);
+  },
+
+  avgDuration() { return '—'; }, // placeholder - would need duration field
+
+  renderMonthly(cros) {
+    const counts = {};
+    cros.forEach(c => {
+      const d = c.date_intervention || c.created_at.slice(0,10);
+      const key = d.slice(0, 7);
+      counts[key] = (counts[key] || 0) + 1;
+    });
+    const keys = Object.keys(counts).sort().slice(-12);
+    const data = keys.map(k => counts[k]);
+    const labels = keys.map(k => {
+      const [y, m] = k.split('-');
+      const months = ['Jan','Fév','Mar','Avr','Mai','Juin','Juil','Août','Sep','Oct','Nov','Déc'];
+      return `${months[parseInt(m)-1]} ${y.slice(2)}`;
+    });
+    this.drawBar('chart-monthly', labels, data, '#1f5f4a');
+  },
+
+  renderTypes(cros) {
+    const counts = {};
+    cros.forEach(c => {
+      const name = (TEMPLATES[c.template] || TEMPLATES.none).name;
+      counts[name] = (counts[name] || 0) + 1;
+    });
+    const labels = Object.keys(counts);
+    const data = Object.values(counts);
+    this.drawDoughnut('chart-types', labels, data);
+  },
+
+  renderApproaches(cros) {
+    const counts = {};
+    cros.forEach(c => {
+      const a = APPROACHES.find(x => x.id === c.approach);
+      const name = a ? a.label : 'Non précisé';
+      counts[name] = (counts[name] || 0) + 1;
+    });
+    const labels = Object.keys(counts);
+    const data = Object.values(counts);
+    this.drawBar('chart-approaches', labels, data, '#0a1628');
+  },
+
+  drawBar(id, labels, data, color) {
+    if (this.charts[id]) this.charts[id].destroy();
+    const ctx = document.getElementById(id);
+    if (!ctx) return;
+    this.charts[id] = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          data: data,
+          backgroundColor: color,
+          borderRadius: 3,
+          maxBarThickness: 40
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          y: { beginAtZero: true, ticks: { precision: 0, color: '#4a5b78' }, grid: { color: '#e3e0d8' } },
+          x: { ticks: { color: '#4a5b78' }, grid: { display: false } }
+        }
+      }
+    });
+  },
+
+  drawDoughnut(id, labels, data) {
+    if (this.charts[id]) this.charts[id].destroy();
+    const ctx = document.getElementById(id);
+    if (!ctx) return;
+    const colors = ['#1f5f4a','#2d8366','#0a1628','#b8893a','#a8421f','#4a5b78','#1a2942','#c9c5b8'];
+    this.charts[id] = new Chart(ctx, {
+      type: 'doughnut',
+      data: { labels, datasets: [{ data, backgroundColor: colors, borderWidth: 0 }] },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'right',
+            labels: { color: '#0a1628', font: { family: 'IBM Plex Sans', size: 12 }, boxWidth: 12, padding: 12 }
+          }
+        }
+      }
+    });
+  }
+};
+
+// ============================================================
+// SETTINGS
+// ============================================================
+const Settings = {
+  async load() {
+    const surgeon = await DB.getSetting('surgeon');
+    const hospital = await DB.getSetting('hospital');
+    if (surgeon) document.getElementById('setting-surgeon').value = surgeon;
+    if (hospital) document.getElementById('setting-hospital').value = hospital;
+  },
+  async save() {
+    await DB.setSetting('surgeon', document.getElementById('setting-surgeon').value);
+    await DB.setSetting('hospital', document.getElementById('setting-hospital').value);
+    Toast.show('Profil enregistré', 'success');
+  }
+};
+
+// ============================================================
+// BACKUP
+// ============================================================
+const Backup = {
+  async exportAll() {
+    const cros = await DB.allCROs();
+    const surgeon = await DB.getSetting('surgeon');
+    const hospital = await DB.getSetting('hospital');
+    const payload = {
+      version: 1,
+      app: 'OpSurg',
+      exported_at: new Date().toISOString(),
+      settings: { surgeon, hospital },
+      cros
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `opsurg_backup_${new Date().toISOString().slice(0,10)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    Toast.show('Sauvegarde exportée', 'success');
+  },
+
+  importFile(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      try {
+        const payload = JSON.parse(e.target.result);
+        if (payload.app !== 'OpSurg') throw new Error('Fichier non valide');
+        let count = 0;
+        for (const cro of (payload.cros || [])) {
+          await DB.saveCRO(cro);
+          count++;
+        }
+        if (payload.settings) {
+          if (payload.settings.surgeon) await DB.setSetting('surgeon', payload.settings.surgeon);
+          if (payload.settings.hospital) await DB.setSetting('hospital', payload.settings.hospital);
+          Settings.load();
+        }
+        Toast.show(`${count} CRO importés`, 'success');
+        App.renderHome();
+      } catch (err) {
+        Toast.show('Erreur d\'import : ' + err.message, 'error');
+      }
+    };
+    reader.readAsText(file);
+    event.target.value = '';
+  },
+
+  confirmWipe() {
+    App.openModal('Tout effacer ?', 'Tous vos CRO et paramètres seront supprimés définitivement. Cette action est irréversible.', async () => {
+      await DB.wipeAll();
+      App.closeModal();
+      App.currentCRO = null;
+      Toast.show('Toutes les données ont été effacées', 'success');
+      App.newCRO();
+      App.go('home');
+      Settings.load();
+    });
+  }
+};
+
+// ============================================================
+// TOAST
+// ============================================================
+const Toast = {
+  timer: null,
+  show(msg, type = '') {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = 'toast ' + type + ' show';
+    clearTimeout(this.timer);
+    this.timer = setTimeout(() => { t.className = 'toast ' + type; }, 2400);
+  }
+};
+
+// ============================================================
+// INIT
+// ============================================================
+window.addEventListener('DOMContentLoaded', () => App.init());
+
+// ============================================================
+// SERVICE WORKER — mode hors-ligne
+// ============================================================
+if ('serviceWorker' in navigator) {
+  const swCode = `
+    const CACHE = 'opsurg-v1';
+    const ASSETS = [self.location.href];
+    self.addEventListener('install', e => {
+      e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)));
+      self.skipWaiting();
+    });
+    self.addEventListener('activate', e => {
+      e.waitUntil(caches.keys().then(keys =>
+        Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
+      ));
+      self.clients.claim();
+    });
+    self.addEventListener('fetch', e => {
+      e.respondWith(
+        caches.match(e.request).then(cached => cached || fetch(e.request).catch(() => cached))
+      );
+    });
+  `;
+  const blob = new Blob([swCode], { type: 'application/javascript' });
+  const swUrl = URL.createObjectURL(blob);
+  navigator.serviceWorker.register(swUrl, { scope: '/' }).catch(() => {});
+}
+
+// ============================================================
+// BANNIÈRE INSTALLATION (iOS & Android)
+// ============================================================
+(function() {
+  let deferredPrompt = null;
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+
+  if (isStandalone) return; // déjà installée
+
+  function showBanner(message) {
+    if (sessionStorage.getItem('opsurg-banner-dismissed')) return;
+    const banner = document.createElement('div');
+    banner.id = 'install-banner';
+    banner.innerHTML = `
+      <style>
+        #install-banner {
+          position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999;
+          background: #0a1628; color: #fafaf7;
+          padding: 14px 16px; display: flex; align-items: center; gap: 12px;
+          font-family: 'IBM Plex Sans', sans-serif; font-size: 14px;
+          box-shadow: 0 -4px 20px rgba(0,0,0,.3);
+          animation: slideUp .3s ease;
+        }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        #install-banner .icon { font-size: 28px; flex-shrink: 0; }
+        #install-banner .text { flex: 1; line-height: 1.4; }
+        #install-banner .text strong { color: #2d8366; }
+        #install-banner .actions { display: flex; gap: 8px; flex-shrink: 0; }
+        #install-banner button {
+          border: none; border-radius: 6px; padding: 8px 14px;
+          font-size: 13px; font-weight: 600; cursor: pointer;
+        }
+        #install-banner .btn-install { background: #1f5f4a; color: #fff; }
+        #install-banner .btn-dismiss { background: rgba(255,255,255,.1); color: #fafaf7; }
+      </style>
+      <div class="icon">🏥</div>
+      <div class="text">${message}</div>
+      <div class="actions">
+        ${deferredPrompt ? '<button class="btn-install" id="btn-install">Installer</button>' : ''}
+        <button class="btn-dismiss" id="btn-dismiss">✕</button>
+      </div>
+    `;
+    document.body.appendChild(banner);
+    document.getElementById('btn-dismiss')?.addEventListener('click', () => {
+      banner.remove();
+      sessionStorage.setItem('opsurg-banner-dismissed', '1');
+    });
+    document.getElementById('btn-install')?.addEventListener('click', () => {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(() => { banner.remove(); deferredPrompt = null; });
+    });
+  }
+
+  if (isIOS) {
+    setTimeout(() => showBanner(
+      '<strong>Installer OpSurg</strong> sur iPhone :<br>Appuie sur <strong>⬆︎ Partager</strong> → <em>"Sur l\'écran d\'accueil"</em>'
+    ), 2000);
+  } else {
+    window.addEventListener('beforeinstallprompt', e => {
+      e.preventDefault();
+      deferredPrompt = e;
+      setTimeout(() => showBanner(
+        '<strong>Installer OpSurg</strong> comme application sur cet appareil'
+      ), 2000);
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
