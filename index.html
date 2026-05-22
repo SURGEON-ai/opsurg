@@ -1024,6 +1024,145 @@
     font-size: 10px; font-weight: 700; margin-top: 1px;
     font-family: 'IBM Plex Mono', monospace;
   }
+
+  /* ============ TAGS ============ */
+  .tags-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; align-items: center; min-height: 28px; }
+  .tag-chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--accent-bg); color: var(--accent);
+    border: 1px solid var(--accent); border-radius: 14px;
+    padding: 4px 6px 4px 12px; font-size: 13px; font-weight: 500;
+  }
+  .tag-chip button { color: var(--accent); font-size: 13px; width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; line-height: 1; }
+  .tag-chip button:hover { background: var(--accent); color: #fff; }
+  .tags-input-row { display: flex; flex-direction: column; gap: 8px; }
+  .tags-input-row #tag-input { max-width: 320px; }
+  .tags-suggest-row { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag-suggest {
+    font-size: 12px; color: var(--ink-mute);
+    border: 1px dashed var(--line-strong); border-radius: 14px;
+    padding: 4px 12px; transition: all .12s;
+  }
+  .tag-suggest:hover { color: var(--accent); border-color: var(--accent); border-style: solid; }
+
+  /* ============ COMPLÉTUDE ============ */
+  .completeness-wrap { display: flex; align-items: center; gap: 12px; margin: 4px 0 18px; }
+  .completeness-track { flex: 1; height: 8px; background: var(--paper-warm); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+  .completeness-fill { height: 100%; border-radius: 6px; transition: width .35s ease, background-color .35s; }
+  .completeness-fill.low { background: var(--alert); }
+  .completeness-fill.mid { background: var(--gold); }
+  .completeness-fill.high { background: var(--accent); }
+  .completeness-text { font-size: 12px; font-weight: 600; color: var(--ink-mute); font-family: 'IBM Plex Mono', monospace; white-space: nowrap; }
+
+  /* ============ AVERTISSEMENTS EXPORT ============ */
+  .export-warnings {
+    background: var(--alert-bg); border: 1px solid var(--alert);
+    border-radius: var(--radius); padding: 12px 14px; margin-bottom: 16px; font-size: 13px;
+  }
+  .export-warnings .warn-title { font-weight: 600; color: var(--alert); margin-bottom: 6px; }
+  .export-warnings ul { margin: 0; padding-left: 18px; }
+  .export-warnings li { margin: 3px 0; color: var(--ink-soft); }
+  .export-warnings .warn-note { margin-top: 8px; font-size: 12px; color: var(--ink-mute); font-style: italic; }
+  .export-warnings .warn-ok { color: var(--accent); font-weight: 600; }
+  html[data-theme="dark"] .export-warnings { background: rgba(224,122,82,.12); }
+
+  /* ============ SÉLECTION SECTIONS EXPORT ============ */
+  .export-sections-details { margin-bottom: 16px; border: 1px solid var(--line); border-radius: var(--radius); }
+  .export-sections-details summary {
+    padding: 11px 14px; cursor: pointer; font-size: 14px; font-weight: 500;
+    user-select: none; list-style-position: inside;
+  }
+  .export-sections-details summary:hover { background: var(--paper-warm); }
+  .export-sections-details[open] summary { border-bottom: 1px solid var(--line); }
+  .export-sections { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 14px; }
+  .section-toggle-all {
+    width: 100%; text-align: left; font-size: 12px; font-weight: 600;
+    color: var(--accent); padding: 2px 2px 6px; border-bottom: 1px dashed var(--line);
+    margin-bottom: 4px;
+  }
+  .section-toggle-all:hover { color: var(--accent-light); }
+  .section-pill {
+    display: inline-flex; align-items: center; gap: 7px; cursor: pointer;
+    border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px;
+    font-size: 13px; background: var(--paper-warm);
+  }
+  .section-pill input { width: auto; margin: 0; accent-color: var(--accent); }
+
+  /* Badge de tags dans les listes */
+  .cro-item-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+  .cro-item-tag {
+    font-size: 10px; background: var(--paper-warm); color: var(--ink-mute);
+    border: 1px solid var(--line); border-radius: 10px; padding: 1px 8px;
+    text-transform: lowercase; letter-spacing: .02em;
+  }
+  .cro-item-tag.complication { background: var(--alert-bg); color: var(--alert); border-color: var(--alert); }
+  .cro-item-tag.urgence { background: var(--alert-bg); color: var(--alert); border-color: var(--alert); }
+
+  /* ============ CAHIER ============ */
+  .cahier-quick { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  .cahier-seg { display: flex; flex-wrap: wrap; gap: 6px; }
+  .seg-btn {
+    flex: 1; min-width: 90px; padding: 10px 12px; font-size: 13px; font-weight: 500;
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--paper); color: var(--ink-mute); transition: all .12s;
+  }
+  .seg-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .seg-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .cahier-checks { display: flex; flex-wrap: wrap; gap: 8px; }
+  .check-pill {
+    display: inline-flex; align-items: center; gap: 7px; cursor: pointer;
+    border: 1px solid var(--line); border-radius: 16px; padding: 7px 14px;
+    font-size: 13px; background: var(--paper-warm); transition: border-color .12s;
+  }
+  .check-pill:hover { border-color: var(--accent); }
+  .check-pill input { width: auto; margin: 0; accent-color: var(--accent); }
+  .cahier-summary { margin: 8px 0 16px; }
+  .cahier-stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .cahier-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+  @media (max-width: 700px) {
+    .cahier-stat-grid { grid-template-columns: repeat(2, 1fr); }
+    .seg-btn { min-width: 0; }
+  }
+
+  /* ============ LECTURE RAPIDE ============ */
+  .reader-backdrop {
+    position: fixed; inset: 0; z-index: 210;
+    background: rgba(10,22,40,.55);
+    display: none; align-items: center; justify-content: center; padding: 16px;
+  }
+  .reader-backdrop.show { display: flex; animation: fadeIn .2s ease; }
+  .reader-sheet {
+    background: var(--paper); width: 100%; max-width: 640px;
+    max-height: 90vh; border-radius: var(--radius-lg); overflow: hidden;
+    display: flex; flex-direction: column; box-shadow: var(--shadow-lg);
+  }
+  .reader-bar {
+    background: var(--ink); color: var(--paper);
+    padding: 14px 18px; display: flex; align-items: center; justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .reader-bar .title { font-family: 'Fraunces', serif; font-size: 16px; }
+  .reader-scroll { overflow-y: auto; padding: 22px; }
+  .qr-head { border-bottom: 2px solid var(--ink); padding-bottom: 12px; margin-bottom: 14px; }
+  .qr-title { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 500; }
+  .qr-sub { color: var(--ink-mute); font-size: 14px; margin-top: 3px; }
+  .qr-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .qr-tag {
+    font-size: 11px; background: var(--paper-warm); color: var(--ink-mute);
+    border: 1px solid var(--line); border-radius: 12px; padding: 2px 10px;
+  }
+  .qr-tag.qr-role { background: var(--accent-bg); color: var(--accent); border-color: var(--accent); }
+  .qr-line { display: flex; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); }
+  .qr-line:last-child { border-bottom: none; }
+  .qr-k {
+    flex-shrink: 0; width: 110px; font-weight: 600; font-size: 12px;
+    color: var(--accent); text-transform: uppercase; letter-spacing: .03em; padding-top: 1px;
+  }
+  .qr-v { flex: 1; font-size: 14px; line-height: 1.5; white-space: pre-wrap; }
+  @media (max-width: 600px) {
+    .qr-line { flex-direction: column; gap: 2px; }
+    .qr-k { width: auto; }
+  }
 </style>
 </head>
 <body>
@@ -1037,7 +1176,7 @@
   </div>
   <div style="display:flex;align-items:center;gap:14px">
     <button id="theme-toggle" onclick="Theme.toggle()" title="Mode sombre / clair" style="background:rgba(255,255,255,.08);border-radius:8px;width:36px;height:36px;display:grid;place-items:center;color:var(--paper);font-size:17px">🌙</button>
-    <div class="header-meta" id="header-meta">v0.2 · LOCAL</div>
+    <div class="header-meta" id="header-meta">v0.6 · LOCAL</div>
   </div>
 </header>
 
@@ -1045,6 +1184,7 @@
   <button class="nav-tab active" data-view="home">Accueil</button>
   <button class="nav-tab" data-view="editor">Nouveau CRO</button>
   <button class="nav-tab" data-view="list">Mes CRO</button>
+  <button class="nav-tab" data-view="cahier">Cahier</button>
   <button class="nav-tab" data-view="dashboard">Tableau de bord</button>
   <button class="nav-tab" data-view="settings">Paramètres</button>
 </nav>
@@ -1094,6 +1234,10 @@
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
         <span>Copier le texte</span>
       </button>
+      <button class="btn" onclick="App.quickRead()" title="Vue résumé compacte">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        <span>Lecture rapide</span>
+      </button>
       <button class="btn" onclick="Phrases.open()">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
         <span>Phrases</span>
@@ -1129,9 +1273,19 @@
       </div>
     </div>
 
+    <!-- COMPLÉTUDE -->
+    <div id="completeness-wrap" class="completeness-wrap" style="display:none">
+      <div class="completeness-track"><div id="completeness-bar" class="completeness-fill low" style="width:0%"></div></div>
+      <span id="completeness-text" class="completeness-text">CRO rempli à 0%</span>
+    </div>
+
     <!-- TEMPLATE -->
     <h3 class="section-title" style="font-size:16px; margin-bottom:10px;">Template</h3>
     <div class="template-grid" id="template-grid"></div>
+
+    <!-- TAGS -->
+    <h3 class="section-title" style="font-size:16px; margin:18px 0 10px;">Tags</h3>
+    <div id="tags-container"></div>
 
     <!-- FORM SECTIONS -->
     <div id="form-container"></div>
@@ -1141,10 +1295,80 @@
   <section class="view" id="view-list">
     <h2 class="section-title">Mes comptes rendus</h2>
     <div class="search-bar">
-      <input type="text" id="search-input" placeholder="Rechercher par patient, diagnostic, geste…">
+      <input type="text" id="search-input" placeholder="Rechercher par patient, diagnostic, geste, tag…">
     </div>
     <div class="filter-row" id="filter-row"></div>
     <div class="cro-list" id="full-list"></div>
+  </section>
+
+  <!-- ============ CAHIER ============ -->
+  <section class="view" id="view-cahier">
+    <h2 class="section-title">Cahier de comptes rendus</h2>
+    <p style="color:var(--ink-mute);font-size:14px;margin-top:-6px">Générez un recueil de vos interventions sur une période, filtré par rôle, type et tags.</p>
+
+    <div class="form-section">
+      <div class="form-section-header"><div class="form-section-title">1 · Période</div></div>
+      <div class="form-section-body">
+        <div class="field-grid">
+          <div class="field">
+            <label class="field-label">Du</label>
+            <input type="date" id="cahier-from" onchange="Cahier.refresh()">
+          </div>
+          <div class="field">
+            <label class="field-label">Au</label>
+            <input type="date" id="cahier-to" onchange="Cahier.refresh()">
+          </div>
+        </div>
+        <div class="cahier-quick" id="cahier-quick">
+          <button class="tag-suggest" onclick="Cahier.quickPeriod('month')">Ce mois</button>
+          <button class="tag-suggest" onclick="Cahier.quickPeriod('quarter')">3 derniers mois</button>
+          <button class="tag-suggest" onclick="Cahier.quickPeriod('year')">12 derniers mois</button>
+          <button class="tag-suggest" onclick="Cahier.quickPeriod('all')">Tout</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-header"><div class="form-section-title">2 · Mon rôle</div></div>
+      <div class="form-section-body">
+        <div class="cahier-seg" id="cahier-role">
+          <button class="seg-btn active" data-role="all" onclick="Cahier.setRole('all', this)">Tous</button>
+          <button class="seg-btn" data-role="operateur" onclick="Cahier.setRole('operateur', this)">Opérateur</button>
+          <button class="seg-btn" data-role="aide" onclick="Cahier.setRole('aide', this)">Aide</button>
+          <button class="seg-btn" data-role="observateur" onclick="Cahier.setRole('observateur', this)">Observateur</button>
+          <button class="seg-btn" data-role="op_aide" onclick="Cahier.setRole('op_aide', this)">Opérateur + aide</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section collapsed">
+      <div class="form-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+        <div class="form-section-title">3 · Type & tags (optionnel)</div>
+        <div class="form-section-toggle">▾</div>
+      </div>
+      <div class="form-section-body">
+        <label class="field-label" style="display:block;margin-bottom:8px">Types d'intervention</label>
+        <div class="cahier-checks" id="cahier-types"></div>
+        <label class="field-label" style="display:block;margin:16px 0 8px">Tags</label>
+        <div class="cahier-checks" id="cahier-tags"></div>
+      </div>
+    </div>
+
+    <div class="cahier-summary" id="cahier-summary"></div>
+
+    <p id="cahier-sections-note" style="font-size:12px;color:var(--ink-mute);margin:0 0 12px;display:none"></p>
+
+    <div class="cahier-actions">
+      <button class="btn btn-accent" onclick="Cahier.exportWord()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Générer le cahier (Word)
+      </button>
+      <button class="btn btn-primary" onclick="Cahier.exportPDF()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Générer le cahier (PDF)
+      </button>
+    </div>
+    <div class="cro-list" id="cahier-list" style="margin-top:20px"></div>
   </section>
 
   <!-- ============ DASHBOARD ============ -->
@@ -1198,8 +1422,27 @@
             <label class="field-label">Service / Hôpital</label>
             <input type="text" id="setting-hospital" placeholder="Service de chirurgie générale...">
           </div>
+          <div class="field">
+            <label class="field-label">Titre / Qualité (sous la signature)</label>
+            <input type="text" id="setting-title" placeholder="Chirurgien viscéral, RPPS…">
+          </div>
         </div>
-        <button class="btn btn-primary" onclick="Settings.save()" style="margin-top:12px">Enregistrer le profil</button>
+        <div style="margin-top:16px">
+          <label class="field-label" style="display:block;margin-bottom:8px">Tampon / en-tête (logo hôpital, image)</label>
+          <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+            <div id="stamp-preview" style="display:none;align-items:center;gap:10px">
+              <img id="stamp-img" src="" alt="Tampon" style="max-height:60px;max-width:200px;border:1px solid var(--line);border-radius:4px;padding:4px;background:#fff">
+            </div>
+            <button class="btn" onclick="document.getElementById('stamp-input').click()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              Importer une image
+            </button>
+            <button class="btn btn-danger" id="stamp-remove" onclick="Settings.removeStamp()" style="display:none">Retirer</button>
+            <input type="file" id="stamp-input" accept="image/*" style="display:none" onchange="Settings.uploadStamp(event)">
+          </div>
+          <p style="color:var(--ink-mute);font-size:12px;margin-top:8px">Apparaît en en-tête des documents Word et PDF, et dans le cahier.</p>
+        </div>
+        <button class="btn btn-primary" onclick="Settings.save()" style="margin-top:16px">Enregistrer le profil</button>
       </div>
     </div>
 
@@ -1254,10 +1497,10 @@
       </div>
       <div class="form-section-body">
         <p style="margin:0; font-size:14px; color:var(--ink-mute)">
-          <strong style="color:var(--ink)">OpSurg v0.2</strong> · Application web autonome pour chirurgien.<br>
+          <strong style="color:var(--ink)">OpSurg v0.4</strong> · Application web autonome pour chirurgien.<br>
           Stockage local. Aucun serveur. Aucune télémétrie.<br>
           Données 100% privées sur cet appareil.<br><br>
-          <strong style="color:var(--ink)">Nouveautés v0.2 :</strong> contact patient pour le suivi, mode sombre, aperçu PDF avant export, export Word et Excel, rappels postopératoires (J1/J7/J30), courbe d'apprentissage, vue calendrier, banque de phrases, duplication de CRO et partage chiffré entre confrères.
+          <strong style="color:var(--ink)">Nouveautés v0.4 :</strong> vrai export Word natif (.docx) éditable, auto-remplissage de l'équipe depuis votre profil, compteur de complétude du CRO, score ASA et côté, et détection d'incohérences avant export (voie, latéralité, champs manquants).
         </p>
       </div>
     </div>
@@ -1291,6 +1534,11 @@
         <div class="tpl-desc">Grille structurée, lisible</div>
       </button>
     </div>
+    <div id="export-warnings" class="export-warnings" style="display:none"></div>
+    <details class="export-sections-details">
+      <summary>Sections à inclure</summary>
+      <div id="export-sections" class="export-sections"></div>
+    </details>
     <div style="margin-bottom:16px">
       <label style="display:flex;align-items:center;gap:10px;font-size:14px;cursor:pointer">
         <input type="checkbox" id="export-include-photos" checked style="width:18px;height:18px;accent-color:var(--accent)">
@@ -1312,6 +1560,17 @@
         Exporter PDF
       </button>
     </div>
+  </div>
+</div>
+
+<!-- LECTURE RAPIDE -->
+<div class="reader-backdrop" id="reader-panel">
+  <div class="reader-sheet">
+    <div class="reader-bar">
+      <span class="title">Lecture rapide</span>
+      <button onclick="App.closeReader()" style="font-size:22px;color:var(--paper);line-height:1">✕</button>
+    </div>
+    <div class="reader-scroll" id="reader-body"></div>
   </div>
 </div>
 
@@ -1576,6 +1835,8 @@ const SECTIONS = [
       { id: 'patient_id', label: 'N° dossier (optionnel)', type: 'text', dictTargets: ['dossier', 'numéro'] },
       { id: 'patient_tel', label: 'Téléphone (suivi post-op)', type: 'tel', dictTargets: ['téléphone', 'numéro', 'contact', 'portable'] },
       { id: 'patient_email', label: 'Email (optionnel)', type: 'email', dictTargets: ['email', 'mail', 'courriel'] },
+      { id: 'asa', label: 'Score ASA', type: 'select', options: ['', 'ASA I', 'ASA II', 'ASA III', 'ASA IV', 'ASA V', 'ASA VI'], dictTargets: ['asa', 'score'] },
+      { id: 'cote', label: 'Côté', type: 'select', options: ['', 'Droit', 'Gauche', 'Bilatéral', 'Médian / non applicable'], dictTargets: ['côté', 'cote', 'latéralité'] },
       { id: 'date_intervention', label: 'Date d\'intervention', type: 'date', dictTargets: ['date'] }
     ]
   },
@@ -1609,6 +1870,7 @@ const SECTIONS = [
     id: 'preop',
     title: 'Préparation opératoire',
     fields: [
+      { id: 'mon_role', label: 'Mon rôle', type: 'select', options: ['', 'Opérateur', '1er aide', '2e aide', '3e aide', 'Observateur'], dictTargets: ['rôle', 'role'] },
       { id: 'anesthesie', label: 'Type d\'anesthésie', type: 'textarea', dictTargets: ['anesthésie'] },
       { id: 'equipe', label: 'Équipe opératoire', type: 'textarea', dictTargets: ['équipe', 'opérateur', 'aide'] }
     ]
@@ -1943,6 +2205,7 @@ const App = {
   async init() {
     await DB.open();
     await Theme.load();
+    await this.loadExcludedSections();
     Dictation.init();
     this.bindNav();
     this.bindSearch();
@@ -1979,6 +2242,7 @@ const App = {
     if (view === 'home') this.renderHome();
     if (view === 'list') this.renderList();
     if (view === 'dashboard') Dashboard.render();
+    if (view === 'cahier') Cahier.init();
     if (view === 'editor') {
       if (!this.currentCRO) this.newCRO();
     }
@@ -1991,8 +2255,10 @@ const App = {
       template: 'none',
       approach: 'coelioscopie',
       fields: {
-        date_intervention: new Date().toISOString().slice(0, 10)
+        date_intervention: new Date().toISOString().slice(0, 10),
+        mon_role: 'Opérateur'
       },
+      tags: [],
       photos_perop: [],     // [{dataUrl, caption}]
       imagerie_files: []    // [{dataUrl, caption}]
     };
@@ -2002,6 +2268,19 @@ const App = {
     const dup = document.getElementById('btn-duplicate');
     if (dup) dup.style.display = 'none';
     this.renderEditor();
+    // auto-remplissage de l'équipe depuis le profil (asynchrone)
+    this._prefillTeam();
+  },
+
+  async _prefillTeam() {
+    try {
+      const surgeon = await DB.getSetting('surgeon');
+      if (surgeon && this.currentCRO && !this.currentCRO.fields.equipe) {
+        this.currentCRO.fields.equipe = 'Opérateur : ' + surgeon;
+        const el = document.getElementById('field-equipe');
+        if (el) el.value = this.currentCRO.fields.equipe;
+      }
+    } catch(e) {}
   },
 
   async loadCRO(id) {
@@ -2048,7 +2327,7 @@ const App = {
     const t = TEMPLATES[key];
     if (!t) return;
 
-    const IDENTITY_FIELDS = ['patient_nom','patient_age','patient_sexe','patient_id','patient_tel','patient_email','date_intervention'];
+    const IDENTITY_FIELDS = ['patient_nom','patient_age','patient_sexe','patient_id','patient_tel','patient_email','asa','cote','date_intervention'];
     const hasContent = Object.entries(this.currentCRO.fields).some(
       ([fid, val]) => !IDENTITY_FIELDS.includes(fid) && val && val.trim() !== ''
     );
@@ -2086,21 +2365,25 @@ const App = {
     const VOIE_DEFAULTS = {
       coelioscopie: {
         voie_detail: 'Coelioscopie à 3 trocarts : optique ombilical 10mm, deux trocarts opérateurs 5mm. Pneumopéritoine 12 mmHg établi par open-coelio.',
-        conclusion_suffix: 'par coelioscopie'
+        conclusion_suffix: 'par coelioscopie',
+        fermeture: 'Exsufflation. Fermeture aponévrotique des orifices de 10mm au fil résorbable. Suture cutanée par points séparés ou agrafes.'
       },
       laparotomie: {
         voie_detail: 'Laparotomie médiane.',
-        conclusion_suffix: 'par laparotomie'
+        conclusion_suffix: 'par laparotomie',
+        fermeture: 'Fermeture pariétale plan par plan. Surjet de l\'aponévrose au fil à résorption lente. Suture cutanée par agrafes.'
       },
       coelio_convertie: {
         voie_detail: 'Coelioscopie convertie en laparotomie médiane après [raison].',
-        conclusion_suffix: 'par coelioscopie convertie en laparotomie'
+        conclusion_suffix: 'par coelioscopie convertie en laparotomie',
+        fermeture: 'Fermeture pariétale plan par plan après conversion. Surjet de l\'aponévrose. Suture cutanée.'
       },
       robot: {
         voie_detail: 'Chirurgie robot-assistée : trocart caméra 12mm, trois bras robotisés 8mm, trocart assistant 12mm. Arrimage du robot.',
-        conclusion_suffix: 'par chirurgie robot-assistée'
+        conclusion_suffix: 'par chirurgie robot-assistée',
+        fermeture: 'Désarrimage du robot. Exsufflation. Fermeture aponévrotique des orifices de trocart de 12mm. Suture cutanée.'
       },
-      autre: { voie_detail: '', conclusion_suffix: '' }
+      autre: { voie_detail: '', conclusion_suffix: '', fermeture: '' }
     };
 
     const prevApproach = this.currentCRO.approach;
@@ -2144,9 +2427,28 @@ const App = {
       }
     }
 
+    // --- Met à jour la fermeture (seulement si vide ou encore une valeur par défaut) ---
+    if (defaults.fermeture) {
+      const currentFerm = (this.currentCRO.fields['fermeture'] || '').trim();
+      // valeurs considérées comme "par défaut" : vide, fermeture de la voie précédente,
+      // fermeture par défaut de toutes les voies, ou la fermeture du template
+      const allVoieFermetures = Object.values(VOIE_DEFAULTS).map(d => (d.fermeture || '').trim()).filter(Boolean);
+      const tplFerm = (tpl.defaults?.fermeture || '').trim();
+      const fermIsDefault = currentFerm === '' ||
+        currentFerm === (prevDefaults.fermeture || '').trim() ||
+        currentFerm === tplFerm ||
+        allVoieFermetures.includes(currentFerm);
+      if (fermIsDefault) {
+        this.currentCRO.fields['fermeture'] = defaults.fermeture;
+        const elFerm = document.getElementById('field-fermeture');
+        if (elFerm) elFerm.value = defaults.fermeture;
+      }
+    }
+
     document.querySelectorAll('.approach-btn').forEach(b => {
       b.classList.toggle('active', b.dataset.approach === key);
     });
+    this.updateCompleteness();
     const labels = { coelioscopie: 'Cœlioscopie', laparotomie: 'Laparotomie', coelio_convertie: 'Cœlio convertie', robot: 'Robot-assistée', autre: 'Autre' };
     Toast.show('Voie : ' + (labels[key] || key), '');
   },
@@ -2193,12 +2495,19 @@ const App = {
     const sexe = cro.fields.patient_sexe ? `, ${cro.fields.patient_sexe}` : '';
     const dx = cro.fields.diagnostic ? cro.fields.diagnostic.slice(0, 100) : '—';
     const tpl = TEMPLATES[cro.template] || TEMPLATES.none;
+    const role = cro.fields.mon_role ? `<span class="cro-item-tag">${this.escape(cro.fields.mon_role)}</span>` : '';
+    const tags = (cro.tags || []).map(t => {
+      const cls = (t === 'complication' || t === 'urgence') ? ' ' + t : '';
+      return `<span class="cro-item-tag${cls}">${this.escape(t)}</span>`;
+    }).join('');
+    const tagRow = (role || tags) ? `<div class="cro-item-tags">${role}${tags}</div>` : '';
     return `
       <div class="cro-item" onclick="App.loadCRO('${cro.id}')">
         <div class="cro-item-date">${this.formatDate(date)}</div>
         <div class="cro-item-main">
           <div class="cro-item-title">${this.escape(patient)}${age}${sexe}</div>
           <div class="cro-item-meta">${this.escape(dx)}</div>
+          ${tagRow}
         </div>
         <div class="cro-item-badge">${tpl.code}</div>
       </div>`;
@@ -2221,14 +2530,29 @@ const App = {
         }))
         .filter(Boolean)
         .join('');
-      document.getElementById('filter-row').innerHTML = chipsHTML;
+
+      // chips de tags (tag:xxx)
+      const tagCounts = {};
+      cros.forEach(c => (c.tags || []).forEach(t => { tagCounts[t] = (tagCounts[t] || 0) + 1; }));
+      const tagChips = Object.entries(tagCounts).sort((a,b) => b[1]-a[1]).map(([t, n]) =>
+        `<button class="filter-chip ${activeFilter === 'tag:'+t ? 'active' : ''}" data-filter="tag:${t}" onclick="App.setFilter('tag:${t.replace(/'/g, "\\'")}')"># ${this.escape(t)} · ${n}</button>`
+      ).join('');
+
+      document.getElementById('filter-row').innerHTML = chipsHTML + tagChips;
 
       let list = cros;
-      if (activeFilter !== 'all') list = list.filter(c => c.template === activeFilter);
+      if (activeFilter !== 'all') {
+        if (activeFilter.startsWith('tag:')) {
+          const tag = activeFilter.slice(4);
+          list = list.filter(c => (c.tags || []).includes(tag));
+        } else {
+          list = list.filter(c => c.template === activeFilter);
+        }
+      }
 
       if (query) {
         list = list.filter(c => {
-          const blob = JSON.stringify(c.fields).toLowerCase();
+          const blob = (JSON.stringify(c.fields) + ' ' + (c.tags || []).join(' ')).toLowerCase();
           return blob.includes(query);
         });
       }
@@ -2352,15 +2676,152 @@ const App = {
           <div class="form-section-body">${inner}</div>
         </div>`;
     }).join('');
+
+    this.renderTags();
+    this.updateCompleteness();
+  },
+
+  // ---- Compteur de complétude ----
+  COMPLETE_KEYS: ['patient_nom', 'date_intervention', 'diagnostic', 'geste', 'conclusion'],
+  updateCompleteness() {
+    const bar = document.getElementById('completeness-bar');
+    const txt = document.getElementById('completeness-text');
+    const wrap = document.getElementById('completeness-wrap');
+    if (!bar || !this.currentCRO) return;
+    const f = this.currentCRO.fields;
+    let score = 0, total = 0;
+    this.COMPLETE_KEYS.forEach(k => { total += 2; if (f[k] && String(f[k]).trim()) score += 2; });
+    const secondary = ['indication', 'voie_detail', 'suites', 'mon_role', 'duree_min'];
+    secondary.forEach(k => { total += 1; if (f[k] && String(f[k]).trim()) score += 1; });
+    const pct = Math.round(100 * score / total);
+    bar.style.width = pct + '%';
+    bar.className = 'completeness-fill ' + (pct >= 80 ? 'high' : pct >= 50 ? 'mid' : 'low');
+    if (txt) txt.textContent = 'CRO rempli à ' + pct + '%';
+    if (wrap) wrap.style.display = '';
+    return pct;
+  },
+
+  // ---- Détection d'incohérences ----
+  checkConsistency() {
+    if (!this.currentCRO) return [];
+    const f = this.currentCRO.fields;
+    const warnings = [];
+    const approach = this.currentCRO.approach;
+    const blob = (f.geste || '') + ' ' + (f.voie_detail || '') + ' ' + (f.fermeture || '');
+    const low = blob.toLowerCase();
+
+    if (approach === 'coelioscopie') {
+      if (/laparotomie|incision m(é|e)diane|laparo/i.test(low) && !/convert/i.test(low))
+        warnings.push('La voie est « cœlioscopie » mais le texte mentionne une laparotomie. Conversion non documentée ?');
+    }
+    if (approach === 'laparotomie') {
+      if (/c(œ|oe)lioscop|trocart|pneumop(é|e)riton/i.test(low))
+        warnings.push('La voie est « laparotomie » mais le texte mentionne des éléments de cœlioscopie (trocart, pneumopéritoine).');
+    }
+    if (f.cote && (f.cote === 'Droit' || f.cote === 'Gauche')) {
+      const other = f.cote === 'Droit' ? 'gauche' : 'droit';
+      if (new RegExp('\\b' + other + '\\b', 'i').test(blob))
+        warnings.push(`Le côté renseigné est « ${f.cote} » mais le texte mentionne « ${other} ». Vérifiez la latéralité.`);
+    }
+    const missing = [];
+    if (!f.patient_nom || !f.patient_nom.trim()) missing.push('nom du patient');
+    if (!f.date_intervention) missing.push('date');
+    if (!f.diagnostic || !f.diagnostic.trim()) missing.push('diagnostic');
+    if (!f.geste || !f.geste.trim()) missing.push('geste réalisé');
+    if (!f.conclusion || !f.conclusion.trim()) missing.push('conclusion');
+    if (missing.length) warnings.push('Champs clés non renseignés : ' + missing.join(', ') + '.');
+    if (!f.duree_min || !String(f.duree_min).trim())
+      warnings.push('Durée opératoire non renseignée (utile pour vos statistiques).');
+    if ((this.currentCRO.tags || []).includes('complication') && !/complic|incident/i.test((f.incidents||'') + (f.suites||'')))
+      warnings.push('Tag « complication » présent mais aucune complication décrite dans Incidents ou Suites.');
+
+    return warnings;
+  },
+
+  // ---- Tags ----
+  TAG_SUGGESTIONS: ['urgence', 'ambulatoire', 'complication', 'formation', 'programmé', 'reprise'],
+
+  renderTags() {
+    const wrap = document.getElementById('tags-container');
+    if (!wrap) return;
+    const tags = this.currentCRO.tags || [];
+    const chips = tags.map(t =>
+      `<span class="tag-chip">${this.escape(t)}<button onclick="App.removeTag('${this.escape(t).replace(/'/g, "\\'")}')" title="Retirer">✕</button></span>`
+    ).join('');
+    const suggestions = this.TAG_SUGGESTIONS
+      .filter(s => !tags.includes(s))
+      .map(s => `<button class="tag-suggest" onclick="App.addTag('${s}')">+ ${s}</button>`)
+      .join('');
+    wrap.innerHTML = `
+      <div class="tags-row">${chips || '<span style="color:var(--ink-mute);font-size:13px">Aucun tag</span>'}</div>
+      <div class="tags-input-row">
+        <input type="text" id="tag-input" placeholder="Ajouter un tag…" onkeydown="if(event.key==='Enter'){App.addTag(this.value);this.value='';}">
+        <div class="tags-suggest-row">${suggestions}</div>
+      </div>`;
+  },
+
+  addTag(value) {
+    const tag = (value || '').trim().toLowerCase();
+    if (!tag) return;
+    if (!this.currentCRO.tags) this.currentCRO.tags = [];
+    if (this.currentCRO.tags.includes(tag)) { Toast.show('Tag déjà présent', ''); return; }
+    this.currentCRO.tags.push(tag);
+    this.renderTags();
+  },
+
+  removeTag(tag) {
+    if (!this.currentCRO.tags) return;
+    this.currentCRO.tags = this.currentCRO.tags.filter(t => t !== tag);
+    this.renderTags();
   },
 
   hasContent(section) {
-    return section.fields.some(f => this.currentCRO.fields[f.id] && this.currentCRO.fields[f.id].trim());
+    return section.fields.some(f => this.currentCRO.fields[f.id] && String(this.currentCRO.fields[f.id]).trim());
+  },
+
+  // ---- Lecture rapide : résumé compact une page ----
+  quickRead() {
+    if (!this.currentCRO) return;
+    const f = this.currentCRO.fields;
+    const tpl = TEMPLATES[this.currentCRO.template] || TEMPLATES.none;
+    const approach = APPROACHES.find(a => a.id === this.currentCRO.approach) || APPROACHES[0];
+    const patient = [f.patient_nom, f.patient_age ? f.patient_age + ' ans' : '', f.patient_sexe].filter(Boolean).join(' · ') || 'Patient non renseigné';
+    const tags = (this.currentCRO.tags || []).map(t => `<span class="qr-tag">${this.escape(t)}</span>`).join('');
+    const role = f.mon_role ? `<span class="qr-tag qr-role">${this.escape(f.mon_role)}</span>` : '';
+
+    const keyFields = [
+      ['Diagnostic', f.diagnostic], ['Indication', f.indication],
+      ['Voie d\'abord', approach.label + (f.voie_detail ? ' — ' + f.voie_detail : '')],
+      ['Geste', f.geste], ['Constatations', f.constatations],
+      ['Incidents', f.incidents], ['Drainage', f.drainage],
+      ['Fermeture', f.fermeture],
+      ['Pertes', f.pertes], ['Durée', f.duree_min ? f.duree_min + ' min' : ''],
+      ['Suites', f.suites], ['Conclusion', f.conclusion]
+    ].filter(([,v]) => v && String(v).trim());
+
+    const body = keyFields.map(([k, v]) =>
+      `<div class="qr-line"><span class="qr-k">${this.escape(k)}</span><span class="qr-v">${this.escape(String(v))}</span></div>`
+    ).join('');
+
+    document.getElementById('reader-body').innerHTML = `
+      <div class="qr-head">
+        <div class="qr-title">${this.escape(tpl.name)}</div>
+        <div class="qr-sub">${this.escape(patient)} · ${this.formatDate(f.date_intervention)}</div>
+        <div class="qr-tags">${role}${tags}</div>
+      </div>
+      <div class="qr-content">${body || '<p style="color:var(--ink-mute)">CRO vide.</p>'}</div>`;
+    document.getElementById('reader-panel').classList.add('show');
+  },
+
+  closeReader() {
+    document.getElementById('reader-panel').classList.remove('show');
   },
 
   updateField(id, value) {
     if (!this.currentCRO) return;
     this.currentCRO.fields[id] = value;
+    clearTimeout(this._compTimer);
+    this._compTimer = setTimeout(() => this.updateCompleteness(), 300);
   },
 
   // ---- Photo per-op management ----
@@ -2431,9 +2892,87 @@ const App = {
   // ---- Export modal ----
   openExportModal() {
     document.getElementById('export-modal').classList.add('show');
+    this.renderExportSections();
+    // affiche les avertissements de cohérence
+    const warnings = this.checkConsistency();
+    const box = document.getElementById('export-warnings');
+    if (box) {
+      if (warnings.length) {
+        box.innerHTML = '<div class="warn-title">⚠ ' + warnings.length + ' point' + (warnings.length>1?'s':'') + ' à vérifier</div>' +
+          '<ul>' + warnings.map(w => '<li>' + this.escape(w) + '</li>').join('') + '</ul>' +
+          '<div class="warn-note">Ce ne sont que des suggestions — vous pouvez exporter quand même.</div>';
+        box.style.display = 'block';
+      } else {
+        box.innerHTML = '<div class="warn-ok">✓ Aucune incohérence détectée</div>';
+        box.style.display = 'block';
+      }
+    }
   },
   closeExportModal() {
     document.getElementById('export-modal').classList.remove('show');
+  },
+
+  // ---- Sélection des sections à exporter ----
+  excludedSections: new Set(),
+  async loadExcludedSections() {
+    try {
+      const saved = await DB.getSetting('excludedSections');
+      if (saved) this.excludedSections = new Set(JSON.parse(saved));
+    } catch(e) {}
+  },
+  renderExportSections() {
+    const wrap = document.getElementById('export-sections');
+    if (!wrap || !this.currentCRO) return;
+    const f = this.currentCRO.fields;
+    const withContent = SECTIONS.filter(s => s.fields.some(field => f[field.id] && String(f[field.id]).trim()));
+    const allIncluded = withContent.every(s => !this.excludedSections.has(s.id));
+    const toggleLabel = allIncluded ? 'Tout décocher' : 'Tout cocher';
+    const pills = SECTIONS.map(section => {
+      const hasContent = section.fields.some(field => f[field.id] && String(f[field.id]).trim());
+      const included = !this.excludedSections.has(section.id);
+      const dim = hasContent ? '' : ' style="opacity:.5"';
+      return `<label class="section-pill"${dim}>
+        <input type="checkbox" ${included ? 'checked' : ''} onchange="App.toggleExportSection('${section.id}', this.checked)">
+        ${this.escape(section.title)}${hasContent ? '' : ' <span style="font-size:11px;color:var(--ink-mute)">(vide)</span>'}
+      </label>`;
+    }).join('');
+    wrap.innerHTML = `<button type="button" class="section-toggle-all" onclick="App.toggleAllSections()">${toggleLabel}</button>${pills}`;
+  },
+  async toggleAllSections() {
+    const f = this.currentCRO.fields;
+    const withContent = SECTIONS.filter(s => s.fields.some(field => f[field.id] && String(f[field.id]).trim()));
+    const allIncluded = withContent.every(s => !this.excludedSections.has(s.id));
+    if (allIncluded) {
+      // tout décocher (sauf identité, qu'on garde toujours par sécurité)
+      SECTIONS.forEach(s => { if (s.id !== 'identite') this.excludedSections.add(s.id); });
+    } else {
+      this.excludedSections.clear();
+    }
+    try { await DB.setSetting('excludedSections', JSON.stringify([...this.excludedSections])); } catch(e) {}
+    this.renderExportSections();
+  },
+  async toggleExportSection(id, included) {
+    if (included) this.excludedSections.delete(id);
+    else this.excludedSections.add(id);
+    try { await DB.setSetting('excludedSections', JSON.stringify([...this.excludedSections])); } catch(e) {}
+    this.renderExportSections();
+  },
+  // Renvoie [section, indexAffiché] pour les sections à inclure et non vides
+  exportSections() {
+    return this.sectionsForFields(this.currentCRO.fields);
+  },
+  // Variante générique : pour un objet fields donné, respecte excludedSections
+  sectionsForFields(f) {
+    let n = 0;
+    const out = [];
+    SECTIONS.forEach(section => {
+      if (this.excludedSections.has(section.id)) return;
+      const hasContent = section.fields.some(field => f[field.id] && String(f[field.id]).trim());
+      if (!hasContent) return;
+      n++;
+      out.push({ section, num: n });
+    });
+    return out;
   },
   selectExportTpl(tpl, btn) {
     this.currentExportTpl = tpl;
@@ -2509,13 +3048,13 @@ const App = {
     txt += `Voie d'abord : ${approach.label}\n`;
     txt += `Date : ${this.formatDate(f.date_intervention)}\n\n`;
 
-    SECTIONS.forEach((section, idx) => {
+    this.exportSections().forEach(({ section, num }) => {
       const sectionContent = section.fields
         .filter(field => f[field.id] && f[field.id].trim())
         .map(field => `${field.label} : ${f[field.id]}`)
         .join('\n\n');
       if (sectionContent) {
-        txt += `\n${idx + 1}. ${section.title.toUpperCase()}\n${'-'.repeat(50)}\n${sectionContent}\n`;
+        txt += `\n${num}. ${section.title.toUpperCase()}\n${'-'.repeat(50)}\n${sectionContent}\n`;
       }
     });
 
@@ -2580,8 +3119,11 @@ const App = {
 
       doc.setFontSize(10);
       const meta = [
+        ['Patient', f.patient_nom], ['Âge', f.patient_age ? f.patient_age + ' ans' : ''],
+        ['ASA', f.asa], ['Côté', f.cote],
         ['Intervention', tpl.name], ['Voie d\'abord', approach.label],
-        ['Date', this.formatDate(f.date_intervention)], ['Chirurgien', surgeon]
+        ['Mon rôle', f.mon_role], ['Date', this.formatDate(f.date_intervention)],
+        ['Chirurgien', surgeon]
       ].filter(([,v]) => v);
       meta.forEach(([k,v], i) => {
         const x = i % 2 === 0 ? margin : margin + 95;
@@ -2592,12 +3134,12 @@ const App = {
       });
       y += 8;
 
-      SECTIONS.forEach((section, idx) => {
+      this.exportSections().forEach(({ section, num }) => {
         const sectionFields = section.fields.filter(field => f[field.id] && f[field.id].trim());
         if (sectionFields.length === 0) return;
         checkPage(12);
         doc.setFont('helvetica','bold'); doc.setFontSize(11); doc.setTextColor(31,95,74);
-        doc.text(`${idx+1}. ${section.title.toUpperCase()}`, margin, y); y += 4;
+        doc.text(`${num}. ${section.title.toUpperCase()}`, margin, y); y += 4;
         doc.setDrawColor(31,95,74); doc.setLineWidth(0.3); doc.line(margin, y, pageWidth-margin, y); y += 4;
         doc.setTextColor(0); doc.setLineWidth(0.2); doc.setDrawColor(180);
         sectionFields.forEach(field => {
@@ -2625,7 +3167,7 @@ const App = {
 
       // Patient info box
       doc.setDrawColor(200); doc.setLineWidth(0.3);
-      const boxH = 24;
+      const boxH = 30;
       doc.rect(margin, y, maxWidth, boxH);
       doc.setFillColor(244,241,234); doc.rect(margin, y, maxWidth, 6, 'F');
       doc.setFont('helvetica','bold'); doc.setFontSize(9); doc.setTextColor(10,22,40);
@@ -2633,6 +3175,7 @@ const App = {
       doc.setFont('helvetica','normal'); doc.setTextColor(0); doc.setFontSize(9);
       const patInfo = [
         ['Nom', f.patient_nom||'—'], ['Âge', f.patient_age ? f.patient_age+' ans' : '—'],
+        ['ASA', f.asa||'—'], ['Côté', f.cote||'—'],
         ['N° dossier', f.patient_id||'—'], ['Tél', f.patient_tel||'—'],
         ['Email', f.patient_email||'—'], ['Date', this.formatDate(f.date_intervention)]
       ];
@@ -2652,7 +3195,7 @@ const App = {
       doc.text(`${tpl.name}  ·  ${approach.label}${surgeon ? '  ·  '+surgeon : ''}`, margin+3, y+5.5);
       doc.setTextColor(0); y += 14;
 
-      SECTIONS.forEach((section, idx) => {
+      this.exportSections().forEach(({ section }) => {
         const sectionFields = section.fields.filter(field => f[field.id] && f[field.id].trim());
         if (sectionFields.length === 0) return;
         checkPage(14);
@@ -2707,7 +3250,7 @@ const App = {
       // Draw table rows
       const rowH = 6;
       const labelW = 55;
-      SECTIONS.forEach(section => {
+      this.exportSections().forEach(({ section }) => {
         const sectionFields = section.fields.filter(field => f[field.id] && f[field.id].trim());
         if (!sectionFields.length) return;
         checkPage(10);
@@ -2819,7 +3362,24 @@ const App = {
     Toast.show('PDF exporté · ' + res.exportTpl, 'success');
   },
 
-  // Export Word : document HTML compatible Word (.doc), éditable, hors-ligne
+  // Charge le tampon et ses dimensions pour le .docx
+  async _getStampForDocx() {
+    const stamp = await DB.getSetting('stamp');
+    if (!stamp) return null;
+    return new Promise(resolve => {
+      const img = new Image();
+      img.onload = () => {
+        // limite l'affichage à 180px de large dans le doc
+        const maxW = 180;
+        const ratio = Math.min(maxW / img.width, 1);
+        resolve({ dataUrl: stamp, widthPx: Math.round(img.width * ratio), heightPx: Math.round(img.height * ratio) });
+      };
+      img.onerror = () => resolve(null);
+      img.src = stamp;
+    });
+  },
+
+  // Export Word natif (.docx), éditable, hors-ligne
   async exportWord() {
     if (!this.currentCRO) return;
     this.closeExportModal();
@@ -2828,52 +3388,67 @@ const App = {
     const f = this.currentCRO.fields;
     const surgeon = await DB.getSetting('surgeon') || '';
     const hospital = await DB.getSetting('hospital') || '';
-    const esc = (s) => this.escape(s).replace(/\n/g, '<br>');
+    const surgeonTitle = await DB.getSetting('title') || '';
+    const D = Docx;
+    const stampImg = await this._getStampForDocx();
+    let body = '';
 
-    let sectionsHTML = '';
-    SECTIONS.forEach((section, idx) => {
-      const fields = section.fields.filter(field => f[field.id] && String(f[field.id]).trim());
-      if (!fields.length) return;
-      sectionsHTML += `<h2 style="font-size:13pt;color:#1f5f4a;border-bottom:1px solid #1f5f4a;padding-bottom:2pt;margin-top:14pt">${idx+1}. ${this.escape(section.title.toUpperCase())}</h2>`;
-      fields.forEach(field => {
-        sectionsHTML += `<p style="margin:4pt 0"><strong style="color:#444">${this.escape(field.label)} :</strong><br>${esc(f[field.id])}</p>`;
-      });
-    });
+    // Tampon en en-tête
+    if (stampImg) body += D.imagePara(stampImg.widthPx, stampImg.heightPx);
 
+    // En-tête
+    body += D.heading('COMPTE RENDU OPÉRATOIRE', { color: '0A1628', size: 32, border: false });
+    if (hospital) body += D.para(D.textToRuns(hospital, { color: '666666', size: 20 }), { spacingAfter: 120 });
+
+    // Tableau métadonnées (2 colonnes)
     const meta = [
       ['Intervention', tpl.name], ['Voie d\'abord', approach.label],
       ['Patient', f.patient_nom || '—'], ['Âge', f.patient_age ? f.patient_age + ' ans' : '—'],
-      ['N° dossier', f.patient_id || '—'], ['Téléphone', f.patient_tel || '—'],
-      ['Date', this.formatDate(f.date_intervention)], ['Chirurgien', surgeon || '—']
+      ['Sexe', f.patient_sexe || '—'], ['Score ASA', f.asa || '—'],
+      ['Côté', f.cote || '—'], ['N° dossier', f.patient_id || '—'],
+      ['Téléphone', f.patient_tel || '—'], ['Mon rôle', f.mon_role || '—'],
+      ['Date', this.formatDate(f.date_intervention)]
     ];
-    const metaRows = meta.map(([k,v]) =>
-      `<tr><td style="padding:3pt 8pt;font-weight:bold;background:#f4f1ea;width:30%">${this.escape(k)}</td><td style="padding:3pt 8pt">${this.escape(v)}</td></tr>`
-    ).join('');
+    let rows = '';
+    for (let i = 0; i < meta.length; i += 2) {
+      const cell = (pair) => {
+        if (!pair) return `<w:tc><w:tcPr><w:tcW w:w="2700" w:type="dxa"/></w:tcPr><w:p/></w:tc><w:tc><w:tcPr><w:tcW w:w="3000" w:type="dxa"/></w:tcPr><w:p/></w:tc>`;
+        return `<w:tc><w:tcPr><w:tcW w:w="2700" w:type="dxa"/><w:shd w:val="clear" w:fill="F4F1EA"/></w:tcPr>${D.para(D.textToRuns(pair[0], { bold: true, size: 18 }))}</w:tc><w:tc><w:tcPr><w:tcW w:w="3000" w:type="dxa"/></w:tcPr>${D.para(D.textToRuns(pair[1], { size: 18 }))}</w:tc>`;
+      };
+      rows += `<w:tr>${cell(meta[i])}${cell(meta[i+1])}</w:tr>`;
+    }
+    body += `<w:tbl><w:tblPr><w:tblStyle w:val="TableGrid"/><w:tblW w:w="0" w:type="auto"/><w:tblBorders><w:top w:val="single" w:sz="4" w:color="CCCCCC"/><w:left w:val="single" w:sz="4" w:color="CCCCCC"/><w:bottom w:val="single" w:sz="4" w:color="CCCCCC"/><w:right w:val="single" w:sz="4" w:color="CCCCCC"/><w:insideH w:val="single" w:sz="4" w:color="CCCCCC"/><w:insideV w:val="single" w:sz="4" w:color="CCCCCC"/></w:tblBorders></w:tblPr>${rows}</w:tbl>`;
+    body += D.para('');
 
-    const html = `<!DOCTYPE html>
-<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
-<head><meta charset="utf-8"><title>CRO</title>
-<!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View></w:WordDocument></xml><![endif]-->
-<style>body{font-family:'Calibri',sans-serif;font-size:11pt;color:#111}h1{font-size:16pt;text-align:center}table{border-collapse:collapse;width:100%;margin:8pt 0}</style>
-</head>
-<body>
-<h1>COMPTE RENDU OPÉRATOIRE</h1>
-${hospital ? `<p style="text-align:center;color:#666">${this.escape(hospital)}</p>` : ''}
-<table>${metaRows}</table>
-${sectionsHTML}
-<p style="margin-top:20pt;color:#999;font-size:8pt;border-top:1px solid #ccc;padding-top:4pt">OpSurg · Document généré le ${this.formatDate(new Date().toISOString())}</p>
-</body></html>`;
+    // Sections
+    this.exportSections().forEach(({ section, num }) => {
+      const fields = section.fields.filter(field => f[field.id] && String(f[field.id]).trim());
+      if (!fields.length) return;
+      body += D.heading(`${num}. ${section.title.toUpperCase()}`, { size: 24, border: true });
+      fields.forEach(field => {
+        body += D.para(
+          D.textToRuns(field.label + ' : ', { bold: true, color: '555555', size: 20 }) +
+          D.textToRuns(f[field.id], { size: 20 }),
+          { spacingAfter: 80 }
+        );
+      });
+    });
 
-    const blob = new Blob(['\uFEFF' + html], { type: 'application/msword;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
+    // Bloc signature
+    body += D.para(D.textToRuns(`Fait à ………………………, le ${this.formatDate(f.date_intervention)}`, { color: '666666', size: 18 }), { spacingAfter: 200 });
+    const sigCell = D.para(D.textToRuns('Le chirurgien', { color: '666666', size: 16 })) +
+      D.para(D.textToRuns(surgeon || '………………………', { bold: true, size: 22 })) +
+      (surgeonTitle ? D.para(D.textToRuns(surgeonTitle, { color: '444444', size: 16 })) : '') +
+      D.para(D.textToRuns('', {})) + D.para(D.textToRuns('', {})) +
+      D.para(D.textToRuns('Signature et cachet', { color: '999999', size: 14 }));
+    body += `<w:tbl><w:tblPr><w:tblW w:w="0" w:type="auto"/><w:jc w:val="right"/><w:tblBorders><w:top w:val="single" w:sz="4" w:color="999999"/><w:left w:val="single" w:sz="4" w:color="999999"/><w:bottom w:val="single" w:sz="4" w:color="999999"/><w:right w:val="single" w:sz="4" w:color="999999"/></w:tblBorders></w:tblPr><w:tr><w:tc><w:tcPr><w:tcW w:w="4500" w:type="dxa"/></w:tcPr>${sigCell}</w:tc></w:tr></w:tbl>`;
+
+    body += D.para(D.textToRuns('OpSurg · Document généré le ' + this.formatDate(new Date().toISOString()), { color: '999999', size: 14 }), { spacingAfter: 0 });
+
     const patientName = (f.patient_nom || 'patient').replace(/[^a-zA-Z0-9]/g, '_');
     const dateStr = (f.date_intervention || new Date().toISOString().slice(0,10)).replace(/-/g, '');
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `CRO_${dateStr}_${patientName}.doc`;
-    a.click();
-    URL.revokeObjectURL(url);
-    Toast.show('Document Word exporté', 'success');
+    D.download(body, `CRO_${dateStr}_${patientName}.docx`, stampImg);
+    Toast.show('Document Word (.docx) exporté', 'success');
   }
 };
 
@@ -3175,19 +3750,551 @@ const Dashboard = {
 };
 
 // ============================================================
+// DOCX — vrai fichier Word natif (.docx), 100% hors-ligne
+// ZIP non compressé (STORED) construit à la main, aucune dépendance
+// ============================================================
+const Docx = {
+  _crcTable: (() => {
+    const t = new Uint32Array(256);
+    for (let n = 0; n < 256; n++) {
+      let c = n;
+      for (let k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+      t[n] = c >>> 0;
+    }
+    return t;
+  })(),
+  crc32(bytes) {
+    let crc = 0xFFFFFFFF;
+    for (let i = 0; i < bytes.length; i++) crc = (crc >>> 8) ^ this._crcTable[(crc ^ bytes[i]) & 0xFF];
+    return (crc ^ 0xFFFFFFFF) >>> 0;
+  },
+
+  zip(files) {
+    const enc = new TextEncoder();
+    const chunks = [];
+    const central = [];
+    let offset = 0;
+    const u16 = (n) => new Uint8Array([n & 0xFF, (n >>> 8) & 0xFF]);
+    const u32 = (n) => new Uint8Array([n & 0xFF, (n >>> 8) & 0xFF, (n >>> 16) & 0xFF, (n >>> 24) & 0xFF]);
+    const concat = (arrs) => { let len = arrs.reduce((a,b) => a+b.length, 0); const out = new Uint8Array(len); let p = 0; arrs.forEach(a => { out.set(a, p); p += a.length; }); return out; };
+
+    files.forEach(f => {
+      const nameBytes = enc.encode(f.name);
+      const data = f.data;
+      const crc = this.crc32(data);
+      const local = concat([
+        u32(0x04034b50), u16(20), u16(0), u16(0), u16(0), u16(0),
+        u32(crc), u32(data.length), u32(data.length),
+        u16(nameBytes.length), u16(0), nameBytes, data
+      ]);
+      chunks.push(local);
+      const cd = concat([
+        u32(0x02014b50), u16(20), u16(20), u16(0), u16(0), u16(0), u16(0),
+        u32(crc), u32(data.length), u32(data.length),
+        u16(nameBytes.length), u16(0), u16(0), u16(0), u16(0), u32(0), u32(offset), nameBytes
+      ]);
+      central.push(cd);
+      offset += local.length;
+    });
+
+    const centralData = concat(central);
+    const end = concat([
+      u32(0x06054b50), u16(0), u16(0), u16(files.length), u16(files.length),
+      u32(centralData.length), u32(offset), u16(0)
+    ]);
+    return concat([...chunks, centralData, end]);
+  },
+
+  esc(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  },
+
+  textToRuns(text, opts) {
+    opts = opts || {};
+    const bold = opts.bold ? '<w:b/>' : '';
+    const color = opts.color ? `<w:color w:val="${opts.color}"/>` : '';
+    const sz = opts.size ? `<w:sz w:val="${opts.size}"/>` : '';
+    const rPr = (bold || color || sz) ? `<w:rPr>${bold}${color}${sz}</w:rPr>` : '';
+    const lines = String(text || '').split('\n');
+    return lines.map((line, i) => {
+      const br = i < lines.length - 1 ? '<w:br/>' : '';
+      return `<w:r>${rPr}<w:t xml:space="preserve">${this.esc(line)}</w:t>${br}</w:r>`;
+    }).join('');
+  },
+
+  para(runs, opts) {
+    opts = opts || {};
+    const align = opts.align ? `<w:jc w:val="${opts.align}"/>` : '';
+    const spacing = opts.spacingAfter != null ? `<w:spacing w:after="${opts.spacingAfter}"/>` : '';
+    const pBdr = opts.bottomBorder ? '<w:pBdr><w:bottom w:val="single" w:sz="6" w:space="2" w:color="1F5F4A"/></w:pBdr>' : '';
+    const pageBreakBefore = opts.pageBreakBefore ? '<w:pageBreakBefore/>' : '';
+    const keep = opts.keepNext ? '<w:keepNext/>' : '';
+    return `<w:p><w:pPr>${pageBreakBefore}${keep}${align}${spacing}${pBdr}</w:pPr>${runs}</w:p>`;
+  },
+  heading(text, opts) {
+    opts = opts || {};
+    return this.para(this.textToRuns(text, { bold: true, color: opts.color || '1F5F4A', size: opts.size || 26 }), { spacingAfter: 60, bottomBorder: opts.border, keepNext: true, pageBreakBefore: opts.pageBreakBefore });
+  },
+
+  // Convertit un dataURL PNG/JPEG en Uint8Array
+  dataUrlToBytes(dataUrl) {
+    const base64 = dataUrl.split(',')[1] || '';
+    const bin = atob(base64);
+    const bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    return bytes;
+  },
+
+  // Construit le XML d'un paragraphe contenant une image centrée
+  // widthPx/heightPx en pixels → convertis en EMU (1 px = 9525 EMU)
+  imagePara(widthPx, heightPx) {
+    const cx = Math.round(widthPx * 9525);
+    const cy = Math.round(heightPx * 9525);
+    return `<w:p><w:pPr><w:jc w:val="center"/></w:pPr><w:r><w:drawing><wp:inline distT="0" distB="0" distL="0" distR="0" xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"><wp:extent cx="${cx}" cy="${cy}"/><wp:docPr id="1" name="Tampon"/><a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"><a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:pic xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:nvPicPr><pic:cNvPr id="1" name="Tampon"/><pic:cNvPicPr/></pic:nvPicPr><pic:blipFill><a:blip r:embed="rId10" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"/><a:stretch><a:fillRect/></a:stretch></pic:blipFill><pic:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="${cx}" cy="${cy}"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></pic:spPr></pic:pic></a:graphicData></a:graphic></wp:inline></w:drawing></w:r></w:p>`;
+  },
+
+  download(bodyXml, filename, image) {
+    // image optionnelle : { dataUrl, widthPx, heightPx }
+    const hasImage = image && image.dataUrl;
+    const imgExt = hasImage && /image\/jpe?g/.test(image.dataUrl) ? 'jpeg' : 'png';
+
+    const contentTypes = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/>${hasImage ? `<Default Extension="${imgExt}" ContentType="image/${imgExt}"/>` : ''}<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>`;
+    const rels = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>`;
+    const docRels = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${hasImage ? `<Relationship Id="rId10" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="media/stamp.${imgExt}"/>` : ''}</Relationships>`;
+
+    const docXml = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><w:body>${bodyXml}<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1134" w:right="1134" w:bottom="1134" w:left="1134" w:header="709" w:footer="709" w:gutter="0"/></w:sectPr></w:body></w:document>`;
+
+    const enc = new TextEncoder();
+    const files = [
+      { name: '[Content_Types].xml', data: enc.encode(contentTypes) },
+      { name: '_rels/.rels', data: enc.encode(rels) },
+      { name: 'word/document.xml', data: enc.encode(docXml) },
+      { name: 'word/_rels/document.xml.rels', data: enc.encode(docRels) }
+    ];
+    if (hasImage) {
+      files.push({ name: `word/media/stamp.${imgExt}`, data: this.dataUrlToBytes(image.dataUrl) });
+    }
+    const zipBytes = this.zip(files);
+    const blob = new Blob([zipBytes], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+    const url = URL.createObjectURL(blob);
+    const a = window.document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+};
+
+// ============================================================
+// CAHIER DE COMPTES RENDUS
+// ============================================================
+const Cahier = {
+  filters: { from: '', to: '', role: 'all', types: new Set(), tags: new Set() },
+  _cros: [],
+
+  async init() {
+    this._allCros = await DB.allCROs();
+    // valeurs par défaut : 12 derniers mois
+    if (!this.filters.from && !this.filters.to) {
+      this.quickPeriod('year', true);
+    }
+    this.renderTypeChecks();
+    this.renderTagChecks();
+    this.refresh();
+  },
+
+  quickPeriod(kind, silent) {
+    const today = new Date();
+    const to = today.toISOString().slice(0,10);
+    let from = '';
+    if (kind === 'month') { const d = new Date(today.getFullYear(), today.getMonth(), 1); from = d.toISOString().slice(0,10); }
+    else if (kind === 'quarter') { const d = new Date(today); d.setMonth(d.getMonth()-3); from = d.toISOString().slice(0,10); }
+    else if (kind === 'year') { const d = new Date(today); d.setFullYear(d.getFullYear()-1); from = d.toISOString().slice(0,10); }
+    else if (kind === 'all') { from = ''; }
+    this.filters.from = from;
+    this.filters.to = kind === 'all' ? '' : to;
+    const fromEl = document.getElementById('cahier-from');
+    const toEl = document.getElementById('cahier-to');
+    if (fromEl) fromEl.value = from;
+    if (toEl) toEl.value = (kind === 'all' ? '' : to);
+    if (!silent) this.refresh();
+  },
+
+  setRole(role, btn) {
+    this.filters.role = role;
+    document.querySelectorAll('#cahier-role .seg-btn').forEach(b => b.classList.toggle('active', b === btn));
+    this.refresh();
+  },
+
+  renderTypeChecks() {
+    const present = {};
+    this._allCros.forEach(c => { present[c.template] = (present[c.template]||0)+1; });
+    const el = document.getElementById('cahier-types');
+    if (!el) return;
+    el.innerHTML = Object.entries(TEMPLATES)
+      .filter(([k]) => present[k])
+      .map(([k, t]) => `<label class="check-pill"><input type="checkbox" value="${k}" onchange="Cahier.toggleType('${k}', this.checked)"> ${App.escape(t.name)} · ${present[k]}</label>`)
+      .join('') || '<span style="color:var(--ink-mute);font-size:13px">Aucun</span>';
+  },
+
+  renderTagChecks() {
+    const counts = {};
+    this._allCros.forEach(c => (c.tags||[]).forEach(t => { counts[t] = (counts[t]||0)+1; }));
+    const el = document.getElementById('cahier-tags');
+    if (!el) return;
+    const keys = Object.keys(counts);
+    el.innerHTML = keys.length
+      ? keys.sort().map(t => `<label class="check-pill"><input type="checkbox" value="${App.escape(t)}" onchange="Cahier.toggleTag('${App.escape(t).replace(/'/g,"\\'")}', this.checked)"> # ${App.escape(t)} · ${counts[t]}</label>`).join('')
+      : '<span style="color:var(--ink-mute);font-size:13px">Aucun tag</span>';
+  },
+
+  toggleType(k, on) { if (on) this.filters.types.add(k); else this.filters.types.delete(k); this.refresh(); },
+  toggleTag(t, on) { if (on) this.filters.tags.add(t); else this.filters.tags.delete(t); this.refresh(); },
+
+  // mappe le rôle libre du CRO vers une catégorie
+  _roleCategory(cro) {
+    const r = (cro.fields.mon_role || '').toLowerCase();
+    if (!r) return null;
+    if (r.includes('opérateur') || r.includes('operateur')) return 'operateur';
+    if (r.includes('aide')) return 'aide';
+    if (r.includes('observ')) return 'observateur';
+    return null;
+  },
+
+  _matchRole(cro) {
+    if (this.filters.role === 'all') return true;
+    const cat = this._roleCategory(cro);
+    if (this.filters.role === 'op_aide') return cat === 'operateur' || cat === 'aide';
+    return cat === this.filters.role;
+  },
+
+  getFiltered() {
+    const { from, to, types, tags } = this.filters;
+    return this._allCros.filter(c => {
+      const d = c.fields.date_intervention || (c.created_at||'').slice(0,10);
+      if (from && d < from) return false;
+      if (to && d > to) return false;
+      if (!this._matchRole(c)) return false;
+      if (types.size && !types.has(c.template)) return false;
+      if (tags.size) {
+        const ct = c.tags || [];
+        if (![...tags].every(t => ct.includes(t))) return false;
+      }
+      return true;
+    }).sort((a,b) => (a.fields.date_intervention||'').localeCompare(b.fields.date_intervention||''));
+  },
+
+  computeStats(cros) {
+    const durations = cros.map(c => parseFloat(c.fields.duree_min)).filter(v => !isNaN(v) && v > 0);
+    const avgDuration = durations.length ? Math.round(durations.reduce((a,b)=>a+b,0)/durations.length) : null;
+    let nbOp = 0, nbAide = 0, nbObs = 0;
+    cros.forEach(c => { const cat = this._roleCategory(c); if (cat==='operateur') nbOp++; else if (cat==='aide') nbAide++; else if (cat==='observateur') nbObs++; });
+    const nbCompl = cros.filter(c => (c.tags||[]).includes('complication')).length;
+    const complRate = cros.length ? Math.round(100 * nbCompl / cros.length) : 0;
+    return { total: cros.length, avgDuration, nbOp, nbAide, nbObs, nbCompl, complRate };
+  },
+
+  refresh() {
+    this.filters.from = document.getElementById('cahier-from')?.value || this.filters.from;
+    this.filters.to = document.getElementById('cahier-to')?.value || '';
+    const cros = this.getFiltered();
+    this._cros = cros;
+    const s = this.computeStats(cros);
+
+    const ratio = s.nbOp + s.nbAide > 0 ? `${s.nbOp} / ${s.nbAide}` : '—';
+    document.getElementById('cahier-summary').innerHTML = `
+      <div class="cahier-stat-grid">
+        <div class="stat-card"><div class="stat-label">Interventions</div><div class="stat-value">${s.total}</div><div class="stat-unit">sur la période</div></div>
+        <div class="stat-card"><div class="stat-label">Temps moyen</div><div class="stat-value">${s.avgDuration ?? '—'}</div><div class="stat-unit">${s.avgDuration ? 'minutes' : 'non renseigné'}</div></div>
+        <div class="stat-card"><div class="stat-label">Ratio opérateur / aide</div><div class="stat-value" style="font-size:24px">${ratio}</div><div class="stat-unit">${s.nbObs} observateur(s)</div></div>
+        <div class="stat-card"><div class="stat-label">Complications</div><div class="stat-value">${s.complRate}%</div><div class="stat-unit">${s.nbCompl} cas (tag)</div></div>
+      </div>`;
+
+    const list = document.getElementById('cahier-list');
+    if (!cros.length) {
+      list.innerHTML = `<div class="empty-state"><div class="empty-state-title">Aucun CRO dans cette sélection</div><p>Ajustez la période ou les filtres.</p></div>`;
+    } else {
+      list.innerHTML = cros.map(c => App.croItemHTML(c)).join('');
+    }
+
+    // note sur les sections exclues (partagées avec l'export CRO)
+    const note = document.getElementById('cahier-sections-note');
+    if (note) {
+      const excluded = [...App.excludedSections]
+        .map(id => (SECTIONS.find(s => s.id === id) || {}).title)
+        .filter(Boolean);
+      if (excluded.length) {
+        note.textContent = 'Sections exclues du cahier (réglage d\'export) : ' + excluded.join(', ') + '. Modifiable dans la fenêtre d\'export d\'un CRO.';
+        note.style.display = 'block';
+      } else {
+        note.style.display = 'none';
+      }
+    }
+  },
+
+  _periodLabel() {
+    const { from, to } = this.filters;
+    const fmt = (d) => d ? App.formatDate(d) : '…';
+    if (!from && !to) return 'Toutes périodes';
+    return `du ${fmt(from)} au ${fmt(to || new Date().toISOString().slice(0,10))}`;
+  },
+
+  _roleLabel() {
+    return { all:'tous rôles', operateur:'opérateur', aide:'aide', observateur:'observateur', op_aide:'opérateur + aide' }[this.filters.role] || '';
+  },
+
+  async exportWord() {
+    const cros = this._cros;
+    if (!cros.length) { Toast.show('Aucun CRO à inclure', 'error'); return; }
+    const surgeon = await DB.getSetting('surgeon') || '';
+    const hospital = await DB.getSetting('hospital') || '';
+    const surgeonTitle = await DB.getSetting('title') || '';
+    const s = this.computeStats(cros);
+    const D = Docx;
+    const stampImg = await App._getStampForDocx();
+    let body = '';
+
+    // Page de garde
+    if (stampImg) body += D.imagePara(stampImg.widthPx, stampImg.heightPx);
+    body += D.heading('CAHIER DE COMPTES RENDUS OPÉRATOIRES', { color: '0A1628', size: 34 });
+    if (hospital) body += D.para(D.textToRuns(hospital, { color: '666666', size: 20, bold: false }), { align: 'center' });
+    if (surgeon) body += D.para(D.textToRuns(surgeon, { bold: true, size: 22 }), { align: 'center' });
+    body += D.para(D.textToRuns(this._periodLabel() + ' · ' + this._roleLabel(), { color: '666666', size: 18 }), { align: 'center', spacingAfter: 200 });
+
+    // Tableau stats
+    const statCell = (txt, bold) => `<w:tc><w:tcPr><w:tcW w:w="1425" w:type="dxa"/>${bold?'<w:shd w:val="clear" w:fill="F4F1EA"/>':''}</w:tcPr>${D.para(D.textToRuns(txt, { bold: !!bold, size: 18 }))}</w:tc>`;
+    body += `<w:tbl><w:tblPr><w:tblW w:w="0" w:type="auto"/><w:tblBorders><w:top w:val="single" w:sz="4" w:color="CCCCCC"/><w:left w:val="single" w:sz="4" w:color="CCCCCC"/><w:bottom w:val="single" w:sz="4" w:color="CCCCCC"/><w:right w:val="single" w:sz="4" w:color="CCCCCC"/><w:insideH w:val="single" w:sz="4" w:color="CCCCCC"/><w:insideV w:val="single" w:sz="4" w:color="CCCCCC"/></w:tblBorders></w:tblPr>`
+      + `<w:tr>${statCell('Total', true)}${statCell('Temps moyen', true)}${statCell('Opérateur / Aide', true)}${statCell('Complications', true)}</w:tr>`
+      + `<w:tr>${statCell(String(s.total))}${statCell((s.avgDuration ?? '—') + ' min')}${statCell(s.nbOp + ' / ' + s.nbAide)}${statCell(s.complRate + '% (' + s.nbCompl + ')')}</w:tr></w:tbl>`;
+    body += D.para('');
+
+    // Sommaire
+    body += D.heading('Sommaire', { size: 24 });
+    cros.forEach((c, i) => {
+      const tpl = TEMPLATES[c.template] || TEMPLATES.none;
+      body += D.para(D.textToRuns(`${i+1}. ${App.formatDate(c.fields.date_intervention)} — ${tpl.name} — ${c.fields.patient_nom || 'Patient'}`, { size: 18 }), { spacingAfter: 20 });
+    });
+
+    // Chaque CRO
+    cros.forEach((c, i) => {
+      const f = c.fields;
+      const tpl = TEMPLATES[c.template] || TEMPLATES.none;
+      const approach = APPROACHES.find(a => a.id === c.approach) || APPROACHES[0];
+      body += D.heading(`${i+1}. ${tpl.name} — ${f.patient_nom || 'Patient'}`, { color: '0A1628', size: 26, border: true, pageBreakBefore: true });
+      const tags = (c.tags||[]).length ? ' · tags : ' + (c.tags||[]).join(', ') : '';
+      body += D.para(D.textToRuns(`${App.formatDate(f.date_intervention)} · ${approach.label}${f.mon_role ? ' · ' + f.mon_role : ''}${tags}`, { color: '666666', size: 16 }), { spacingAfter: 100 });
+      App.sectionsForFields(f).forEach(({ section, num }) => {
+        const fields = section.fields.filter(field => f[field.id] && String(f[field.id]).trim());
+        if (!fields.length) return;
+        body += D.para(D.textToRuns(`${num}. ${section.title.toUpperCase()}`, { bold: true, color: '1F5F4A', size: 19 }), { spacingAfter: 20, keepNext: true });
+        fields.forEach(field => {
+          body += D.para(
+            D.textToRuns(field.label + ' : ', { bold: true, color: '555555', size: 18 }) +
+            D.textToRuns(f[field.id], { size: 18 }),
+            { spacingAfter: 40 }
+          );
+        });
+      });
+    });
+
+    // Signature
+    body += D.para(D.textToRuns(`Fait le ${App.formatDate(new Date().toISOString())}`, { color: '666666', size: 18 }), { spacingAfter: 200, pageBreakBefore: true });
+    const sigCell = D.para(D.textToRuns('Le chirurgien', { color: '666666', size: 16 })) +
+      D.para(D.textToRuns(surgeon || '………………………', { bold: true, size: 22 })) +
+      (surgeonTitle ? D.para(D.textToRuns(surgeonTitle, { color: '444444', size: 16 })) : '') +
+      D.para('') + D.para('') + D.para(D.textToRuns('Signature et cachet', { color: '999999', size: 14 }));
+    body += `<w:tbl><w:tblPr><w:tblW w:w="0" w:type="auto"/><w:jc w:val="right"/><w:tblBorders><w:top w:val="single" w:sz="4" w:color="999999"/><w:left w:val="single" w:sz="4" w:color="999999"/><w:bottom w:val="single" w:sz="4" w:color="999999"/><w:right w:val="single" w:sz="4" w:color="999999"/></w:tblBorders></w:tblPr><w:tr><w:tc><w:tcPr><w:tcW w:w="4500" w:type="dxa"/></w:tcPr>${sigCell}</w:tc></w:tr></w:tbl>`;
+    body += D.para(D.textToRuns(`OpSurg · Cahier généré le ${App.formatDate(new Date().toISOString())} · ${s.total} interventions`, { color: '999999', size: 14 }));
+
+    D.download(body, `Cahier_CRO_${new Date().toISOString().slice(0,10)}.docx`, stampImg);
+    Toast.show('Cahier Word (.docx) généré · ' + s.total + ' CRO', 'success');
+  },
+
+  async exportPDF() {
+    const cros = this._cros;
+    if (!cros.length) { Toast.show('Aucun CRO à inclure', 'error'); return; }
+    const { jsPDF } = window.jspdf;
+    const surgeon = await DB.getSetting('surgeon') || '';
+    const hospital = await DB.getSetting('hospital') || '';
+    const surgeonTitle = await DB.getSetting('title') || '';
+    const stamp = await DB.getSetting('stamp') || '';
+    const s = this.computeStats(cros);
+
+    const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+    const pageW = 210, pageH = 297, margin = 16, maxW = pageW - 2*margin;
+    let y = margin;
+    const checkPage = (need) => { if (y + need > pageH - margin) { doc.addPage(); y = margin; return true; } return false; };
+    const wrap = (text, x, w, lh, size, style) => {
+      doc.setFont('helvetica', style||'normal'); doc.setFontSize(size||10);
+      const lines = doc.splitTextToSize(String(text||''), w);
+      lines.forEach(line => { checkPage(lh); doc.text(line, x, y); y += lh; });
+    };
+
+    // Page de garde
+    if (stamp) { try { doc.addImage(stamp, 'PNG', pageW/2 - 25, y, 50, 18); y += 22; } catch(e){} }
+    doc.setFont('helvetica','bold'); doc.setFontSize(18);
+    doc.text('CAHIER DE COMPTES RENDUS', pageW/2, y, { align:'center' }); y += 8;
+    doc.setFontSize(13); doc.text('OPÉRATOIRES', pageW/2, y, { align:'center' }); y += 10;
+    doc.setFont('helvetica','normal'); doc.setFontSize(11); doc.setTextColor(80);
+    if (hospital) { doc.text(hospital, pageW/2, y, { align:'center' }); y += 6; }
+    if (surgeon) { doc.setFont('helvetica','bold'); doc.text(surgeon, pageW/2, y, { align:'center' }); y += 6; }
+    doc.setFont('helvetica','normal'); doc.setFontSize(10);
+    doc.text(this._periodLabel() + ' · ' + this._roleLabel(), pageW/2, y, { align:'center' }); y += 12;
+    doc.setTextColor(0);
+
+    // Tableau stats
+    doc.setDrawColor(180); doc.setFillColor(244,241,234);
+    doc.rect(margin, y, maxW, 8, 'F');
+    doc.setFont('helvetica','bold'); doc.setFontSize(9);
+    const cw = maxW/4;
+    ['Total','Temps moyen','Opérateur / Aide','Complications'].forEach((h,i) => doc.text(h, margin + i*cw + 2, y+5.5));
+    y += 8;
+    doc.rect(margin, y, maxW, 8);
+    doc.setFont('helvetica','normal');
+    [`${s.total}`, `${s.avgDuration ?? '—'} min`, `${s.nbOp} / ${s.nbAide}`, `${s.complRate}% (${s.nbCompl})`].forEach((v,i) => doc.text(v, margin + i*cw + 2, y+5.5));
+    y += 16;
+
+    // Sommaire
+    doc.setFont('helvetica','bold'); doc.setFontSize(12); doc.setTextColor(31,95,74);
+    checkPage(10); doc.text('Sommaire', margin, y); y += 6;
+    doc.setTextColor(0); doc.setFont('helvetica','normal'); doc.setFontSize(9);
+    cros.forEach((c, i) => {
+      checkPage(5);
+      const tpl = TEMPLATES[c.template] || TEMPLATES.none;
+      doc.text(`${i+1}. ${App.formatDate(c.fields.date_intervention)} — ${tpl.name} — ${c.fields.patient_nom||'Patient'}`, margin+2, y);
+      y += 4.5;
+    });
+
+    // Chaque CRO
+    cros.forEach((c, i) => {
+      doc.addPage(); y = margin;
+      const f = c.fields;
+      const tpl = TEMPLATES[c.template] || TEMPLATES.none;
+      const approach = APPROACHES.find(a => a.id === c.approach) || APPROACHES[0];
+      // bandeau titre
+      doc.setFillColor(10,22,40); doc.rect(0, 0, pageW, 16, 'F');
+      doc.setFont('helvetica','bold'); doc.setFontSize(11); doc.setTextColor(255);
+      doc.text(`${i+1}. ${tpl.name} — ${f.patient_nom||'Patient'}`, margin, 10);
+      doc.setTextColor(0); y = 22;
+      doc.setFont('helvetica','normal'); doc.setFontSize(9); doc.setTextColor(90);
+      const sub = [App.formatDate(f.date_intervention), approach.label, f.mon_role, (c.tags||[]).join(', ')].filter(Boolean).join(' · ');
+      doc.text(sub, margin, y); y += 6; doc.setTextColor(0);
+
+      App.sectionsForFields(f).forEach(({ section, num }) => {
+        const fields = section.fields.filter(field => f[field.id] && String(f[field.id]).trim());
+        if (!fields.length) return;
+        checkPage(10);
+        doc.setFont('helvetica','bold'); doc.setFontSize(10); doc.setTextColor(31,95,74);
+        checkPage(6); doc.text(`${num}. ${section.title.toUpperCase()}`, margin, y); y += 5;
+        doc.setTextColor(0);
+        fields.forEach(field => {
+          checkPage(6);
+          doc.setFont('helvetica','bold'); doc.setFontSize(8); doc.setTextColor(70);
+          doc.text(field.label + ' :', margin, y); y += 3.5;
+          doc.setTextColor(0);
+          wrap(f[field.id], margin, maxW, 4, 9.5, 'normal');
+          y += 1.5;
+        });
+        y += 2;
+      });
+    });
+
+    // Page signature
+    doc.addPage(); y = margin + 10;
+    doc.setFont('helvetica','normal'); doc.setFontSize(10);
+    doc.text(`Fait le ${App.formatDate(new Date().toISOString())}`, margin, y); y += 20;
+    const boxW = 80, boxX = pageW - margin - boxW;
+    doc.setDrawColor(120); doc.rect(boxX, y, boxW, 42);
+    doc.setFontSize(9); doc.setTextColor(90); doc.text('Le chirurgien', boxX+3, y+6);
+    doc.setFont('helvetica','bold'); doc.setFontSize(11); doc.setTextColor(0);
+    doc.text(surgeon || '………………………', boxX+3, y+13);
+    if (surgeonTitle) { doc.setFont('helvetica','normal'); doc.setFontSize(9); doc.setTextColor(60); doc.text(surgeonTitle, boxX+3, y+19); }
+    doc.setFontSize(8); doc.setTextColor(140); doc.text('Signature et cachet', boxX+3, y+38);
+
+    // Pied de page numéroté
+    const pageCount = doc.internal.getNumberOfPages();
+    for (let i = 1; i <= pageCount; i++) {
+      doc.setPage(i);
+      doc.setFontSize(8); doc.setTextColor(150);
+      doc.text(`Cahier CRO · ${hospital || 'OpSurg'} · ${this._periodLabel()}`, margin, pageH-8);
+      doc.text(`Page ${i}/${pageCount}`, pageW-margin, pageH-8, { align:'right' });
+    }
+
+    doc.save(`Cahier_CRO_${new Date().toISOString().slice(0,10)}.pdf`);
+    Toast.show('Cahier PDF généré · ' + s.total + ' CRO', 'success');
+  }
+};
+
+// ============================================================
 // SETTINGS
 // ============================================================
 const Settings = {
   async load() {
     const surgeon = await DB.getSetting('surgeon');
     const hospital = await DB.getSetting('hospital');
+    const title = await DB.getSetting('title');
+    const stamp = await DB.getSetting('stamp');
     if (surgeon) document.getElementById('setting-surgeon').value = surgeon;
     if (hospital) document.getElementById('setting-hospital').value = hospital;
+    if (title) { const el = document.getElementById('setting-title'); if (el) el.value = title; }
+    this._renderStamp(stamp);
+  },
+  _renderStamp(stamp) {
+    const preview = document.getElementById('stamp-preview');
+    const img = document.getElementById('stamp-img');
+    const removeBtn = document.getElementById('stamp-remove');
+    if (!preview) return;
+    if (stamp) {
+      img.src = stamp;
+      preview.style.display = 'flex';
+      if (removeBtn) removeBtn.style.display = '';
+    } else {
+      preview.style.display = 'none';
+      if (removeBtn) removeBtn.style.display = 'none';
+    }
   },
   async save() {
     await DB.setSetting('surgeon', document.getElementById('setting-surgeon').value);
     await DB.setSetting('hospital', document.getElementById('setting-hospital').value);
+    const titleEl = document.getElementById('setting-title');
+    if (titleEl) await DB.setSetting('title', titleEl.value);
     Toast.show('Profil enregistré', 'success');
+  },
+  uploadStamp(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      // redimensionner pour limiter le poids
+      const img = new Image();
+      img.onload = async () => {
+        const maxW = 400, maxH = 160;
+        let { width, height } = img;
+        const ratio = Math.min(maxW / width, maxH / height, 1);
+        width = Math.round(width * ratio); height = Math.round(height * ratio);
+        const canvas = document.createElement('canvas');
+        canvas.width = width; canvas.height = height;
+        canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+        const dataUrl = canvas.toDataURL('image/png');
+        await DB.setSetting('stamp', dataUrl);
+        this._renderStamp(dataUrl);
+        Toast.show('Tampon enregistré', 'success');
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+    event.target.value = '';
+  },
+  async removeStamp() {
+    await DB.setSetting('stamp', '');
+    this._renderStamp('');
+    Toast.show('Tampon retiré', 'success');
   }
 };
 
@@ -3199,11 +4306,18 @@ const Backup = {
     const cros = await DB.allCROs();
     const surgeon = await DB.getSetting('surgeon');
     const hospital = await DB.getSetting('hospital');
+    const title = await DB.getSetting('title');
+    const stamp = await DB.getSetting('stamp');
+    const theme = await DB.getSetting('theme');
+    const excludedSections = await DB.getSetting('excludedSections');
+    let phrases = [];
+    try { phrases = await DB.allPhrases(); } catch(e) {}
     const payload = {
-      version: 1,
+      version: 2,
       app: 'OpSurg',
       exported_at: new Date().toISOString(),
-      settings: { surgeon, hospital },
+      settings: { surgeon, hospital, title, stamp, theme, excludedSections },
+      phrases,
       cros
     };
     const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
@@ -3230,9 +4344,17 @@ const Backup = {
           count++;
         }
         if (payload.settings) {
-          if (payload.settings.surgeon) await DB.setSetting('surgeon', payload.settings.surgeon);
-          if (payload.settings.hospital) await DB.setSetting('hospital', payload.settings.hospital);
+          const s = payload.settings;
+          if (s.surgeon != null) await DB.setSetting('surgeon', s.surgeon);
+          if (s.hospital != null) await DB.setSetting('hospital', s.hospital);
+          if (s.title != null) await DB.setSetting('title', s.title);
+          if (s.stamp != null) await DB.setSetting('stamp', s.stamp);
+          if (s.theme != null) await DB.setSetting('theme', s.theme);
+          if (s.excludedSections != null) await DB.setSetting('excludedSections', s.excludedSections);
           Settings.load();
+        }
+        if (Array.isArray(payload.phrases)) {
+          for (const p of payload.phrases) { try { await DB.savePhrase(p); } catch(e) {} }
         }
         Toast.show(`${count} CRO importés`, 'success');
         App.renderHome();
@@ -3573,7 +4695,7 @@ window.addEventListener('DOMContentLoaded', () => App.init());
 // ============================================================
 if ('serviceWorker' in navigator) {
   const swCode = `
-    const CACHE = 'opsurg-v2';
+    const CACHE = 'opsurg-v6';
     const ASSETS = [self.location.href];
     self.addEventListener('install', e => {
       e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)));
