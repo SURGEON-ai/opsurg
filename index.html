@@ -1597,29 +1597,72 @@ const App = {
   },
 
   selectTemplate(key) {
-    this.currentTemplate = key;
-    this.currentCRO.template = key;
     const t = TEMPLATES[key];
-    if (t && t.defaults) {
-      // merge defaults only into empty fields
-      for (const fid in t.defaults) {
-        if (!this.currentCRO.fields[fid] || this.currentCRO.fields[fid].trim() === '') {
+    if (!t) return;
+
+    const IDENTITY_FIELDS = ['patient_nom','patient_age','patient_sexe','patient_id','date_intervention'];
+    const hasContent = Object.entries(this.currentCRO.fields).some(
+      ([fid, val]) => !IDENTITY_FIELDS.includes(fid) && val && val.trim() !== ''
+    );
+
+    const apply = () => {
+      this.currentTemplate = key;
+      this.currentCRO.template = key;
+      if (t.defaults) {
+        for (const fid in t.defaults) {
+          if (IDENTITY_FIELDS.includes(fid) && this.currentCRO.fields[fid] && this.currentCRO.fields[fid].trim() !== '') {
+            continue;
+          }
           this.currentCRO.fields[fid] = t.defaults[fid];
         }
+        if (t.defaults.voie) {
+          this.currentCRO.approach = t.defaults.voie;
+        }
       }
-      if (t.defaults.voie) {
-        this.currentCRO.approach = t.defaults.voie;
-      }
+      this.renderEditor();
+      Toast.show('Template appliqué : ' + t.name, 'success');
+    };
+
+    if (hasContent && this.currentTemplate !== key) {
+      this.openModal(
+        'Changer de template ?',
+        'Les champs seront remplacés par le template ' + t.name + '. Nom, âge et date patient seront conservés.',
+        () => { this.closeModal(); apply(); }
+      );
+    } else {
+      apply();
     }
-    this.renderEditor();
-    Toast.show('Template appliqué : ' + t.name, 'success');
   },
 
   selectApproach(key) {
+    // Détails par défaut par voie (si le champ voie_detail est vide ou générique)
+    const VOIE_DEFAULTS = {
+      coelioscopie: 'Coelioscopie à 3 trocarts : optique ombilical 10mm, deux trocarts opérateurs 5mm. Pneumopéritoine 12 mmHg établi par open-coelio.',
+      laparotomie: 'Laparotomie médiane.',
+      coelio_convertie: 'Coelioscopie convertie en laparotomie médiane après [raison].',
+      robot: 'Chirurgie robot-assistée : trocart caméra 12mm, trois bras robotisés 8mm, trocart assistant 12mm. Arrimage du robot.',
+      autre: ''
+    };
+    const prevApproach = this.currentCRO.approach;
     this.currentCRO.approach = key;
+
+    // Met à jour voie_detail si vide OU si c'était encore le défaut de l'ancienne voie
+    const prevDefault = VOIE_DEFAULTS[prevApproach] || '';
+    const currentDetail = (this.currentCRO.fields['voie_detail'] || '').trim();
+    const tplDefault = (TEMPLATES[this.currentCRO.template]?.defaults?.voie_detail || '').trim();
+
+    const isDefault = currentDetail === '' || currentDetail === prevDefault || currentDetail === tplDefault;
+    if (isDefault && VOIE_DEFAULTS[key]) {
+      this.currentCRO.fields['voie_detail'] = VOIE_DEFAULTS[key];
+      // Met à jour le textarea dans le DOM directement (sans re-render complet)
+      const el = document.getElementById('field-voie_detail');
+      if (el) el.value = VOIE_DEFAULTS[key];
+    }
+
     document.querySelectorAll('.approach-btn').forEach(b => {
       b.classList.toggle('active', b.dataset.approach === key);
     });
+    Toast.show('Voie : ' + (key === 'coelioscopie' ? 'Cœlioscopie' : key === 'laparotomie' ? 'Laparotomie' : key), '');
   },
 
   renderHome() {
