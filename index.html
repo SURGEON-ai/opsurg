@@ -47,6 +47,40 @@
     --radius-lg: 8px;
   }
 
+  /* ============ MODE SOMBRE ============ */
+  html[data-theme="dark"] {
+    --ink: #e8eaf0;
+    --ink-soft: #c5cad6;
+    --ink-mute: #8b96ab;
+    --paper: #0d1420;
+    --paper-warm: #141d2e;
+    --line: #243049;
+    --line-strong: #34425e;
+    --accent: #3ba07d;
+    --accent-light: #4cc096;
+    --accent-bg: #16291f;
+    --alert: #e07a52;
+    --alert-bg: #2e1a12;
+    --gold: #d4a456;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,.3), 0 1px 3px rgba(0,0,0,.4);
+    --shadow-md: 0 4px 12px rgba(0,0,0,.4), 0 2px 4px rgba(0,0,0,.3);
+    --shadow-lg: 0 12px 32px rgba(0,0,0,.5), 0 4px 8px rgba(0,0,0,.4);
+    color-scheme: dark;
+  }
+  html[data-theme="dark"] .app-header { background: #060b14; }
+  html[data-theme="dark"] input,
+  html[data-theme="dark"] textarea,
+  html[data-theme="dark"] select { background: var(--paper-warm); }
+  html[data-theme="dark"] .hero { background: linear-gradient(180deg, var(--paper-warm) 0%, var(--paper) 100%); }
+  html { transition: none; }
+  html[data-theme] body,
+  html[data-theme] .app-header,
+  html[data-theme] .app-nav,
+  html[data-theme] .form-section,
+  html[data-theme] input,
+  html[data-theme] textarea,
+  html[data-theme] select { transition: background-color .25s ease, color .25s ease, border-color .25s ease; }
+
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
   html, body {
@@ -889,6 +923,107 @@
     .form-section { border: none; box-shadow: none; page-break-inside: avoid; }
     .form-section-header { background: white; border-bottom: 2px solid var(--ink); }
   }
+
+  /* ============ PHRASES FAVORITES ============ */
+  .phrases-backdrop {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(10,22,40,.4);
+    display: none; align-items: flex-end; justify-content: center;
+  }
+  .phrases-backdrop.show { display: flex; animation: fadeIn .2s ease; }
+  .phrases-sheet {
+    background: var(--paper); width: 100%; max-width: 560px;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    padding: 22px 22px calc(22px + env(safe-area-inset-bottom));
+    max-height: 80vh; overflow-y: auto;
+    box-shadow: var(--shadow-lg);
+    animation: slideUpSheet .28s cubic-bezier(.2,.8,.2,1);
+  }
+  @keyframes slideUpSheet { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  .phrases-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+  .phrases-list { display: flex; flex-direction: column; gap: 8px; }
+  .phrase-item {
+    display: flex; align-items: stretch; gap: 8px;
+    border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--paper-warm); overflow: hidden;
+  }
+  .phrase-text {
+    flex: 1; text-align: left; padding: 12px 14px;
+    font-size: 14px; line-height: 1.45; color: var(--ink);
+  }
+  .phrase-text:hover { background: var(--accent-bg); }
+  .phrase-tag {
+    flex-shrink: 0; align-self: center; margin-right: 12px;
+    font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+    text-transform: uppercase; letter-spacing: .05em; color: var(--ink-mute);
+  }
+  .phrase-del {
+    flex-shrink: 0; width: 40px; color: var(--alert);
+    font-size: 15px; border-left: 1px solid var(--line);
+  }
+  .phrase-del:hover { background: var(--alert-bg); }
+
+  /* ============ PRÉVISUALISATION PDF ============ */
+  .preview-backdrop {
+    position: fixed; inset: 0; z-index: 210;
+    background: rgba(10,22,40,.6);
+    display: none; flex-direction: column;
+  }
+  .preview-backdrop.show { display: flex; animation: fadeIn .2s ease; }
+  .preview-bar {
+    background: var(--ink); color: var(--paper);
+    padding: 12px 16px; padding-top: calc(12px + env(safe-area-inset-top));
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    flex-shrink: 0;
+  }
+  .preview-bar .title { font-family: 'Fraunces', serif; font-size: 16px; }
+  .preview-frame-wrap { flex: 1; overflow: auto; padding: 16px; display: flex; justify-content: center; }
+  .preview-frame {
+    width: 100%; max-width: 800px; height: 100%; min-height: 60vh;
+    border: none; background: #fff; border-radius: 4px; box-shadow: var(--shadow-lg);
+  }
+  .preview-actions { display: flex; gap: 8px; }
+
+  /* ============ RAPPELS POST-OP ============ */
+  .reminder-card {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 14px; border: 1px solid var(--line);
+    border-left: 3px solid var(--gold); border-radius: var(--radius);
+    background: var(--paper-warm); margin-bottom: 8px;
+  }
+  .reminder-card.due { border-left-color: var(--alert); background: var(--alert-bg); }
+  .reminder-card .r-main { flex: 1; }
+  .reminder-card .r-patient { font-weight: 600; font-size: 14px; }
+  .reminder-card .r-meta { font-size: 12px; color: var(--ink-mute); margin-top: 2px; }
+  .reminder-card .r-done { flex-shrink: 0; font-size: 12px; padding: 6px 10px; border-radius: 4px; background: var(--accent-bg); color: var(--accent); }
+
+  /* ============ CALENDRIER ============ */
+  .cal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+  .cal-title { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 500; }
+  .cal-nav {
+    width: 34px; height: 34px; border-radius: 6px;
+    background: var(--paper-warm); border: 1px solid var(--line);
+    font-size: 18px; color: var(--ink); display: grid; place-items: center;
+  }
+  .cal-nav:hover { background: var(--accent-bg); border-color: var(--accent); }
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
+  .cal-dow {
+    text-align: center; font-size: 11px; font-weight: 600; color: var(--ink-mute);
+    text-transform: uppercase; letter-spacing: .04em; padding-bottom: 4px;
+  }
+  .cal-cell {
+    position: relative; aspect-ratio: 1; border-radius: 5px;
+    border: 1px solid var(--line); background: var(--paper);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    min-height: 38px; transition: transform .1s;
+  }
+  .cal-cell.empty { border: none; background: transparent; }
+  .cal-cell.today { border: 2px solid var(--gold); }
+  .cal-cell .cal-day { font-size: 12px; font-weight: 500; }
+  .cal-cell .cal-count {
+    font-size: 10px; font-weight: 700; margin-top: 1px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
 </style>
 </head>
 <body>
@@ -900,7 +1035,10 @@
       <div class="brand-name">Op<em>Surg</em></div>
     </div>
   </div>
-  <div class="header-meta" id="header-meta">v0.1 · LOCAL</div>
+  <div style="display:flex;align-items:center;gap:14px">
+    <button id="theme-toggle" onclick="Theme.toggle()" title="Mode sombre / clair" style="background:rgba(255,255,255,.08);border-radius:8px;width:36px;height:36px;display:grid;place-items:center;color:var(--paper);font-size:17px">🌙</button>
+    <div class="header-meta" id="header-meta">v0.2 · LOCAL</div>
+  </div>
 </header>
 
 <nav class="app-nav">
@@ -915,6 +1053,13 @@
 
   <!-- ============ HOME ============ -->
   <section class="view active" id="view-home">
+    <div id="reminders-wrap" style="display:none;margin-bottom:20px">
+      <h2 class="section-title" style="font-size:16px">
+        Rappels de suivi
+        <span class="count" id="reminders-count">0</span>
+      </h2>
+      <div id="reminders-list"></div>
+    </div>
     <div class="hero">
       <div class="hero-label">— Compte rendu opératoire</div>
       <h1>Dictez. <em>L'app structure.</em></h1>
@@ -948,6 +1093,18 @@
       <button class="btn" onclick="App.copyText()">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
         <span>Copier le texte</span>
+      </button>
+      <button class="btn" onclick="Phrases.open()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <span>Phrases</span>
+      </button>
+      <button class="btn" onclick="App.duplicateCRO()" id="btn-duplicate" style="display:none">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        <span>Dupliquer</span>
+      </button>
+      <button class="btn" onclick="SecureShare.exportEncrypted()" title="Exporter ce CRO en fichier chiffré">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <span>Partager</span>
       </button>
       <button class="btn btn-danger" onclick="App.confirmDelete()" id="btn-delete" style="display:none">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L5 6"/></svg>
@@ -992,11 +1149,26 @@
 
   <!-- ============ DASHBOARD ============ -->
   <section class="view" id="view-dashboard">
-    <h2 class="section-title">Tableau de bord opératoire</h2>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+      <h2 class="section-title" style="margin-bottom:0">Tableau de bord opératoire</h2>
+      <button class="btn" onclick="Dashboard.exportExcel()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
+        Export Excel
+      </button>
+    </div>
     <div class="home-grid" id="dashboard-stats"></div>
     <div class="chart-wrap">
       <h3>Activité mensuelle</h3>
       <div class="chart-container"><canvas id="chart-monthly"></canvas></div>
+    </div>
+    <div class="chart-wrap">
+      <h3>Courbe d'apprentissage</h3>
+      <p id="learning-note" style="font-size:13px;color:var(--ink-mute);margin:0 0 10px"></p>
+      <div class="chart-container"><canvas id="chart-learning"></canvas></div>
+    </div>
+    <div class="chart-wrap">
+      <h3>Calendrier d'activité</h3>
+      <div id="calendar-container"></div>
     </div>
     <div class="chart-wrap">
       <h3>Répartition par intervention</h3>
@@ -1047,6 +1219,11 @@
             Importer sauvegarde
           </button>
           <input type="file" id="import-file" accept=".json" style="display:none" onchange="Backup.importFile(event)">
+          <button class="btn" onclick="document.getElementById('import-encrypted-file').click()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Importer un CRO chiffré (.opsurg)
+          </button>
+          <input type="file" id="import-encrypted-file" accept=".opsurg,application/octet-stream" style="display:none" onchange="SecureShare.importEncrypted(event)">
           <button class="btn btn-danger" onclick="Backup.confirmWipe()">
             Tout effacer
           </button>
@@ -1077,9 +1254,10 @@
       </div>
       <div class="form-section-body">
         <p style="margin:0; font-size:14px; color:var(--ink-mute)">
-          <strong style="color:var(--ink)">OpSurg v0.1</strong> · Application web autonome pour chirurgien.<br>
+          <strong style="color:var(--ink)">OpSurg v0.2</strong> · Application web autonome pour chirurgien.<br>
           Stockage local. Aucun serveur. Aucune télémétrie.<br>
-          Données 100% privées sur cet appareil.
+          Données 100% privées sur cet appareil.<br><br>
+          <strong style="color:var(--ink)">Nouveautés v0.2 :</strong> contact patient pour le suivi, mode sombre, aperçu PDF avant export, export Word et Excel, rappels postopératoires (J1/J7/J30), courbe d'apprentissage, vue calendrier, banque de phrases, duplication de CRO et partage chiffré entre confrères.
         </p>
       </div>
     </div>
@@ -1121,6 +1299,14 @@
     </div>
     <div class="export-actions">
       <button class="btn" onclick="App.closeExportModal()">Annuler</button>
+      <button class="btn" onclick="App.previewPDF()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        Aperçu
+      </button>
+      <button class="btn" onclick="App.exportWord()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Word
+      </button>
       <button class="btn btn-accent" onclick="App.exportPDF()">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         Exporter PDF
@@ -1129,10 +1315,43 @@
   </div>
 </div>
 
+<!-- PRÉVISUALISATION PDF -->
+<div class="preview-backdrop" id="preview-panel">
+  <div class="preview-bar">
+    <span class="title">Aperçu du PDF</span>
+    <div class="preview-actions">
+      <button class="btn btn-accent" onclick="App.downloadFromPreview()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Télécharger
+      </button>
+      <button class="btn" onclick="App.closePreview()" style="background:rgba(255,255,255,.12);color:var(--paper)">Fermer</button>
+    </div>
+  </div>
+  <div class="preview-frame-wrap">
+    <iframe class="preview-frame" id="preview-frame" title="Aperçu PDF"></iframe>
+  </div>
+</div>
+
 <!-- TARGET HINT -->
 <div class="target-hint" id="target-hint">
   <span class="dot"></span>
   <span id="target-hint-text">Dictée → ...</span>
+</div>
+
+<!-- PANNEAU PHRASES FAVORITES -->
+<div class="phrases-backdrop" id="phrases-panel">
+  <div class="phrases-sheet">
+    <div class="phrases-head">
+      <h3 style="font-family:'Fraunces',serif;margin:0">Banque de phrases</h3>
+      <button onclick="Phrases.close()" style="font-size:22px;color:var(--ink-mute);line-height:1">✕</button>
+    </div>
+    <p style="color:var(--ink-mute);font-size:13px;margin:0 0 14px">Touchez un champ du CRO, puis touchez une phrase pour l'insérer.</p>
+    <div style="display:flex;gap:8px;margin-bottom:16px">
+      <input type="text" id="phrase-new-input" placeholder="Nouvelle phrase favorite…" onkeydown="if(event.key==='Enter')Phrases.add()">
+      <button class="btn btn-primary" onclick="Phrases.add()" style="flex-shrink:0">Ajouter</button>
+    </div>
+    <div class="phrases-list" id="phrases-list"></div>
+  </div>
 </div>
 
 <!-- MODAL -->
@@ -1355,6 +1574,8 @@ const SECTIONS = [
       { id: 'patient_age', label: 'Âge', type: 'text', dictTargets: ['âge', 'age'] },
       { id: 'patient_sexe', label: 'Sexe', type: 'select', options: ['', 'M', 'F'], dictTargets: ['sexe'] },
       { id: 'patient_id', label: 'N° dossier (optionnel)', type: 'text', dictTargets: ['dossier', 'numéro'] },
+      { id: 'patient_tel', label: 'Téléphone (suivi post-op)', type: 'tel', dictTargets: ['téléphone', 'numéro', 'contact', 'portable'] },
+      { id: 'patient_email', label: 'Email (optionnel)', type: 'email', dictTargets: ['email', 'mail', 'courriel'] },
       { id: 'date_intervention', label: 'Date d\'intervention', type: 'date', dictTargets: ['date'] }
     ]
   },
@@ -1410,7 +1631,8 @@ const SECTIONS = [
       { id: 'incidents', label: 'Incidents per-opératoires', type: 'textarea', dictTargets: ['incident', 'incidents'] },
       { id: 'drainage', label: 'Drainage', type: 'textarea', dictTargets: ['drainage', 'drain'] },
       { id: 'fermeture', label: 'Fermeture', type: 'textarea', dictTargets: ['fermeture'] },
-      { id: 'pertes', label: 'Pertes sanguines', type: 'text', dictTargets: ['perte', 'pertes', 'saignement'] }
+      { id: 'pertes', label: 'Pertes sanguines', type: 'text', dictTargets: ['perte', 'pertes', 'saignement'] },
+      { id: 'duree_min', label: 'Durée opératoire (minutes)', type: 'number', dictTargets: ['durée', 'temps', 'minutes'] }
     ]
   },
   {
@@ -1437,7 +1659,7 @@ const APPROACHES = [
 // ============================================================
 const DB = {
   name: 'opsurg_db',
-  version: 1,
+  version: 2,
   db: null,
 
   async open() {
@@ -1452,6 +1674,9 @@ const DB = {
         }
         if (!db.objectStoreNames.contains('settings')) {
           db.createObjectStore('settings', { keyPath: 'key' });
+        }
+        if (!db.objectStoreNames.contains('phrases')) {
+          db.createObjectStore('phrases', { keyPath: 'id' });
         }
       };
       req.onsuccess = e => { this.db = e.target.result; resolve(); };
@@ -1517,11 +1742,39 @@ const DB = {
     });
   },
 
+  async allPhrases() {
+    return new Promise((resolve, reject) => {
+      const tx = this.db.transaction('phrases', 'readonly');
+      const req = tx.objectStore('phrases').getAll();
+      req.onsuccess = () => resolve(req.result || []);
+      req.onerror = e => reject(e.target.error);
+    });
+  },
+
+  async savePhrase(p) {
+    return new Promise((resolve, reject) => {
+      const tx = this.db.transaction('phrases', 'readwrite');
+      const req = tx.objectStore('phrases').put(p);
+      req.onsuccess = () => resolve(p);
+      req.onerror = e => reject(e.target.error);
+    });
+  },
+
+  async deletePhrase(id) {
+    return new Promise((resolve, reject) => {
+      const tx = this.db.transaction('phrases', 'readwrite');
+      const req = tx.objectStore('phrases').delete(id);
+      req.onsuccess = () => resolve();
+      req.onerror = e => reject(e.target.error);
+    });
+  },
+
   async wipeAll() {
     return new Promise((resolve, reject) => {
-      const tx = this.db.transaction(['cros', 'settings'], 'readwrite');
+      const tx = this.db.transaction(['cros', 'settings', 'phrases'], 'readwrite');
       tx.objectStore('cros').clear();
       tx.objectStore('settings').clear();
+      tx.objectStore('phrases').clear();
       tx.oncomplete = () => resolve();
       tx.onerror = e => reject(e.target.error);
     });
@@ -1689,6 +1942,7 @@ const App = {
 
   async init() {
     await DB.open();
+    await Theme.load();
     Dictation.init();
     this.bindNav();
     this.bindSearch();
@@ -1745,6 +1999,8 @@ const App = {
     this.currentTemplate = 'none';
     this.currentExportTpl = 'classique';
     document.getElementById('btn-delete').style.display = 'none';
+    const dup = document.getElementById('btn-duplicate');
+    if (dup) dup.style.display = 'none';
     this.renderEditor();
   },
 
@@ -1757,15 +2013,42 @@ const App = {
     this.currentTemplate = cro.template || 'none';
     this.currentExportTpl = this.currentExportTpl || 'classique';
     document.getElementById('btn-delete').style.display = '';
+    const dup = document.getElementById('btn-duplicate');
+    if (dup) dup.style.display = '';
     this.renderEditor();
     this.go('editor');
+  },
+
+  duplicateCRO() {
+    if (!this.currentCRO) return;
+    this.openModal(
+      'Dupliquer ce CRO ?',
+      'Une copie sera créée avec les mêmes données (patient, chirurgie). La date sera réinitialisée à aujourd\'hui. Pensez à enregistrer la copie.',
+      () => {
+        this.closeModal();
+        const src = this.currentCRO;
+        const copy = JSON.parse(JSON.stringify(src));
+        copy.id = 'cro_' + Date.now() + '_' + Math.random().toString(36).slice(2,8);
+        copy.created_at = new Date().toISOString();
+        delete copy.updated_at;
+        copy.fields = copy.fields || {};
+        copy.fields.date_intervention = new Date().toISOString().slice(0, 10);
+        this.currentCRO = copy;
+        this.currentTemplate = copy.template || 'none';
+        // C'est une copie non encore enregistrée → masquer suppr, garder dupliquer
+        document.getElementById('btn-delete').style.display = 'none';
+        this.renderEditor();
+        window.scrollTo(0, 0);
+        Toast.show('Copie créée — enregistrez-la', 'success');
+      }
+    );
   },
 
   selectTemplate(key) {
     const t = TEMPLATES[key];
     if (!t) return;
 
-    const IDENTITY_FIELDS = ['patient_nom','patient_age','patient_sexe','patient_id','date_intervention'];
+    const IDENTITY_FIELDS = ['patient_nom','patient_age','patient_sexe','patient_id','patient_tel','patient_email','date_intervention'];
     const hasContent = Object.entries(this.currentCRO.fields).some(
       ([fid, val]) => !IDENTITY_FIELDS.includes(fid) && val && val.trim() !== ''
     );
@@ -1869,6 +2152,7 @@ const App = {
   },
 
   renderHome() {
+    Reminders.render();
     DB.allCROs().then(async cros => {
       // Stats
       const stats = [
@@ -2162,6 +2446,8 @@ const App = {
     this.currentCRO.updated_at = new Date().toISOString();
     await DB.saveCRO(this.currentCRO);
     document.getElementById('btn-delete').style.display = '';
+    const dup = document.getElementById('btn-duplicate');
+    if (dup) dup.style.display = '';
     Toast.show('CRO enregistré', 'success');
   },
 
@@ -2253,9 +2539,8 @@ const App = {
     }
   },
 
-  async exportPDF() {
-    if (!this.currentCRO) return;
-    this.closeExportModal();
+  async buildPDFDoc() {
+    if (!this.currentCRO) return null;
     const { jsPDF } = window.jspdf;
     const tpl = TEMPLATES[this.currentCRO.template] || TEMPLATES.none;
     const approach = APPROACHES.find(a => a.id === this.currentCRO.approach) || APPROACHES[0];
@@ -2340,24 +2625,26 @@ const App = {
 
       // Patient info box
       doc.setDrawColor(200); doc.setLineWidth(0.3);
-      doc.rect(margin, y, maxWidth, 18);
+      const boxH = 24;
+      doc.rect(margin, y, maxWidth, boxH);
       doc.setFillColor(244,241,234); doc.rect(margin, y, maxWidth, 6, 'F');
       doc.setFont('helvetica','bold'); doc.setFontSize(9); doc.setTextColor(10,22,40);
       doc.text('PATIENT', margin+3, y+4.5);
       doc.setFont('helvetica','normal'); doc.setTextColor(0); doc.setFontSize(9);
       const patInfo = [
         ['Nom', f.patient_nom||'—'], ['Âge', f.patient_age ? f.patient_age+' ans' : '—'],
-        ['N° dossier', f.patient_id||'—'], ['Date', this.formatDate(f.date_intervention)]
+        ['N° dossier', f.patient_id||'—'], ['Tél', f.patient_tel||'—'],
+        ['Email', f.patient_email||'—'], ['Date', this.formatDate(f.date_intervention)]
       ];
       patInfo.forEach(([k,v], i) => {
-        const col = i < 2 ? 0 : 1;
-        const row = i % 2;
+        const col = i % 2;
+        const row = Math.floor(i / 2);
         doc.setFont('helvetica','bold');
-        doc.text(k+' :', margin + col*85 + 3, y + 9 + row*5);
+        doc.text(k+' :', margin + col*92 + 3, y + 10 + row*5);
         doc.setFont('helvetica','normal');
-        doc.text(v, margin + col*85 + 22, y + 9 + row*5);
+        doc.text(String(v).slice(0,42), margin + col*92 + 22, y + 10 + row*5);
       });
-      y += 24;
+      y += boxH + 6;
 
       // Intervention summary bar
       doc.setFillColor(31,95,74); doc.rect(margin, y, maxWidth, 8, 'F');
@@ -2492,8 +2779,101 @@ const App = {
 
     const patientName = (f.patient_nom||'patient').replace(/[^a-zA-Z0-9]/g,'_');
     const dateStr = (f.date_intervention||new Date().toISOString().slice(0,10)).replace(/-/g,'');
-    doc.save(`CRO_${dateStr}_${patientName}_${exportTpl}.pdf`);
-    Toast.show('PDF exporté · ' + exportTpl, 'success');
+    const filename = `CRO_${dateStr}_${patientName}_${exportTpl}.pdf`;
+    return { doc, filename, exportTpl };
+  },
+
+  async exportPDF() {
+    if (!this.currentCRO) return;
+    this.closeExportModal();
+    const res = await this.buildPDFDoc();
+    if (!res) return;
+    res.doc.save(res.filename);
+    Toast.show('PDF exporté · ' + res.exportTpl, 'success');
+  },
+
+  async previewPDF() {
+    if (!this.currentCRO) return;
+    const res = await this.buildPDFDoc();
+    if (!res) return;
+    this._previewFilename = res.filename;
+    this._previewExportTpl = res.exportTpl;
+    const blobUrl = res.doc.output('bloburl');
+    const frame = document.getElementById('preview-frame');
+    frame.src = blobUrl;
+    document.getElementById('preview-panel').classList.add('show');
+  },
+
+  closePreview() {
+    document.getElementById('preview-panel').classList.remove('show');
+    const frame = document.getElementById('preview-frame');
+    if (frame) frame.src = 'about:blank';
+  },
+
+  async downloadFromPreview() {
+    const res = await this.buildPDFDoc();
+    if (!res) return;
+    res.doc.save(res.filename);
+    this.closePreview();
+    this.closeExportModal();
+    Toast.show('PDF exporté · ' + res.exportTpl, 'success');
+  },
+
+  // Export Word : document HTML compatible Word (.doc), éditable, hors-ligne
+  async exportWord() {
+    if (!this.currentCRO) return;
+    this.closeExportModal();
+    const tpl = TEMPLATES[this.currentCRO.template] || TEMPLATES.none;
+    const approach = APPROACHES.find(a => a.id === this.currentCRO.approach) || APPROACHES[0];
+    const f = this.currentCRO.fields;
+    const surgeon = await DB.getSetting('surgeon') || '';
+    const hospital = await DB.getSetting('hospital') || '';
+    const esc = (s) => this.escape(s).replace(/\n/g, '<br>');
+
+    let sectionsHTML = '';
+    SECTIONS.forEach((section, idx) => {
+      const fields = section.fields.filter(field => f[field.id] && String(f[field.id]).trim());
+      if (!fields.length) return;
+      sectionsHTML += `<h2 style="font-size:13pt;color:#1f5f4a;border-bottom:1px solid #1f5f4a;padding-bottom:2pt;margin-top:14pt">${idx+1}. ${this.escape(section.title.toUpperCase())}</h2>`;
+      fields.forEach(field => {
+        sectionsHTML += `<p style="margin:4pt 0"><strong style="color:#444">${this.escape(field.label)} :</strong><br>${esc(f[field.id])}</p>`;
+      });
+    });
+
+    const meta = [
+      ['Intervention', tpl.name], ['Voie d\'abord', approach.label],
+      ['Patient', f.patient_nom || '—'], ['Âge', f.patient_age ? f.patient_age + ' ans' : '—'],
+      ['N° dossier', f.patient_id || '—'], ['Téléphone', f.patient_tel || '—'],
+      ['Date', this.formatDate(f.date_intervention)], ['Chirurgien', surgeon || '—']
+    ];
+    const metaRows = meta.map(([k,v]) =>
+      `<tr><td style="padding:3pt 8pt;font-weight:bold;background:#f4f1ea;width:30%">${this.escape(k)}</td><td style="padding:3pt 8pt">${this.escape(v)}</td></tr>`
+    ).join('');
+
+    const html = `<!DOCTYPE html>
+<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
+<head><meta charset="utf-8"><title>CRO</title>
+<!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View></w:WordDocument></xml><![endif]-->
+<style>body{font-family:'Calibri',sans-serif;font-size:11pt;color:#111}h1{font-size:16pt;text-align:center}table{border-collapse:collapse;width:100%;margin:8pt 0}</style>
+</head>
+<body>
+<h1>COMPTE RENDU OPÉRATOIRE</h1>
+${hospital ? `<p style="text-align:center;color:#666">${this.escape(hospital)}</p>` : ''}
+<table>${metaRows}</table>
+${sectionsHTML}
+<p style="margin-top:20pt;color:#999;font-size:8pt;border-top:1px solid #ccc;padding-top:4pt">OpSurg · Document généré le ${this.formatDate(new Date().toISOString())}</p>
+</body></html>`;
+
+    const blob = new Blob(['\uFEFF' + html], { type: 'application/msword;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const patientName = (f.patient_nom || 'patient').replace(/[^a-zA-Z0-9]/g, '_');
+    const dateStr = (f.date_intervention || new Date().toISOString().slice(0,10)).replace(/-/g, '');
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `CRO_${dateStr}_${patientName}.doc`;
+    a.click();
+    URL.revokeObjectURL(url);
+    Toast.show('Document Word exporté', 'success');
   }
 };
 
@@ -2521,9 +2901,176 @@ const Dashboard = {
     this.renderMonthly(cros);
     this.renderTypes(cros);
     this.renderApproaches(cros);
+    this.renderLearningCurve(cros);
+    this.renderCalendar(cros);
   },
 
-  avgDuration() { return '—'; }, // placeholder - would need duration field
+  // Vue calendrier : activité par jour, navigation par mois
+  _calRef: null,
+  renderCalendar(cros) {
+    const container = document.getElementById('calendar-container');
+    if (!container) return;
+    this._calCros = cros || this._calCros || [];
+    if (!this._calRef) {
+      const now = new Date();
+      this._calRef = { y: now.getFullYear(), m: now.getMonth() };
+    }
+    const { y, m } = this._calRef;
+
+    // compte par jour (clé AAAA-MM-JJ)
+    const counts = {};
+    this._calCros.forEach(c => {
+      const d = c.date_intervention || (c.created_at || '').slice(0,10);
+      if (d) counts[d] = (counts[d] || 0) + 1;
+    });
+
+    const monthNames = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+    const firstDay = new Date(y, m, 1);
+    // 0=lundi … 6=dimanche
+    let startWeekday = (firstDay.getDay() + 6) % 7;
+    const daysInMonth = new Date(y, m + 1, 0).getDate();
+    const todayStr = new Date().toISOString().slice(0,10);
+
+    const maxCount = Math.max(1, ...Object.values(counts));
+    const cells = [];
+    for (let i = 0; i < startWeekday; i++) cells.push('<div class="cal-cell empty"></div>');
+    for (let day = 1; day <= daysInMonth; day++) {
+      const dateStr = `${y}-${String(m+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+      const n = counts[dateStr] || 0;
+      const intensity = n === 0 ? 0 : 0.25 + 0.75 * (n / maxCount);
+      const isToday = dateStr === todayStr;
+      const bg = n > 0 ? `background: rgba(31,95,74,${intensity}); color:#fff;` : '';
+      cells.push(`<div class="cal-cell ${isToday ? 'today' : ''}" style="${bg}" title="${n} intervention(s)">
+        <span class="cal-day">${day}</span>
+        ${n > 0 ? `<span class="cal-count">${n}</span>` : ''}
+      </div>`);
+    }
+
+    const dows = ['L','M','M','J','V','S','D'];
+    container.innerHTML = `
+      <div class="cal-head">
+        <button class="cal-nav" onclick="Dashboard.calMove(-1)">‹</button>
+        <span class="cal-title">${monthNames[m]} ${y}</span>
+        <button class="cal-nav" onclick="Dashboard.calMove(1)">›</button>
+      </div>
+      <div class="cal-grid">
+        ${dows.map(d => `<div class="cal-dow">${d}</div>`).join('')}
+        ${cells.join('')}
+      </div>`;
+  },
+
+  calMove(delta) {
+    if (!this._calRef) return;
+    let m = this._calRef.m + delta;
+    let y = this._calRef.y;
+    if (m < 0) { m = 11; y--; }
+    if (m > 11) { m = 0; y++; }
+    this._calRef = { y, m };
+    this.renderCalendar(this._calCros);
+  },
+
+  // Courbe d'apprentissage : temps opératoire par type au fil du temps
+  renderLearningCurve(cros) {
+    const withDuration = cros
+      .filter(c => c.fields && parseFloat(c.fields.duree_min) > 0)
+      .slice()
+      .sort((a,b) => (a.date_intervention||'').localeCompare(b.date_intervention||''));
+
+    const note = document.getElementById('learning-note');
+    if (withDuration.length < 2) {
+      if (this.charts['chart-learning']) { this.charts['chart-learning'].destroy(); delete this.charts['chart-learning']; }
+      if (note) note.textContent = 'Renseignez la « Durée opératoire » dans vos CRO pour voir votre courbe d\'apprentissage (au moins 2 interventions du même type).';
+      const cv = document.getElementById('chart-learning');
+      if (cv) { const ctx = cv.getContext('2d'); ctx.clearRect(0,0,cv.width,cv.height); }
+      return;
+    }
+    if (note) note.textContent = 'Évolution de vos temps opératoires par type d\'intervention.';
+
+    // Regrouper par template
+    const byTpl = {};
+    withDuration.forEach(c => {
+      const name = (TEMPLATES[c.template] || TEMPLATES.none).name;
+      if (!byTpl[name]) byTpl[name] = [];
+      byTpl[name].push({ x: c.date_intervention || c.created_at.slice(0,10), y: parseFloat(c.fields.duree_min) });
+    });
+
+    const palette = ['#1f5f4a','#b8893a','#a8421f','#2d8366','#4a5b78','#0a1628','#1a2942'];
+    const tc = this._themeColors();
+    const datasets = Object.entries(byTpl).map(([name, pts], i) => ({
+      label: name,
+      data: pts.map(p => p.y),
+      borderColor: palette[i % palette.length],
+      backgroundColor: palette[i % palette.length],
+      tension: 0.3,
+      pointRadius: 4,
+      fill: false
+    }));
+    // labels = index chronologique commun (1, 2, 3…) le plus long
+    const maxLen = Math.max(...Object.values(byTpl).map(a => a.length));
+    const labels = Array.from({length: maxLen}, (_, i) => 'Cas ' + (i+1));
+
+    if (this.charts['chart-learning']) this.charts['chart-learning'].destroy();
+    const ctx = document.getElementById('chart-learning');
+    if (!ctx) return;
+    this.charts['chart-learning'] = new Chart(ctx, {
+      type: 'line',
+      data: { labels, datasets },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { position: 'top', labels: { color: tc.legend, font: { family: 'IBM Plex Sans', size: 11 }, boxWidth: 12, padding: 10 } } },
+        scales: {
+          y: { beginAtZero: true, title: { display: true, text: 'minutes', color: tc.tick }, ticks: { color: tc.tick }, grid: { color: tc.grid } },
+          x: { ticks: { color: tc.tick }, grid: { display: false } }
+        }
+      }
+    });
+  },
+
+  // Export Excel (CSV avec BOM, ouvert nativement par Excel)
+  async exportExcel() {
+    const cros = await DB.allCROs();
+    if (!cros.length) { Toast.show('Aucun CRO à exporter', 'error'); return; }
+    const cols = [
+      ['Date', c => c.fields.date_intervention || ''],
+      ['Patient', c => c.fields.patient_nom || ''],
+      ['Âge', c => c.fields.patient_age || ''],
+      ['Sexe', c => c.fields.patient_sexe || ''],
+      ['N° dossier', c => c.fields.patient_id || ''],
+      ['Téléphone', c => c.fields.patient_tel || ''],
+      ['Intervention', c => (TEMPLATES[c.template] || TEMPLATES.none).name],
+      ['Voie d\'abord', c => { const a = APPROACHES.find(x => x.id === c.approach); return a ? a.label : ''; }],
+      ['Durée (min)', c => c.fields.duree_min || ''],
+      ['Diagnostic', c => c.fields.diagnostic || ''],
+      ['Geste', c => c.fields.geste || ''],
+      ['Pertes', c => c.fields.pertes || ''],
+      ['Conclusion', c => c.fields.conclusion || '']
+    ];
+    const esc = (v) => {
+      v = String(v == null ? '' : v).replace(/\r?\n/g, ' ').replace(/"/g, '""');
+      return `"${v}"`;
+    };
+    const header = cols.map(c => esc(c[0])).join(';');
+    const rows = cros.map(c => cols.map(col => esc(col[1](c))).join(';'));
+    const csv = '\uFEFF' + [header, ...rows].join('\r\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `opsurg_statistiques_${new Date().toISOString().slice(0,10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+    Toast.show(cros.length + ' interventions exportées', 'success');
+  },
+
+  avgDuration(cros) {
+    const durations = (cros || [])
+      .map(c => parseFloat(c.fields && c.fields.duree_min))
+      .filter(v => !isNaN(v) && v > 0);
+    if (!durations.length) return '—';
+    const avg = durations.reduce((a,b) => a+b, 0) / durations.length;
+    return Math.round(avg);
+  },
 
   renderMonthly(cros) {
     const counts = {};
@@ -2565,10 +3112,22 @@ const Dashboard = {
     this.drawBar('chart-approaches', labels, data, '#0a1628');
   },
 
+  _themeColors() {
+    const dark = Theme.current === 'dark';
+    return {
+      grid: dark ? '#243049' : '#e3e0d8',
+      tick: dark ? '#8b96ab' : '#4a5b78',
+      legend: dark ? '#e8eaf0' : '#0a1628',
+      bar: dark ? '#3ba07d' : '#1f5f4a',
+      barDark: dark ? '#4a5b78' : '#0a1628'
+    };
+  },
+
   drawBar(id, labels, data, color) {
     if (this.charts[id]) this.charts[id].destroy();
     const ctx = document.getElementById(id);
     if (!ctx) return;
+    const tc = this._themeColors();
     this.charts[id] = new Chart(ctx, {
       type: 'bar',
       data: {
@@ -2585,8 +3144,8 @@ const Dashboard = {
         maintainAspectRatio: false,
         plugins: { legend: { display: false } },
         scales: {
-          y: { beginAtZero: true, ticks: { precision: 0, color: '#4a5b78' }, grid: { color: '#e3e0d8' } },
-          x: { ticks: { color: '#4a5b78' }, grid: { display: false } }
+          y: { beginAtZero: true, ticks: { precision: 0, color: tc.tick }, grid: { color: tc.grid } },
+          x: { ticks: { color: tc.tick }, grid: { display: false } }
         }
       }
     });
@@ -2596,6 +3155,7 @@ const Dashboard = {
     if (this.charts[id]) this.charts[id].destroy();
     const ctx = document.getElementById(id);
     if (!ctx) return;
+    const tc = this._themeColors();
     const colors = ['#1f5f4a','#2d8366','#0a1628','#b8893a','#a8421f','#4a5b78','#1a2942','#c9c5b8'];
     this.charts[id] = new Chart(ctx, {
       type: 'doughnut',
@@ -2606,7 +3166,7 @@ const Dashboard = {
         plugins: {
           legend: {
             position: 'right',
-            labels: { color: '#0a1628', font: { family: 'IBM Plex Sans', size: 12 }, boxWidth: 12, padding: 12 }
+            labels: { color: tc.legend, font: { family: 'IBM Plex Sans', size: 12 }, boxWidth: 12, padding: 12 }
           }
         }
       }
@@ -2698,6 +3258,298 @@ const Backup = {
 };
 
 // ============================================================
+// PHRASES FAVORITES / BANQUE DE TEXTES
+// ============================================================
+const Phrases = {
+  DEFAULTS: [
+    { id: 'def_1', text: "Aucun incident per-opératoire.", builtin: true },
+    { id: 'def_2', text: "Hémostase soigneuse. Pas de saignement actif en fin d'intervention.", builtin: true },
+    { id: 'def_3', text: "Coelioscopie TAPP : réduction du sac herniaire, mise en place d'une prothèse pré-péritonéale fixée.", builtin: true },
+    { id: 'def_4', text: "Compte des compresses et instruments exact en fin d'intervention.", builtin: true },
+    { id: 'def_5', text: "Suites simples envisagées. Reprise alimentaire à J0. Sortie prévue à J1.", builtin: true },
+    { id: 'def_6', text: "Antalgiques de palier 1. Anticoagulation préventive. Pas d'antibiothérapie postopératoire.", builtin: true },
+    { id: 'def_7', text: "Pièce opératoire envoyée pour examen anatomopathologique.", builtin: true },
+    { id: 'def_8', text: "Patient prévenu des suites et des consignes de surveillance à domicile.", builtin: true }
+  ],
+
+  async render() {
+    const custom = await DB.allPhrases();
+    custom.sort((a,b) => (b.created_at||'').localeCompare(a.created_at||''));
+    const all = [...custom, ...this.DEFAULTS];
+    const list = document.getElementById('phrases-list');
+    if (!list) return;
+    list.innerHTML = all.map(p => `
+      <div class="phrase-item">
+        <button class="phrase-text" onclick="Phrases.insert('${p.id}')" title="Insérer dans le champ sélectionné">${App.escape(p.text)}</button>
+        ${p.builtin ? '<span class="phrase-tag">type</span>' : `<button class="phrase-del" onclick="Phrases.remove('${p.id}')" title="Supprimer">✕</button>`}
+      </div>
+    `).join('');
+    this._cache = all;
+  },
+
+  open() {
+    document.getElementById('phrases-panel').classList.add('show');
+    this.render();
+  },
+  close() {
+    document.getElementById('phrases-panel').classList.remove('show');
+  },
+
+  insert(id) {
+    const p = (this._cache || []).find(x => x.id === id);
+    if (!p) return;
+    const fieldId = Dictation.currentTarget;
+    let target = fieldId ? document.getElementById('field-' + fieldId) : null;
+    if (!target) {
+      const ae = document.activeElement;
+      if (ae && (ae.tagName === 'TEXTAREA' || ae.tagName === 'INPUT')) target = ae;
+    }
+    if (!target) {
+      Toast.show('Touchez d\'abord un champ pour y insérer la phrase', 'error');
+      return;
+    }
+    const cur = target.value || '';
+    const sep = cur && !cur.endsWith(' ') && !cur.endsWith('\n') ? ' ' : '';
+    target.value = cur + sep + p.text;
+    target.dispatchEvent(new Event('input', { bubbles: true }));
+    target.focus();
+    try { target.setSelectionRange(target.value.length, target.value.length); } catch(e) {}
+    Toast.show('Phrase insérée', 'success');
+  },
+
+  async add() {
+    const input = document.getElementById('phrase-new-input');
+    const text = (input.value || '').trim();
+    if (!text) { Toast.show('Saisissez une phrase', 'error'); return; }
+    await DB.savePhrase({ id: 'ph_' + Date.now(), text, created_at: new Date().toISOString() });
+    input.value = '';
+    this.render();
+    Toast.show('Phrase enregistrée', 'success');
+  },
+
+  async remove(id) {
+    await DB.deletePhrase(id);
+    this.render();
+  }
+};
+
+// ============================================================
+// RAPPELS POSTOPÉRATOIRES (J1, J7, J30)
+// ============================================================
+const Reminders = {
+  MILESTONES: [
+    { key: 'j1', days: 1, label: 'J1' },
+    { key: 'j7', days: 7, label: 'J7' },
+    { key: 'j30', days: 30, label: 'J30' }
+  ],
+
+  // Renvoie la liste des rappels échus et non traités
+  computeDue(cros) {
+    const today = new Date(); today.setHours(0,0,0,0);
+    const due = [];
+    (cros || []).forEach(c => {
+      const dateStr = c.fields && c.fields.date_intervention;
+      if (!dateStr) return;
+      const opDate = new Date(dateStr + 'T00:00:00');
+      if (isNaN(opDate)) return;
+      const done = c.reminders_done || {};
+      this.MILESTONES.forEach(ms => {
+        if (done[ms.key]) return;
+        const target = new Date(opDate); target.setDate(target.getDate() + ms.days);
+        target.setHours(0,0,0,0);
+        if (target <= today) {
+          const overdueDays = Math.round((today - target) / 86400000);
+          due.push({ cro: c, ms, target, overdueDays });
+        }
+      });
+    });
+    // les plus anciens d'abord
+    due.sort((a,b) => a.target - b.target);
+    return due;
+  },
+
+  async render() {
+    const cros = await DB.allCROs();
+    const due = this.computeDue(cros);
+    const wrap = document.getElementById('reminders-wrap');
+    const list = document.getElementById('reminders-list');
+    const badge = document.getElementById('reminders-count');
+    if (!wrap || !list) return;
+    if (due.length === 0) {
+      wrap.style.display = 'none';
+      return;
+    }
+    wrap.style.display = 'block';
+    if (badge) badge.textContent = due.length;
+    this._cache = due;
+    list.innerHTML = due.map((d, i) => {
+      const patient = d.cro.fields.patient_nom || 'Patient sans nom';
+      const tpl = (TEMPLATES[d.cro.template] || TEMPLATES.none).name;
+      const tel = d.cro.fields.patient_tel ? ' · ☎ ' + App.escape(d.cro.fields.patient_tel) : '';
+      const when = d.overdueDays === 0 ? 'aujourd\'hui' : `il y a ${d.overdueDays} j`;
+      return `<div class="reminder-card due">
+        <div class="r-main">
+          <div class="r-patient">${App.escape(patient)} — suivi ${d.ms.label}</div>
+          <div class="r-meta">${App.escape(tpl)} · échéance ${when}${tel}</div>
+        </div>
+        <button class="r-done" onclick="Reminders.openCro('${d.cro.id}')">Ouvrir</button>
+        <button class="r-done" onclick="Reminders.markDone('${d.cro.id}','${d.ms.key}')" style="background:var(--accent);color:#fff">Fait ✓</button>
+      </div>`;
+    }).join('');
+  },
+
+  async openCro(id) {
+    await App.loadCRO(id);
+  },
+
+  async markDone(croId, msKey) {
+    const cro = await DB.getCRO(croId);
+    if (!cro) return;
+    cro.reminders_done = cro.reminders_done || {};
+    cro.reminders_done[msKey] = new Date().toISOString();
+    await DB.saveCRO(cro);
+    Toast.show('Rappel marqué comme fait', 'success');
+    this.render();
+  }
+};
+
+// ============================================================
+// PARTAGE SÉCURISÉ (fichier chiffré AES-GCM, hors-ligne)
+// ============================================================
+const SecureShare = {
+  _enc: new TextEncoder(),
+  _dec: new TextDecoder(),
+
+  async _deriveKey(password, salt) {
+    const baseKey = await crypto.subtle.importKey(
+      'raw', this._enc.encode(password), 'PBKDF2', false, ['deriveKey']
+    );
+    return crypto.subtle.deriveKey(
+      { name: 'PBKDF2', salt, iterations: 150000, hash: 'SHA-256' },
+      baseKey,
+      { name: 'AES-GCM', length: 256 },
+      false,
+      ['encrypt', 'decrypt']
+    );
+  },
+
+  _b64(buf) {
+    return btoa(String.fromCharCode(...new Uint8Array(buf)));
+  },
+  _unb64(str) {
+    return Uint8Array.from(atob(str), c => c.charCodeAt(0));
+  },
+
+  // Exporte le CRO courant dans un fichier chiffré .opsurg
+  async exportEncrypted() {
+    if (!App.currentCRO) { Toast.show('Aucun CRO ouvert', 'error'); return; }
+    if (!crypto.subtle) { Toast.show('Chiffrement non disponible (HTTPS requis)', 'error'); return; }
+    const password = prompt('Choisissez un mot de passe pour chiffrer ce CRO.\nVotre collègue en aura besoin pour l\'ouvrir :');
+    if (!password) return;
+    if (password.length < 4) { Toast.show('Mot de passe trop court (min. 4)', 'error'); return; }
+    try {
+      const salt = crypto.getRandomValues(new Uint8Array(16));
+      const iv = crypto.getRandomValues(new Uint8Array(12));
+      const key = await this._deriveKey(password, salt);
+      const payload = JSON.stringify({ app: 'OpSurg', type: 'cro', cro: App.currentCRO });
+      const cipher = await crypto.subtle.encrypt(
+        { name: 'AES-GCM', iv }, key, this._enc.encode(payload)
+      );
+      const out = {
+        app: 'OpSurg', encrypted: true, v: 1,
+        salt: this._b64(salt), iv: this._b64(iv), data: this._b64(cipher)
+      };
+      const blob = new Blob([JSON.stringify(out)], { type: 'application/octet-stream' });
+      const url = URL.createObjectURL(blob);
+      const patientName = (App.currentCRO.fields.patient_nom || 'patient').replace(/[^a-zA-Z0-9]/g, '_');
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `CRO_${patientName}_chiffre.opsurg`;
+      a.click();
+      URL.revokeObjectURL(url);
+      Toast.show('Fichier chiffré exporté', 'success');
+    } catch (e) {
+      Toast.show('Erreur de chiffrement : ' + e.message, 'error');
+    }
+  },
+
+  // Importe et déchiffre un fichier .opsurg
+  importEncrypted(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      try {
+        const obj = JSON.parse(e.target.result);
+        if (!obj.encrypted || obj.app !== 'OpSurg') throw new Error('Fichier non reconnu');
+        const password = prompt('Mot de passe pour déchiffrer ce CRO :');
+        if (!password) return;
+        const salt = this._unb64(obj.salt);
+        const iv = this._unb64(obj.iv);
+        const data = this._unb64(obj.data);
+        const key = await this._deriveKey(password, salt);
+        const plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, data);
+        const payload = JSON.parse(this._dec.decode(plain));
+        const cro = payload.cro;
+        if (!cro || !cro.fields) throw new Error('Contenu invalide');
+        // nouvel id pour éviter d'écraser un CRO existant
+        cro.id = 'cro_' + Date.now() + '_' + Math.random().toString(36).slice(2,8);
+        cro.imported_at = new Date().toISOString();
+        await DB.saveCRO(cro);
+        Toast.show('CRO déchiffré et importé', 'success');
+        App.renderHome();
+        App.loadCRO(cro.id);
+      } catch (err) {
+        const msg = /operation-specific|decrypt/i.test(err.message || '')
+          ? 'Mot de passe incorrect ou fichier corrompu'
+          : 'Erreur : ' + err.message;
+        Toast.show(msg, 'error');
+      }
+    };
+    reader.readAsText(file);
+    event.target.value = '';
+  }
+};
+
+// ============================================================
+// THEME (mode sombre / clair)
+// ============================================================
+const Theme = {
+  current: 'light',
+  async load() {
+    let saved = null;
+    try { saved = await DB.getSetting('theme'); } catch(e) {}
+    if (!saved) {
+      // suit la préférence système au premier lancement
+      saved = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+    }
+    this.apply(saved);
+  },
+  apply(theme) {
+    this.current = theme;
+    if (theme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
+    const btn = document.getElementById('theme-toggle');
+    if (btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', theme === 'dark' ? '#060b14' : '#0a1628');
+    // redessine les graphiques avec les bonnes couleurs si dashboard visible
+    if (document.getElementById('view-dashboard')?.classList.contains('active')) {
+      Dashboard.render();
+    }
+  },
+  async toggle() {
+    const next = this.current === 'dark' ? 'light' : 'dark';
+    this.apply(next);
+    try { await DB.setSetting('theme', next); } catch(e) {}
+    Toast.show(next === 'dark' ? 'Mode sombre activé' : 'Mode clair activé', '');
+  }
+};
+
+// ============================================================
 // TOAST
 // ============================================================
 const Toast = {
@@ -2721,7 +3573,7 @@ window.addEventListener('DOMContentLoaded', () => App.init());
 // ============================================================
 if ('serviceWorker' in navigator) {
   const swCode = `
-    const CACHE = 'opsurg-v1';
+    const CACHE = 'opsurg-v2';
     const ASSETS = [self.location.href];
     self.addEventListener('install', e => {
       e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)));
