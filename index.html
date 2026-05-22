@@ -612,6 +612,120 @@
     background: var(--paper-warm);
   }
 
+  /* PHOTO UPLOAD ZONE */
+  .photo-upload-zone {
+    border: 2px dashed var(--line-strong);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color .2s, background .2s;
+    background: var(--paper-warm);
+    margin-bottom: 10px;
+  }
+  .photo-upload-zone:hover { border-color: var(--accent); background: var(--accent-bg); }
+  .photo-upload-zone .upload-icon { font-size: 28px; margin-bottom: 6px; }
+  .photo-upload-zone p { margin: 0; font-size: 13px; color: var(--ink-mute); }
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .photo-thumb {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  .photo-thumb img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+  .photo-thumb .photo-del {
+    position: absolute; top: 4px; right: 4px;
+    background: rgba(0,0,0,.65); color: #fff;
+    border: none; border-radius: 50%;
+    width: 22px; height: 22px; font-size: 12px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; line-height: 1;
+  }
+  .photo-caption {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: rgba(0,0,0,.5); color: #fff;
+    font-size: 10px; padding: 3px 5px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .imagerie-upload-zone {
+    border: 2px dashed var(--line-strong);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color .2s, background .2s;
+    background: var(--paper-warm);
+    margin-bottom: 10px;
+  }
+  .imagerie-upload-zone:hover { border-color: var(--accent); background: var(--accent-bg); }
+  .imagerie-thumb-grid {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px;
+  }
+  .imagerie-thumb {
+    position: relative;
+    width: 80px; height: 80px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--line);
+    cursor: pointer;
+  }
+  .imagerie-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .imagerie-thumb .photo-del {
+    position: absolute; top: 2px; right: 2px;
+    background: rgba(0,0,0,.65); color: #fff;
+    border: none; border-radius: 50%;
+    width: 18px; height: 18px; font-size: 11px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+  }
+
+  /* EXPORT MODAL */
+  .export-modal-backdrop {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(10,22,40,.55);
+    display: flex; align-items: flex-end; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity .2s;
+  }
+  .export-modal-backdrop.show { opacity: 1; pointer-events: all; }
+  .export-modal {
+    background: var(--paper);
+    border-radius: 16px 16px 0 0;
+    padding: 24px 20px 32px;
+    width: 100%; max-width: 480px;
+    transform: translateY(100%); transition: transform .25s ease;
+    max-height: 85vh; overflow-y: auto;
+  }
+  .export-modal-backdrop.show .export-modal { transform: translateY(0); }
+  .export-modal h3 { font-size: 18px; margin-bottom: 16px; }
+  .export-tpl-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;
+  }
+  .export-tpl-btn {
+    border: 2px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 14px 10px;
+    background: var(--paper);
+    text-align: center;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .export-tpl-btn:hover { border-color: var(--ink); }
+  .export-tpl-btn.active { border-color: var(--accent); background: var(--accent-bg); }
+  .export-tpl-btn .tpl-icon { font-size: 26px; margin-bottom: 6px; }
+  .export-tpl-btn .tpl-name { font-size: 13px; font-weight: 600; color: var(--ink); }
+  .export-tpl-btn .tpl-desc { font-size: 11px; color: var(--ink-mute); margin-top: 2px; }
+  .export-actions { display: flex; gap: 10px; }
+  .export-actions button { flex: 1; }
+
   /* FAB FOR DICTATION TARGET */
   .target-hint {
     position: fixed;
@@ -827,9 +941,9 @@
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
         <span>Enregistrer</span>
       </button>
-      <button class="btn btn-accent" onclick="App.exportPDF()">
+      <button class="btn btn-accent" onclick="App.openExportModal()">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        <span>Exporter PDF</span>
+        <span>Exporter</span>
       </button>
       <button class="btn" onclick="App.copyText()">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
@@ -971,6 +1085,49 @@
     </div>
   </section>
 </main>
+
+<!-- EXPORT MODAL -->
+<div class="export-modal-backdrop" id="export-modal">
+  <div class="export-modal">
+    <h3 style="font-family:'Fraunces',serif">Exporter le CRO</h3>
+    <p style="color:var(--ink-mute);font-size:13px;margin-top:-8px;margin-bottom:16px">Choisissez un modèle de mise en page</p>
+    <div class="export-tpl-grid" id="export-tpl-grid">
+      <button class="export-tpl-btn active" data-tpl="classique" onclick="App.selectExportTpl('classique',this)">
+        <div class="tpl-icon">📄</div>
+        <div class="tpl-name">Classique</div>
+        <div class="tpl-desc">Sections numérotées, compact</div>
+      </button>
+      <button class="export-tpl-btn" data-tpl="hospitalier" onclick="App.selectExportTpl('hospitalier',this)">
+        <div class="tpl-icon">🏥</div>
+        <div class="tpl-name">Hospitalier</div>
+        <div class="tpl-desc">En-tête institutionnel, colonnes</div>
+      </button>
+      <button class="export-tpl-btn" data-tpl="narratif" onclick="App.selectExportTpl('narratif',this)">
+        <div class="tpl-icon">📝</div>
+        <div class="tpl-name">Narratif</div>
+        <div class="tpl-desc">Texte continu, sans labels</div>
+      </button>
+      <button class="export-tpl-btn" data-tpl="tableau" onclick="App.selectExportTpl('tableau',this)">
+        <div class="tpl-icon">📊</div>
+        <div class="tpl-name">Tableau</div>
+        <div class="tpl-desc">Grille structurée, lisible</div>
+      </button>
+    </div>
+    <div style="margin-bottom:16px">
+      <label style="display:flex;align-items:center;gap:10px;font-size:14px;cursor:pointer">
+        <input type="checkbox" id="export-include-photos" checked style="width:18px;height:18px;accent-color:var(--accent)">
+        Inclure les photos per-opératoires
+      </label>
+    </div>
+    <div class="export-actions">
+      <button class="btn" onclick="App.closeExportModal()">Annuler</button>
+      <button class="btn btn-accent" onclick="App.exportPDF()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Exporter PDF
+      </button>
+    </div>
+  </div>
+</div>
 
 <!-- TARGET HINT -->
 <div class="target-hint" id="target-hint">
@@ -1215,8 +1372,9 @@ const SECTIONS = [
     title: 'Examens complémentaires',
     fields: [
       { id: 'biologie', label: 'Examens biologiques', type: 'textarea', dictTargets: ['biologie', 'biologique', 'bilan'] },
-      { id: 'imagerie', label: 'Examens d\'imagerie', type: 'textarea', dictTargets: ['imagerie', 'scanner', 'échographie', 'tdm'] }
-    ]
+      { id: 'imagerie', label: 'Résultats d\'imagerie', type: 'textarea', dictTargets: ['imagerie', 'scanner', 'échographie', 'tdm'] }
+    ],
+    special: 'paraclinique'
   },
   {
     id: 'diagnostic',
@@ -1245,6 +1403,7 @@ const SECTIONS = [
   {
     id: 'peroperatoire',
     title: 'Per-opératoire',
+    special: 'peroperatoire',
     fields: [
       { id: 'constatations', label: 'Constatations per-opératoires', type: 'textarea', dictTargets: ['constatation', 'constatations', 'exploration'] },
       { id: 'geste', label: 'Geste réalisé', type: 'textarea', dictTargets: ['geste', 'technique', 'réalisé'] },
@@ -1579,9 +1738,12 @@ const App = {
       approach: 'coelioscopie',
       fields: {
         date_intervention: new Date().toISOString().slice(0, 10)
-      }
+      },
+      photos_perop: [],     // [{dataUrl, caption}]
+      imagerie_files: []    // [{dataUrl, caption}]
     };
     this.currentTemplate = 'none';
+    this.currentExportTpl = 'classique';
     document.getElementById('btn-delete').style.display = 'none';
     this.renderEditor();
   },
@@ -1590,7 +1752,10 @@ const App = {
     const cro = await DB.getCRO(id);
     if (!cro) return;
     this.currentCRO = cro;
+    if (!this.currentCRO.photos_perop) this.currentCRO.photos_perop = [];
+    if (!this.currentCRO.imagerie_files) this.currentCRO.imagerie_files = [];
     this.currentTemplate = cro.template || 'none';
+    this.currentExportTpl = this.currentExportTpl || 'classique';
     document.getElementById('btn-delete').style.display = '';
     this.renderEditor();
     this.go('editor');
@@ -1635,34 +1800,72 @@ const App = {
   },
 
   selectApproach(key) {
-    // Détails par défaut par voie (si le champ voie_detail est vide ou générique)
     const VOIE_DEFAULTS = {
-      coelioscopie: 'Coelioscopie à 3 trocarts : optique ombilical 10mm, deux trocarts opérateurs 5mm. Pneumopéritoine 12 mmHg établi par open-coelio.',
-      laparotomie: 'Laparotomie médiane.',
-      coelio_convertie: 'Coelioscopie convertie en laparotomie médiane après [raison].',
-      robot: 'Chirurgie robot-assistée : trocart caméra 12mm, trois bras robotisés 8mm, trocart assistant 12mm. Arrimage du robot.',
-      autre: ''
+      coelioscopie: {
+        voie_detail: 'Coelioscopie à 3 trocarts : optique ombilical 10mm, deux trocarts opérateurs 5mm. Pneumopéritoine 12 mmHg établi par open-coelio.',
+        conclusion_suffix: 'par coelioscopie'
+      },
+      laparotomie: {
+        voie_detail: 'Laparotomie médiane.',
+        conclusion_suffix: 'par laparotomie'
+      },
+      coelio_convertie: {
+        voie_detail: 'Coelioscopie convertie en laparotomie médiane après [raison].',
+        conclusion_suffix: 'par coelioscopie convertie en laparotomie'
+      },
+      robot: {
+        voie_detail: 'Chirurgie robot-assistée : trocart caméra 12mm, trois bras robotisés 8mm, trocart assistant 12mm. Arrimage du robot.',
+        conclusion_suffix: 'par chirurgie robot-assistée'
+      },
+      autre: { voie_detail: '', conclusion_suffix: '' }
     };
+
     const prevApproach = this.currentCRO.approach;
     this.currentCRO.approach = key;
+    const defaults = VOIE_DEFAULTS[key] || {};
+    const prevDefaults = VOIE_DEFAULTS[prevApproach] || {};
+    const tpl = TEMPLATES[this.currentCRO.template] || TEMPLATES.none;
 
-    // Met à jour voie_detail si vide OU si c'était encore le défaut de l'ancienne voie
-    const prevDefault = VOIE_DEFAULTS[prevApproach] || '';
+    // --- Met à jour voie_detail ---
     const currentDetail = (this.currentCRO.fields['voie_detail'] || '').trim();
-    const tplDefault = (TEMPLATES[this.currentCRO.template]?.defaults?.voie_detail || '').trim();
+    const prevVoieDefault = prevDefaults.voie_detail || '';
+    const tplVoieDefault = (tpl.defaults?.voie_detail || '').trim();
+    const voieIsDefault = currentDetail === '' || currentDetail === prevVoieDefault || currentDetail === tplVoieDefault;
+    if (voieIsDefault && defaults.voie_detail) {
+      this.currentCRO.fields['voie_detail'] = defaults.voie_detail;
+      const elVoie = document.getElementById('field-voie_detail');
+      if (elVoie) elVoie.value = defaults.voie_detail;
+    }
 
-    const isDefault = currentDetail === '' || currentDetail === prevDefault || currentDetail === tplDefault;
-    if (isDefault && VOIE_DEFAULTS[key]) {
-      this.currentCRO.fields['voie_detail'] = VOIE_DEFAULTS[key];
-      // Met à jour le textarea dans le DOM directement (sans re-render complet)
-      const el = document.getElementById('field-voie_detail');
-      if (el) el.value = VOIE_DEFAULTS[key];
+    // --- Met à jour la conclusion ---
+    if (tpl.defaults?.conclusion && defaults.conclusion_suffix) {
+      const currentConclusion = (this.currentCRO.fields['conclusion'] || '').trim();
+      // Reconstruit la conclusion en remplaçant le suffixe de voie
+      const suffixes = Object.values(VOIE_DEFAULTS).map(d => d.conclusion_suffix).filter(Boolean);
+      let baseConclusion = tpl.defaults.conclusion;
+      // Retire tout suffixe de voie existant dans la conclusion template
+      suffixes.forEach(s => { baseConclusion = baseConclusion.replace(s, '').trim(); });
+      baseConclusion = baseConclusion.replace(/\.\s*$/, '').trim(); // retire le point final
+
+      // Vérifie si la conclusion actuelle est encore "générique" (basée sur le template)
+      const tplConclusionBase = (tpl.defaults.conclusion || '').trim();
+      const conclusionIsDefault = currentConclusion === '' ||
+        currentConclusion === tplConclusionBase ||
+        suffixes.some(s => currentConclusion.includes(s));
+
+      if (conclusionIsDefault) {
+        const newConclusion = tplConclusionBase.replace(prevDefaults.conclusion_suffix || '', defaults.conclusion_suffix).trim();
+        this.currentCRO.fields['conclusion'] = newConclusion || (baseConclusion + ' ' + defaults.conclusion_suffix + '.');
+        const elConc = document.getElementById('field-conclusion');
+        if (elConc) elConc.value = this.currentCRO.fields['conclusion'];
+      }
     }
 
     document.querySelectorAll('.approach-btn').forEach(b => {
       b.classList.toggle('active', b.dataset.approach === key);
     });
-    Toast.show('Voie : ' + (key === 'coelioscopie' ? 'Cœlioscopie' : key === 'laparotomie' ? 'Laparotomie' : key), '');
+    const labels = { coelioscopie: 'Cœlioscopie', laparotomie: 'Laparotomie', coelio_convertie: 'Cœlio convertie', robot: 'Robot-assistée', autre: 'Autre' };
+    Toast.show('Voie : ' + (labels[key] || key), '');
   },
 
   renderHome() {
@@ -1788,6 +1991,46 @@ const App = {
           `</div></div>`;
       }
 
+      if (section.special === 'paraclinique') {
+        // Zone upload images d'imagerie
+        const imgFiles = this.currentCRO.imagerie_files || [];
+        inner += `<div style="margin-bottom:16px">
+          <div class="field-label" style="margin-bottom:8px">Images d'imagerie (radio, scanner, écho…)</div>
+          <div class="imagerie-upload-zone" onclick="document.getElementById('imagerie-file-input').click()">
+            <div style="font-size:22px">🩻</div>
+            <p style="margin:4px 0 0;font-size:13px;color:var(--ink-mute)">Appuyez pour ajouter des images</p>
+          </div>
+          <input type="file" id="imagerie-file-input" accept="image/*" multiple style="display:none" onchange="App.addImagerieFiles(event)">
+          <div class="imagerie-thumb-grid" id="imagerie-thumb-grid">
+            ${imgFiles.map((f, i) => `<div class="imagerie-thumb">
+              <img src="${f.dataUrl}" alt="${f.caption || ''}">
+              <button class="photo-del" onclick="App.removeImagerieFile(${i})">✕</button>
+            </div>`).join('')}
+          </div>
+        </div>`;
+      }
+
+      if (section.special === 'peroperatoire') {
+        // Zone upload photos per-op
+        const photos = this.currentCRO.photos_perop || [];
+        inner += `<div style="margin-top:8px;margin-bottom:16px">
+          <div class="field-label" style="margin-bottom:8px">Photos per-opératoires</div>
+          <div class="photo-upload-zone" onclick="document.getElementById('photo-perop-input').click()">
+            <div class="upload-icon">📸</div>
+            <p>Appuyez pour ajouter des photos</p>
+            <p style="font-size:11px;margin-top:4px">Elles seront intégrées dans l'export PDF</p>
+          </div>
+          <input type="file" id="photo-perop-input" accept="image/*" multiple style="display:none" onchange="App.addPhotoPerop(event)">
+          <div class="photo-grid" id="photo-perop-grid">
+            ${photos.map((p, i) => `<div class="photo-thumb">
+              <img src="${p.dataUrl}" alt="${p.caption || 'Photo ' + (i+1)}">
+              <button class="photo-del" onclick="App.removePhotoPerop(${i})">✕</button>
+              ${p.caption ? `<div class="photo-caption">${p.caption}</div>` : ''}
+            </div>`).join('')}
+          </div>
+        </div>`;
+      }
+
       inner += '<div class="field-grid">';
       section.fields.forEach(field => {
         const val = this.escape(this.currentCRO.fields[field.id] || '');
@@ -1834,6 +2077,84 @@ const App = {
   updateField(id, value) {
     if (!this.currentCRO) return;
     this.currentCRO.fields[id] = value;
+  },
+
+  // ---- Photo per-op management ----
+  addPhotoPerop(event) {
+    const files = Array.from(event.target.files);
+    if (!this.currentCRO.photos_perop) this.currentCRO.photos_perop = [];
+    let loaded = 0;
+    files.forEach(file => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.currentCRO.photos_perop.push({ dataUrl: e.target.result, caption: file.name.replace(/\.[^.]+$/, '') });
+        loaded++;
+        if (loaded === files.length) this._refreshPhotoGrid();
+      };
+      reader.readAsDataURL(file);
+    });
+    event.target.value = '';
+  },
+
+  removePhotoPerop(idx) {
+    this.currentCRO.photos_perop.splice(idx, 1);
+    this._refreshPhotoGrid();
+  },
+
+  _refreshPhotoGrid() {
+    const grid = document.getElementById('photo-perop-grid');
+    if (!grid) return;
+    const photos = this.currentCRO.photos_perop || [];
+    grid.innerHTML = photos.map((p, i) => `<div class="photo-thumb">
+      <img src="${p.dataUrl}" alt="${p.caption || 'Photo ' + (i+1)}">
+      <button class="photo-del" onclick="App.removePhotoPerop(${i})">✕</button>
+      ${p.caption ? `<div class="photo-caption">${this.escape(p.caption)}</div>` : ''}
+    </div>`).join('');
+  },
+
+  // ---- Imagerie file management ----
+  addImagerieFiles(event) {
+    const files = Array.from(event.target.files);
+    if (!this.currentCRO.imagerie_files) this.currentCRO.imagerie_files = [];
+    let loaded = 0;
+    files.forEach(file => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.currentCRO.imagerie_files.push({ dataUrl: e.target.result, caption: file.name.replace(/\.[^.]+$/, '') });
+        loaded++;
+        if (loaded === files.length) this._refreshImagerieGrid();
+      };
+      reader.readAsDataURL(file);
+    });
+    event.target.value = '';
+  },
+
+  removeImagerieFile(idx) {
+    this.currentCRO.imagerie_files.splice(idx, 1);
+    this._refreshImagerieGrid();
+  },
+
+  _refreshImagerieGrid() {
+    const grid = document.getElementById('imagerie-thumb-grid');
+    if (!grid) return;
+    const files = this.currentCRO.imagerie_files || [];
+    grid.innerHTML = files.map((f, i) => `<div class="imagerie-thumb">
+      <img src="${f.dataUrl}" alt="${f.caption || ''}">
+      <button class="photo-del" onclick="App.removeImagerieFile(${i})">✕</button>
+    </div>`).join('');
+  },
+
+  // ---- Export modal ----
+  openExportModal() {
+    document.getElementById('export-modal').classList.add('show');
+  },
+  closeExportModal() {
+    document.getElementById('export-modal').classList.remove('show');
+  },
+  selectExportTpl(tpl, btn) {
+    this.currentExportTpl = tpl;
+    document.querySelectorAll('.export-tpl-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
   },
 
   async saveCRO() {
@@ -1934,122 +2255,245 @@ const App = {
 
   async exportPDF() {
     if (!this.currentCRO) return;
+    this.closeExportModal();
     const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({ unit: 'mm', format: 'a4' });
     const tpl = TEMPLATES[this.currentCRO.template] || TEMPLATES.none;
     const approach = APPROACHES.find(a => a.id === this.currentCRO.approach) || APPROACHES[0];
     const f = this.currentCRO.fields;
     const surgeon = await DB.getSetting('surgeon') || '';
     const hospital = await DB.getSetting('hospital') || '';
+    const exportTpl = this.currentExportTpl || 'classique';
+    const includePhotos = document.getElementById('export-include-photos')?.checked !== false;
 
+    const doc = new jsPDF({ unit: 'mm', format: 'a4' });
     const pageWidth = 210;
     const pageHeight = 297;
     const margin = 18;
     const maxWidth = pageWidth - 2 * margin;
     let y = margin;
 
-    const checkPage = (lineHeight) => {
-      if (y + lineHeight > pageHeight - margin) {
-        doc.addPage();
-        y = margin;
-      }
+    const checkPage = (need) => {
+      if (y + need > pageHeight - margin) { doc.addPage(); y = margin; return true; }
+      return false;
     };
 
-    // Header
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(16);
-    doc.text('COMPTE RENDU OPÉRATOIRE', pageWidth / 2, y, { align: 'center' });
-    y += 7;
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(10);
-    doc.setTextColor(80);
-    if (hospital) {
-      doc.text(hospital, pageWidth / 2, y, { align: 'center' });
-      y += 5;
-    }
-    doc.setTextColor(0);
-    y += 4;
-    doc.setDrawColor(180);
-    doc.line(margin, y, pageWidth - margin, y);
-    y += 6;
+    const writeWrapped = (text, x, startY, width, lineH) => {
+      const lines = doc.splitTextToSize(text || '', width);
+      lines.forEach(line => { checkPage(lineH); doc.text(line, x, y); y += lineH; });
+      return lines.length;
+    };
 
-    // Meta block
-    doc.setFontSize(10);
-    doc.setFont('helvetica', 'bold');
-    doc.text('Intervention :', margin, y);
-    doc.setFont('helvetica', 'normal');
-    doc.text(tpl.name, margin + 30, y);
-    doc.setFont('helvetica', 'bold');
-    doc.text('Voie d\'abord :', margin + 100, y);
-    doc.setFont('helvetica', 'normal');
-    doc.text(approach.label, margin + 130, y);
-    y += 5;
-    doc.setFont('helvetica', 'bold');
-    doc.text('Date :', margin, y);
-    doc.setFont('helvetica', 'normal');
-    doc.text(this.formatDate(f.date_intervention), margin + 30, y);
-    if (surgeon) {
-      doc.setFont('helvetica', 'bold');
-      doc.text('Chirurgien :', margin + 100, y);
-      doc.setFont('helvetica', 'normal');
-      doc.text(surgeon, margin + 130, y);
-    }
-    y += 8;
+    // ======================================================
+    if (exportTpl === 'classique') {
+      // --- CLASSIQUE ---
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(16);
+      doc.text('COMPTE RENDU OPÉRATOIRE', pageWidth/2, y, { align:'center' }); y += 7;
+      doc.setFont('helvetica','normal'); doc.setFontSize(10); doc.setTextColor(80);
+      if (hospital) { doc.text(hospital, pageWidth/2, y, { align:'center' }); y += 5; }
+      doc.setTextColor(0); y += 2;
+      doc.setDrawColor(180); doc.line(margin, y, pageWidth-margin, y); y += 6;
 
-    // Sections
-    SECTIONS.forEach((section, idx) => {
-      const sectionFields = section.fields.filter(field => f[field.id] && f[field.id].trim());
-      if (sectionFields.length === 0) return;
-
-      checkPage(10);
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(11);
-      doc.setTextColor(31, 95, 74);
-      doc.text(`${idx + 1}. ${section.title.toUpperCase()}`, margin, y);
-      y += 5;
-      doc.setDrawColor(31, 95, 74);
-      doc.setLineWidth(0.3);
-      doc.line(margin, y, pageWidth - margin, y);
-      y += 4;
-      doc.setTextColor(0);
-      doc.setLineWidth(0.2);
-      doc.setDrawColor(180);
-
-      sectionFields.forEach(field => {
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(9);
-        doc.setTextColor(60);
-        checkPage(5);
-        doc.text(field.label + ' :', margin, y);
-        y += 4;
-        doc.setFont('helvetica', 'normal');
-        doc.setFontSize(10);
-        doc.setTextColor(0);
-        const lines = doc.splitTextToSize(f[field.id], maxWidth);
-        lines.forEach(line => {
-          checkPage(5);
-          doc.text(line, margin, y);
-          y += 4.5;
-        });
-        y += 2;
+      doc.setFontSize(10);
+      const meta = [
+        ['Intervention', tpl.name], ['Voie d'abord', approach.label],
+        ['Date', this.formatDate(f.date_intervention)], ['Chirurgien', surgeon]
+      ].filter(([,v]) => v);
+      meta.forEach(([k,v], i) => {
+        const x = i % 2 === 0 ? margin : margin + 95;
+        if (i % 2 === 0 && i > 0) y += 5;
+        doc.setFont('helvetica','bold'); doc.text(k+' :', x, y);
+        doc.setFont('helvetica','normal'); doc.text(v, x+28, y);
+        if (i % 2 === 1) y += 5;
       });
-      y += 3;
-    });
+      y += 8;
 
-    // Footer
+      SECTIONS.forEach((section, idx) => {
+        const sectionFields = section.fields.filter(field => f[field.id] && f[field.id].trim());
+        if (sectionFields.length === 0) return;
+        checkPage(12);
+        doc.setFont('helvetica','bold'); doc.setFontSize(11); doc.setTextColor(31,95,74);
+        doc.text(`${idx+1}. ${section.title.toUpperCase()}`, margin, y); y += 4;
+        doc.setDrawColor(31,95,74); doc.setLineWidth(0.3); doc.line(margin, y, pageWidth-margin, y); y += 4;
+        doc.setTextColor(0); doc.setLineWidth(0.2); doc.setDrawColor(180);
+        sectionFields.forEach(field => {
+          checkPage(8);
+          doc.setFont('helvetica','bold'); doc.setFontSize(9); doc.setTextColor(60);
+          doc.text(field.label+' :', margin, y); y += 4;
+          doc.setFont('helvetica','normal'); doc.setFontSize(10); doc.setTextColor(0);
+          writeWrapped(f[field.id], margin, y, maxWidth, 4.5);
+          y += 2;
+        });
+        y += 3;
+      });
+
+    // ======================================================
+    } else if (exportTpl === 'hospitalier') {
+      // --- HOSPITALIER : en-tête avec colonnes, tableau patient ---
+      // Header bar
+      doc.setFillColor(10,22,40);
+      doc.rect(0, 0, pageWidth, 22, 'F');
+      doc.setFont('helvetica','bold'); doc.setFontSize(14); doc.setTextColor(255);
+      doc.text('COMPTE RENDU OPÉRATOIRE', margin, 13);
+      doc.setFontSize(9); doc.setFont('helvetica','normal');
+      if (hospital) doc.text(hospital, pageWidth-margin, 13, { align:'right' });
+      doc.setTextColor(0); y = 30;
+
+      // Patient info box
+      doc.setDrawColor(200); doc.setLineWidth(0.3);
+      doc.rect(margin, y, maxWidth, 18);
+      doc.setFillColor(244,241,234); doc.rect(margin, y, maxWidth, 6, 'F');
+      doc.setFont('helvetica','bold'); doc.setFontSize(9); doc.setTextColor(10,22,40);
+      doc.text('PATIENT', margin+3, y+4.5);
+      doc.setFont('helvetica','normal'); doc.setTextColor(0); doc.setFontSize(9);
+      const patInfo = [
+        ['Nom', f.patient_nom||'—'], ['Âge', f.patient_age ? f.patient_age+' ans' : '—'],
+        ['N° dossier', f.patient_id||'—'], ['Date', this.formatDate(f.date_intervention)]
+      ];
+      patInfo.forEach(([k,v], i) => {
+        const col = i < 2 ? 0 : 1;
+        const row = i % 2;
+        doc.setFont('helvetica','bold');
+        doc.text(k+' :', margin + col*85 + 3, y + 9 + row*5);
+        doc.setFont('helvetica','normal');
+        doc.text(v, margin + col*85 + 22, y + 9 + row*5);
+      });
+      y += 24;
+
+      // Intervention summary bar
+      doc.setFillColor(31,95,74); doc.rect(margin, y, maxWidth, 8, 'F');
+      doc.setFont('helvetica','bold'); doc.setFontSize(9); doc.setTextColor(255);
+      doc.text(`${tpl.name}  ·  ${approach.label}${surgeon ? '  ·  '+surgeon : ''}`, margin+3, y+5.5);
+      doc.setTextColor(0); y += 14;
+
+      SECTIONS.forEach((section, idx) => {
+        const sectionFields = section.fields.filter(field => f[field.id] && f[field.id].trim());
+        if (sectionFields.length === 0) return;
+        checkPage(14);
+        doc.setFont('helvetica','bold'); doc.setFontSize(10); doc.setTextColor(10,22,40);
+        doc.setFillColor(228,232,236); doc.rect(margin, y-4, maxWidth, 7, 'F');
+        doc.text(section.title.toUpperCase(), margin+3, y); y += 6;
+        doc.setTextColor(0);
+        sectionFields.forEach(field => {
+          checkPage(8);
+          doc.setFont('helvetica','bold'); doc.setFontSize(8); doc.setTextColor(80);
+          doc.text(field.label+' :', margin+2, y); y += 3.5;
+          doc.setFont('helvetica','normal'); doc.setFontSize(9.5); doc.setTextColor(0);
+          writeWrapped(f[field.id], margin+2, y, maxWidth-4, 4.5);
+          y += 1;
+        });
+        y += 4;
+      });
+
+    // ======================================================
+    } else if (exportTpl === 'narratif') {
+      // --- NARRATIF : texte continu sans labels ---
+      doc.setFont('helvetica','bold'); doc.setFontSize(14);
+      doc.text('Compte rendu opératoire', margin, y); y += 6;
+      doc.setFont('helvetica','normal'); doc.setFontSize(10); doc.setTextColor(80);
+      const subline = [tpl.name, approach.label, this.formatDate(f.date_intervention), surgeon].filter(Boolean).join(' · ');
+      doc.text(subline, margin, y); y += 4;
+      doc.setTextColor(0); doc.setDrawColor(180); doc.line(margin, y, pageWidth-margin, y); y += 7;
+
+      // Build narrative text
+      const narrativeOrder = ['motif','antecedents','examen','biologie','imagerie','diagnostic','indication','anesthesie','equipe','voie_detail','constatations','geste','incidents','drainage','fermeture','pertes','suites','traitement','conclusion'];
+      doc.setFont('helvetica','normal'); doc.setFontSize(10.5);
+      let para = '';
+      narrativeOrder.forEach(id => {
+        if (f[id] && f[id].trim()) {
+          para += (para ? ' ' : '') + f[id].trim();
+          if (!f[id].trim().endsWith('.')) para += '.';
+        }
+      });
+      const lines = doc.splitTextToSize(para, maxWidth);
+      lines.forEach(line => { checkPage(5); doc.text(line, margin, y); y += 5; });
+
+    // ======================================================
+    } else if (exportTpl === 'tableau') {
+      // --- TABLEAU : grille structurée ---
+      doc.setFont('helvetica','bold'); doc.setFontSize(15);
+      doc.text('CRO — '+tpl.name, margin, y); y += 5;
+      doc.setFont('helvetica','normal'); doc.setFontSize(9); doc.setTextColor(80);
+      doc.text([approach.label, this.formatDate(f.date_intervention), surgeon].filter(Boolean).join('  |  '), margin, y);
+      y += 4; doc.setTextColor(0);
+      doc.setDrawColor(10,22,40); doc.setLineWidth(0.5); doc.line(margin, y, pageWidth-margin, y); y += 6;
+
+      // Draw table rows
+      const rowH = 6;
+      const labelW = 55;
+      SECTIONS.forEach(section => {
+        const sectionFields = section.fields.filter(field => f[field.id] && f[field.id].trim());
+        if (!sectionFields.length) return;
+        checkPage(10);
+        // Section header row
+        doc.setFillColor(10,22,40); doc.rect(margin, y-4.5, maxWidth, 6.5, 'F');
+        doc.setFont('helvetica','bold'); doc.setFontSize(9); doc.setTextColor(255);
+        doc.text(section.title.toUpperCase(), margin+2, y); y += 3;
+        doc.setTextColor(0);
+        sectionFields.forEach(field => {
+          const lines = doc.splitTextToSize(f[field.id]||'', maxWidth - labelW - 4);
+          const cellH = Math.max(rowH, lines.length * 4.2 + 3);
+          checkPage(cellH + 2);
+          doc.setDrawColor(200); doc.setLineWidth(0.2);
+          doc.rect(margin, y-0.5, labelW, cellH);
+          doc.rect(margin+labelW, y-0.5, maxWidth-labelW, cellH);
+          doc.setFillColor(248,246,242); doc.rect(margin, y-0.5, labelW, cellH, 'F');
+          doc.setFont('helvetica','bold'); doc.setFontSize(8); doc.setTextColor(60);
+          const lbl = doc.splitTextToSize(field.label, labelW-4);
+          doc.text(lbl, margin+2, y+2.5);
+          doc.setFont('helvetica','normal'); doc.setFontSize(9); doc.setTextColor(0);
+          lines.forEach((line, li) => { doc.text(line, margin+labelW+3, y + 2.5 + li*4.2); });
+          y += cellH + 1;
+        });
+        y += 3;
+      });
+    }
+
+    // ======================================================
+    // PHOTOS PER-OP (all templates)
+    // ======================================================
+    if (includePhotos) {
+      const photos = this.currentCRO.photos_perop || [];
+      const imgFiles = this.currentCRO.imagerie_files || [];
+      const allPhotos = [...imgFiles.map(p => ({...p, label:'Imagerie'})), ...photos.map(p => ({...p, label:'Per-opératoire'}))];
+      if (allPhotos.length > 0) {
+        doc.addPage(); y = margin;
+        doc.setFont('helvetica','bold'); doc.setFontSize(12); doc.setTextColor(31,95,74);
+        doc.text('ICONOGRAPHIE', margin, y); y += 3;
+        doc.setDrawColor(31,95,74); doc.line(margin, y, pageWidth-margin, y); y += 8;
+        doc.setTextColor(0);
+
+        const imgW = (maxWidth - 8) / 2;
+        const imgH = imgW * 0.75;
+        let col = 0;
+        for (const photo of allPhotos) {
+          if (col === 0) checkPage(imgH + 20);
+          const x = margin + col * (imgW + 8);
+          try {
+            doc.addImage(photo.dataUrl, 'JPEG', x, y, imgW, imgH);
+            doc.setFont('helvetica','italic'); doc.setFontSize(8); doc.setTextColor(80);
+            doc.text((photo.caption || photo.label || '').slice(0,60), x, y + imgH + 4);
+            doc.setTextColor(0);
+          } catch(e) {}
+          col++;
+          if (col >= 2) { col = 0; y += imgH + 12; }
+        }
+        if (col > 0) y += imgH + 12;
+      }
+    }
+
+    // Footer on all pages
     const pageCount = doc.internal.getNumberOfPages();
     for (let i = 1; i <= pageCount; i++) {
       doc.setPage(i);
-      doc.setFontSize(8);
-      doc.setTextColor(150);
+      doc.setFontSize(8); doc.setTextColor(150);
       doc.text(`OpSurg · ${this.formatDate(new Date().toISOString())} · Page ${i}/${pageCount}`,
-        pageWidth / 2, pageHeight - 10, { align: 'center' });
+        pageWidth/2, pageHeight-8, { align:'center' });
     }
 
-    const patientName = (f.patient_nom || 'patient').replace(/[^a-zA-Z0-9]/g, '_');
-    const dateStr = (f.date_intervention || new Date().toISOString().slice(0,10)).replace(/-/g, '');
-    doc.save(`CRO_${dateStr}_${patientName}.pdf`);
-    Toast.show('PDF exporté', 'success');
+    const patientName = (f.patient_nom||'patient').replace(/[^a-zA-Z0-9]/g,'_');
+    const dateStr = (f.date_intervention||new Date().toISOString().slice(0,10)).replace(/-/g,'');
+    doc.save(`CRO_${dateStr}_${patientName}_${exportTpl}.pdf`);
+    Toast.show('PDF exporté · ' + exportTpl, 'success');
   }
 };
 
