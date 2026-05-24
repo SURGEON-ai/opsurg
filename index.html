@@ -610,6 +610,97 @@
     box-shadow: 0 0 0 3px var(--accent-bg);
   }
 
+  /* TEAM BLOCKS (équipe scindée dynamique) */
+  .team-block {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 12px;
+    margin-bottom: 12px;
+    background: var(--paper);
+  }
+  .team-block-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.03em;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+  .team-block .field-grid { margin-bottom: 12px; }
+  .team-list { margin-bottom: 10px; }
+  .team-list:last-child { margin-bottom: 0; }
+  .team-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .team-row input { flex: 1; }
+  .team-del {
+    flex: 0 0 auto;
+    width: 30px; height: 30px;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    border-radius: 6px;
+    color: var(--ink-mute);
+    cursor: pointer;
+    font-size: 13px;
+    transition: all .15s;
+  }
+  .team-del:hover { color: #c0392b; border-color: #c0392b; }
+  .team-empty { font-size: 12px; color: var(--ink-mute); margin: 2px 0 6px; font-style: italic; }
+  .team-add {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--accent);
+    background: var(--accent-bg);
+    border: 1px dashed var(--accent);
+    border-radius: 6px;
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .team-add:hover { background: var(--accent); color: #fff; }
+
+  /* COMPLICATION TOGGLE (Clavien-Dindo) */
+  .compl-toggle {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 10px 12px;
+    margin-bottom: 14px;
+    background: var(--paper);
+  }
+  .compl-check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .compl-check input { width: 16px; height: 16px; cursor: pointer; }
+  .compl-hint { font-size: 11px; color: var(--ink-mute); margin: 6px 0 0 24px; }
+
+  /* BULLET BUTTON */
+  .field-label .bullet-btn {
+    float: right;
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--ink-mute);
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    padding: 1px 7px;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .field-label .bullet-btn:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
   /* APPROACH SELECTOR */
   .approach-selector {
     display: flex;
@@ -1649,7 +1740,6 @@ const TEMPLATES = {
       diagnostic: "Appendicite aiguë.",
       indication: "Indication opératoire posée pour appendicectomie en urgence.",
       anesthesie: "Anesthésie générale avec intubation orotrachéale.",
-      equipe: "Opérateur : [Nom]. Aide : [Nom]. Anesthésiste : [Nom]. Instrumentiste : [Nom].",
       voie: "coelioscopie",
       voie_detail: "Coelioscopie à 3 trocarts : optique ombilical 10mm, trocart sus-pubien 5mm, trocart fosse iliaque gauche 5mm. Pneumopéritoine établi par open-coelio ombilicale, pression 12 mmHg.",
       constatations: "Exploration de la cavité péritonéale. Appendice rétrocaecal / pelvien / latéro-caecal, inflammatoire, congestif, sans perforation visible. Pas de liquide libre / liquide louche en quantité modérée. Reste de l'exploration sans particularité.",
@@ -1675,7 +1765,6 @@ const TEMPLATES = {
       diagnostic: "Hernie inguinale [droite/gauche] non compliquée.",
       indication: "Indication de cure herniaire à froid.",
       anesthesie: "Anesthésie générale.",
-      equipe: "Opérateur : [Nom]. Aide : [Nom]. Anesthésiste : [Nom].",
       voie: "coelioscopie",
       voie_detail: "Coelioscopie TAPP : optique sous-ombilical 10mm, deux trocarts opérateurs 5mm en pararectal droit et gauche. Pneumopéritoine 12 mmHg.",
       constatations: "Hernie inguinale [directe/indirecte] [droite/gauche], collet [X] cm. Sac herniaire contenant [graisse pré-péritonéale / épiploon / anse grêle]. Orifice controlatéral exploré : [libre / hernie associée].",
@@ -1701,7 +1790,6 @@ const TEMPLATES = {
       diagnostic: "Lithiase vésiculaire symptomatique.",
       indication: "Cholécystectomie à froid par coelioscopie.",
       anesthesie: "Anesthésie générale avec intubation orotrachéale.",
-      equipe: "Opérateur : [Nom]. Aide : [Nom]. Anesthésiste : [Nom]. Instrumentiste : [Nom].",
       voie: "coelioscopie",
       voie_detail: "Coelioscopie à 4 trocarts (technique américaine) : optique ombilical 10mm par open-coelio, trocart épigastrique 10mm, deux trocarts 5mm en sous-costal droit. Pneumopéritoine 12 mmHg.",
       constatations: "Vésicule biliaire de taille normale / hydrocholécyste, à paroi fine / épaissie. Adhérences épiplooïques modérées. Triangle de Calot bien identifié. Foie d'aspect normal. Reste de l'exploration sans particularité.",
@@ -1727,7 +1815,6 @@ const TEMPLATES = {
       diagnostic: "Péritonite aiguë généralisée par [perforation appendiculaire / ulcère perforé / perforation diverticulaire / autre].",
       indication: "Laparotomie / coelioscopie en urgence.",
       anesthesie: "Anesthésie générale, remplissage, vasopresseurs si besoin.",
-      equipe: "Opérateur : [Nom]. Aide : [Nom]. Anesthésiste : [Nom].",
       voie: "laparotomie",
       voie_detail: "Laparotomie médiane à cheval sur l'ombilic / coelioscopie exploratrice à 3 trocarts convertie en laparotomie.",
       constatations: "Épanchement péritonéal purulent / stercoral en quantité [modérée/abondante], prélevé pour bactériologie. Fausses membranes diffuses. Foyer de perforation identifié au niveau de [siège]. Reste de l'exploration : [...].",
@@ -1753,7 +1840,6 @@ const TEMPLATES = {
       diagnostic: "Diagnostic préopératoire : [...]. À confirmer en per-opératoire.",
       indication: "Laparotomie exploratrice.",
       anesthesie: "Anesthésie générale.",
-      equipe: "Opérateur : [Nom]. Aide : [Nom]. Anesthésiste : [Nom].",
       voie: "laparotomie",
       voie_detail: "Laparotomie médiane.",
       constatations: "Exploration complète de la cavité abdominale : [...]. Foie, vésicule, estomac, duodénum, grêle de l'angle de Treitz au carrefour iléo-caecal, côlon, rectum, organes pelviens : [...].",
@@ -1779,7 +1865,6 @@ const TEMPLATES = {
       diagnostic: "Occlusion intestinale [haute/basse] par [...].",
       indication: "Laparotomie en urgence après réanimation hydro-électrolytique.",
       anesthesie: "Anesthésie générale, sonde nasogastrique, sondage urinaire.",
-      equipe: "Opérateur : [Nom]. Aide : [Nom]. Anesthésiste : [Nom].",
       voie: "laparotomie",
       voie_detail: "Laparotomie médiane à cheval sur l'ombilic.",
       constatations: "Anses grêles dilatées en amont, plates en aval. Obstacle identifié : [bride / volvulus / sténose / tumeur]. Viabilité intestinale : [bonne / souffrance / nécrose].",
@@ -1805,7 +1890,6 @@ const TEMPLATES = {
       diagnostic: "Traumatisme abdominal avec [lésion(s) viscérale(s)].",
       indication: "Laparotomie en urgence pour [hémopéritoine / lésion viscérale / instabilité hémodynamique].",
       anesthesie: "Anesthésie générale, accès veineux de gros calibre, transfusion si nécessaire.",
-      equipe: "Opérateur : [Nom]. Aide : [Nom]. Anesthésiste : [Nom].",
       voie: "laparotomie",
       voie_detail: "Laparotomie médiane xipho-pubienne.",
       constatations: "Hémopéritoine de [X] mL. Lésion identifiée : [rate / foie / mésentère / grêle / autre]. Exploration systématique des 4 quadrants.",
@@ -1817,6 +1901,206 @@ const TEMPLATES = {
       suites: "Surveillance en réanimation.",
       traitement: "Réanimation, antibiothérapie si lésion digestive, antalgiques, anticoagulation préventive secondaire, vaccination post-splénectomie si applicable.",
       conclusion: "Traumatisme abdominal traité chirurgicalement. Évolution à surveiller."
+    }
+  },
+  hemorroidectomie: {
+    name: 'Hémorroïdectomie',
+    code: 'HEM',
+    defaults: {
+      motif: "Hémorroïdes [internes/externes/mixtes] de grade [II/III/IV] symptomatiques : rectorragies, prolapsus, douleurs, résistant au traitement médical bien conduit.",
+      antecedents: "Pas d'antécédent ano-rectal chirurgical. Pas de maladie de Crohn. Pas de troubles de la coagulation.",
+      examen: "Inspection : mamelons hémorroïdaires extériorisés en positions [3h, 7h, 11h]. Toucher rectal : sphincters bien toniques, ampule rectale libre. Anuscopie : hémorroïdes internes volumineuses.",
+      biologie: "Bilan préopératoire standard. NFS, hémostase.",
+      imagerie: "Pas d'imagerie complémentaire nécessaire.",
+      diagnostic: "Hémorroïdes [internes/externes/mixtes] de grade [II/III/IV].",
+      indication: "Indication opératoire posée devant l'échec du traitement médical et instrumental.",
+      anesthesie: "Anesthésie générale / rachianesthésie. Position de la taille / génu-pectorale.",
+      voie: "autre",
+      voie_detail: "Voie ano-périnéale. Position génu-pectorale / taille. Mise en place d'un écarteur de Parks. Bon éclairage.",
+      constatations: "Hémorroïdes [internes/externes] volumineuses en positions [3h, 7h, 11h]. Muqueuse rectale saine. Sphincter bien tonique.",
+      geste: "Hémorroïdectomie pédiculaire selon la technique de Milligan-Morgan [ou Ferguson]. Traction sur le paquet hémorroïdaire. Dissection jusqu'au plan musculaire sphinctérien. Ligature du pédicule vasculaire à la base. Excision du paquet. Hémostase soigneuse. Plaies laissées ouvertes / suturées (Ferguson). Vérification des ponts cutanéo-muqueux entre les plaies.",
+      incidents: "Aucun incident per-opératoire. Sphincter respecté.",
+      drainage: "Pas de drainage. Méchage léger au tulle gras.",
+      fermeture: "Plaies ano-périnéales non suturées (Milligan-Morgan) / suturées au fil résorbable (Ferguson).",
+      pertes: "Minimes.",
+      suites: "Suites prévisibles simples. Bains de siège tièdes 2–3 fois/jour. Alimentation normale dès J0. Antalgiques adaptés. Laxatifs pour éviter la constipation.",
+      traitement: "Antalgiques de palier 1–2. Laxatifs osmotiques. Bains de siège. AINS locaux si besoin. Pas d'antibiothérapie systématique.",
+      conclusion: "Hémorroïdectomie pédiculaire selon Milligan-Morgan pour hémorroïdes grade [X] par voie périnéale."
+    }
+  },
+  fistule_anale: {
+    name: 'Cure de fistule anale',
+    code: 'FIS',
+    defaults: {
+      motif: "Fistule ano-périnéale [inter-sphinctérienne / trans-sphinctérienne / supra-sphinctérienne / sous-cutanée] avec écoulements chroniques, suppuration périnéale récidivante.",
+      antecedents: "Antécédent d'abcès ano-périnéal drainé. Pas de maladie de Crohn. Pas d'irradiation pelvienne.",
+      examen: "Orifice externe de la fistule visible en [localisation]. Trajet palpable/induré. Toucher rectal : orifice interne perçu à [localisation selon l'horloge]. Sphincters bien toniques.",
+      biologie: "Bilan préopératoire standard.",
+      imagerie: "IRM du périnée : fistule [type] avec trajet [localisation]. Rapport avec le sphincter anal externe évalué.",
+      diagnostic: "Fistule ano-périnéale [inter-sphinctérienne / trans-sphinctérienne / sous-cutanée].",
+      indication: "Traitement chirurgical de la fistule.",
+      anesthesie: "Anesthésie générale / rachianesthésie. Position génu-pectorale / décubitus latéral.",
+      voie: "autre",
+      voie_detail: "Voie périnéale exclusive. Position génu-pectorale.",
+      constatations: "Orifice externe de la fistule en [position]. Introduction d'un stylet : trajet [sous-cutané / inter-sphinctérien / trans-sphinctérien]. Orifice interne identifié en [position] au niveau de la ligne pectinée / crypte de [X]. Rapport avec le sphincter : [X]% du sphincter externe impliqué.",
+      geste: "Fistule sous-cutanée/inter-sphinctérienne basse : fistulotomie directe en un temps. Marsupialisation des berges. [OU] Fistule trans-sphinctérienne : pose d'un séton lâche / coupant [ou] lambeau d'avancement muqueux [ou] technique LIFT (Ligation of Intersphincteric Fistula Tract). [OU] Injection de colle biologique.",
+      incidents: "Aucun incident. Sphincter contrôlé.",
+      drainage: "Méchage de la plaie au tulle gras.",
+      fermeture: "Plaie laissée ouverte à cicatrisation dirigée / suture partielle.",
+      pertes: "Minimes.",
+      suites: "Soins locaux biquotidiens. Bains de siège. Antalgiques. Laxatifs. Suivi en consultation à J15.",
+      traitement: "Antalgiques de palier 1–2. Laxatifs. Soins périnéaux. Antibiothérapie si abcès associé.",
+      conclusion: "Cure de fistule ano-périnéale [type] par [technique] par voie périnéale."
+    }
+  },
+  prolapsus_rectal: {
+    name: 'Cure de prolapsus rectal',
+    code: 'PRO',
+    defaults: {
+      motif: "Prolapsus rectal [extériorisé / interne] symptomatique : sensation de masse à l'anus, difficultés d'exonération, incontinence anale, rectorragies.",
+      antecedents: "Parité [X]. Antécédents périnéaux. Constipation chronique. Pas d'antécédent de chirurgie pelvienne.",
+      examen: "Prolapsus rectal extériorisé visible à l'effort de poussée / en permanence, de [X] cm. Muqueuse rectale d'aspect [normal / congestif]. Tonus sphinctérien [diminué / conservé]. Score ODS de [X], score de Wexner de [X].",
+      biologie: "Bilan préopératoire standard. Bilan de coagulation.",
+      imagerie: "Défécographie dynamique / IRM dynamique pelvienne : prolapsus rectal complet / invagination recto-rectale. Élytrocèle associée : [oui/non]. Descente périnéale.",
+      diagnostic: "Prolapsus rectal [complet / muqueux / interne].",
+      indication: "Correction chirurgicale du prolapsus.",
+      anesthesie: "Anesthésie générale avec intubation orotrachéale. Position de Trendelenburg.",
+      voie: "coelioscopie",
+      voie_detail: "Promontofixation par coelioscopie : optique ombilical 10mm, deux trocarts opérateurs 5mm. Pneumopéritoine 12 mmHg. [OU] Voie périnéale selon Delorme / Altemeier.",
+      constatations: "Prolapsus rectal confirmé. Utérus / vagin [chez la femme : aspect]. Cul-de-sac de Douglas profond. Sigmoïde [aspect]. Méso-rectum [aspect].",
+      geste: "Promontofixation cœlioscopique : dissection du méso-rectum antérieur et postérieur, mobilisation rectale jusqu'au plan des releveurs. Mise en place d'une prothèse de polypropylène / biologique [X x X] cm fixée au rectum par points en U non résorbables. Fixation au promontoire par agrafes / points. Péritonisation. [OU] Rectopexie de Orr-Loygue. [OU] Procédure de Delorme par voie périnéale : décollement muqueux, plicature musculaire, anastomose muco-muqueuse.",
+      incidents: "Aucun incident. Plexus pré-sacrés respectés.",
+      drainage: "Pas de drainage / drain de Redon au cul-de-sac.",
+      fermeture: "Exsufflation. Fermeture aponévrotique des orifices de 10mm.",
+      pertes: "Minimes.",
+      suites: "Suites simples envisagées. Reprise alimentaire précoce. Laxatifs en prévention de la constipation. Rééducation périnéale à distance.",
+      traitement: "Antalgiques. Anticoagulation préventive. Laxatifs osmotiques. Rééducation sphinctérienne à J30.",
+      conclusion: "Cure de prolapsus rectal par promontofixation cœlioscopique / procédure de Delorme par voie périnéale."
+    }
+  },
+  amputation_membre: {
+    name: 'Amputation de membre',
+    code: 'AMP',
+    defaults: {
+      motif: "Indication d'amputation pour [artériopathie oblitérante stade IV / gangrène / nécrose / tumeur / traumatisme / infection]. Membre [supérieur droit/gauche / inférieur droit/gauche].",
+      antecedents: "Diabète type [X]. Artériopathie des membres inférieurs stade [X]. Antécédents de revascularisation. Tabagisme actif/sevré. HTA. Insuffisance rénale.",
+      examen: "Membre [X] : gangrène sèche/humide au niveau de [localisation]. Absence de pouls [fémoral/poplité/pédieux/tibial postérieur]. Douleurs de repos / décubitus. Indice de pression systolique [X]. État général [préciser].",
+      biologie: "NFS : anémie à [X] g/dL. CRP [X], hyperleucocytose [X]. Bilan métabolique, fonction rénale, glycémie, HbA1c. Bilan d'hémostase. Groupe-RAI.",
+      imagerie: "Artériographie / angio-TDM : artériopathie distale sévère, lit d'aval non revascularisable au niveau [X]. IRM : étendue de la nécrose. Rx standard : [lésions osseuses].",
+      diagnostic: "Ischémie critique / gangrène [humide/sèche] / [autre] du membre [X] nécessitant une amputation de [niveau].",
+      indication: "Amputation de [niveau : orteils / transmétatarsienne / Chopart / Syme / jambe / genou / cuisse / bras / avant-bras] après concertation vasculaire / orthopédique et discussion avec le patient.",
+      anesthesie: "Anesthésie générale / rachianesthésie / ALR. Garrot pneumatique à [X] mmHg si applicable.",
+      voie: "autre",
+      voie_detail: "Position décubitus dorsal. Garrot pneumatique à [X] mmHg. Préparation chirurgicale du membre.",
+      constatations: "Gangrène / nécrose étendue à [localisation]. Tissu sous-jacent [viable/non viable]. Vaisseaux [état]. Nerfs identifiés.",
+      geste: "Incision en raquette au niveau de [X]. Sections musculaires et tendineuses plan par plan. Ligature et section des pédicules vasculaires [nommer]. Section et refoulement des nerfs [nommer] avec résection de [X] cm pour prévenir les névromes. Section osseuse à la scie oscillante au niveau de [X]. Régularisation des bords osseux à la râpe. Modelage du moignon. Hémostase soigneuse. Lavage abondant.",
+      incidents: "Aucun incident per-opératoire.",
+      drainage: "Drain de Redon aspiratif laissé en place.",
+      fermeture: "Myoplastie antéro-postérieure / latérale de couverture du moignon. Suture aponévrotique. Suture cutanée par points séparés / agrafes.",
+      pertes: "Estimées à [X] mL.",
+      suites: "Surveillance du moignon. Pansements quotidiens. Rééducation précoce. Appareillage prothétique à envisager à J[X]. Douleurs fantômes à prévenir.",
+      traitement: "Antalgiques adaptés (palier 2–3). Anticoagulation curative/préventive. Antibiothérapie si infection. Soins de moignon. Rééducation kinésithérapique. Consultation appareillage à distance.",
+      conclusion: "Amputation du membre [X] au niveau [X] pour [indication]. Moignon de bonne qualité."
+    }
+  },
+  gastrostomie: {
+    name: 'Gastrostomie d\\\'alimentation',
+    code: 'GAS',
+    defaults: {
+      motif: "Troubles de la déglutition sévères / dénutrition protéino-calorique / incapacité d'alimentation orale chez un patient présentant [AVC / tumeur ORL / pathologie neurologique / autre]. Nécessité d'une voie d'alimentation entérale à long terme.",
+      antecedents: "À préciser. Gastrectomie partielle antérieure : [oui/non]. Chirurgie abdominale antérieure.",
+      examen: "Patient en [état général]. IMC [X]. Poids [X] kg. Albumine [X] g/L. Pas de contre-indication à la gastrostomie.",
+      biologie: "NFS, ionogramme, albumine, préalbumine, bilan hépatique. Hémostase. Bilan préopératoire.",
+      imagerie: "Endoscopie haute préopératoire : estomac accessible, pas de lésion contre-indiquant le geste. TDM si doute sur l'interposition colique.",
+      diagnostic: "Dénutrition sévère / troubles de la déglutition nécessitant une nutrition entérale prolongée.",
+      indication: "Gastrostomie d'alimentation [percutanée endoscopique (PEG) / chirurgicale (Stamm)].",
+      anesthesie: "Anesthésie générale / sédation consciente pour PEG. Antibioprophylaxie par Augmentin 2g.",
+      voie: "autre",
+      voie_detail: "Technique PEG (Ponction Endoscopique Guidée) : gastroscopie, transillumination, ponction pariétale guidée / [OU] Gastrostomie chirurgicale de Stamm : mini-laparotomie épigastrique / coelioscopie.",
+      constatations: "Estomac bien visible et accessible. Pas d'interposition colique. Paroi abdominale [épaisseur]. Muqueuse gastrique saine.",
+      geste: "[PEG] : Gastroscopie, repérage par transillumination et ponction à l'aiguille avec ascension du fil guide, traction de la sonde de gastrostomie [X] Fr vers l'extérieur, mise en place et blocage par le disque interne et externe. Vérification de la position par endoscopie. [OU] [Stamm chirurgical] : Mini-laparotomie épigastrique. Extériorisation de l'estomac. Deux bourses en PDS 2/0. Gastrotomie centrale. Mise en place de la sonde de Pezzer [X] Fr. Serrage des bourses. Gastropexie à la paroi abdominale par 4 points.",
+      incidents: "Aucun incident.",
+      drainage: "Pas de drainage.",
+      fermeture: "Fermeture pariétale plan par plan (si chirurgical).",
+      pertes: "Minimes.",
+      suites: "Mise en route de la nutrition entérale à H24–H48. Soins de la stomie quotidiens. Contrôle de la position de la sonde.",
+      traitement: "Nutrition entérale à débit progressif (débit cible : [X] mL/h). Antalgiques. Soins stomie. Inhibiteur de pompe à protons.",
+      conclusion: "Gastrostomie d'alimentation [PEG / chirurgicale de Stamm] pour [indication]. Sonde en bonne position."
+    }
+  },
+  jejunostomie: {
+    name: 'Jéjunostomie d\\\'alimentation',
+    code: 'JEJ',
+    defaults: {
+      motif: "Nécessité d'alimentation entérale post-pylore [après gastrectomie / DPC / œsophagectomie / gastroparésie sévère / fistule gastrique / pancréatite sévère / reflux gastro-œsophagien sévère].",
+      antecedents: "À préciser. Chirurgie abdominale antérieure. État nutritionnel.",
+      examen: "Patient en [état général]. IMC [X]. Albuminémie [X] g/L. Dénutrition modérée/sévère.",
+      biologie: "NFS, ionogramme, albumine, préalbumine, bilan hépatique. Hémostase. Bilan préopératoire.",
+      imagerie: "TDM abdominal si nécessaire. Évaluation de l'anatomie.",
+      diagnostic: "Indication de nutrition entérale jejunale prolongée.",
+      indication: "Jéjunostomie d'alimentation chirurgicale [selon Witzel / aiguille cathéter].",
+      anesthesie: "Anesthésie générale avec intubation orotrachéale. Antibioprophylaxie.",
+      voie: "laparotomie",
+      voie_detail: "Mini-laparotomie médiane sus-ombilicale / coelioscopie. Ou en complément d'un autre geste abdominal.",
+      constatations: "Repérage de l'angle de Treitz. Première anse jéjunale identifiée à [X] cm de l'angle de Treitz. Mésentère [souple / épais].",
+      geste: "[Technique de Witzel] : Repérage du jéjunum à [X] cm de l'angle de Treitz. Bourse séro-séreuse en PDS 2/0. Entérotomie. Introduction de la sonde de jéjunostomie [X] Fr sur [X] cm. Serrage de la bourse. Tunnelisation séro-séreuse sur [X] cm selon Witzel pour prévenir les fuites. Extériorisation de la sonde par contre-incision. Jéjunogaropexie à la paroi abdominale par 4 points. Vérification de l'absence de tension. [OU] Technique aiguille-cathéter (Seldinger) si voie fine.",
+      incidents: "Aucun incident.",
+      drainage: "Pas de drainage / drain de sécurité si geste associé.",
+      fermeture: "Fermeture pariétale plan par plan.",
+      pertes: "Minimes.",
+      suites: "Démarrage de la nutrition entérale à H12–H24 à débit progressif. Soins quotidiens de la stomie. Vérification des débits.",
+      traitement: "Nutrition entérale à débit progressif (objectif [X] kcal/j). Antalgiques. Soins stomie. Surveillance tolérance digestive.",
+      conclusion: "Jéjunostomie d'alimentation selon Witzel / aiguille-cathéter pour [indication], en association avec [geste principal] / geste isolé."
+    }
+  },
+  dpc: {
+    name: 'DPC (Whipple)',
+    code: 'DPC',
+    defaults: {
+      motif: "Tumeur de la tête du pancréas / de l'ampoule de Vater / du cholédoque distal / du duodénum potentiellement résécable.",
+      antecedents: "Ictère obstructif [avec drainage biliaire préopératoire : oui/non]. Diabète [oui/non]. Pas d'antécédent chirurgical sus-mésocolique.",
+      examen: "Ictère cutanéo-muqueux. Grosse vésicule palpable / non palpable. AEG. Poids [X] kg, perte pondérale de [X] kg. Pas de masse abdominale palpable.",
+      biologie: "Bilirubine totale [X] µmol/L (conj. [X]). PAL [X]. GGT [X]. ASAT/ALAT [X]. Lipasémie [X]. CA 19-9 : [X] UI/mL. ACE : [X]. NFS, hémostase, bilan nutritionnel. Albumine [X] g/L.",
+      imagerie: "TDM thoraco-abdomino-pelvien triphasique : masse de la tête du pancréas de [X] mm, contact avec [vaisseaux], pas d'extension vasculaire / contact artériel à [X]°. Pas de métastase. IRM pancréatique / bili-IRM. Écho-endoscopie avec biopsie : [résultat anapath].",
+      diagnostic: "Adénocarcinome du pancréas / tumeur ampullaire / cholangiocarcinome distal / TIPMP / tumeur duodénale — stade résécable.",
+      indication: "Duodéno-pancréatectomie céphalique (DPC) selon Whipple. Concertation multidisciplinaire du [date] : résécabilité validée.",
+      anesthesie: "Anesthésie générale avec intubation. Monitoring invasif (PA invasive, VVC). Péridural thoracique si possible. Sonde nasogastrique. Sonde urinaire.",
+      voie: "laparotomie",
+      voie_detail: "Laparotomie bi-sous-costale / médiane xipho-ombilicale. Écarteur autostatique.",
+      constatations: "Exploration : pas de carcinose, pas de métastase hépatique macroscopique. Tumeur de [X] mm centrée sur [tête/isthme]. Contact avec [VMS/AMS/artère hépatique]. Pédicule hépatique libre. Vésicule tendue / non tendue. Cholédoque [dilaté/non].",
+      geste: "Cholécystectomie. Section du cholédoque / hépatique commun à [X] cm de la convergence. Dissection du pédicule hépatique. Section gastrique / duodénale (DPC classique / pylore-conservateur). Dissection duodéno-pancréatique. Libération du bloc duodéno-pancréatique de la VMS (section de l'isthme pancréatique). Contrôle et section des vaisseaux mésentériques supérieurs. Curage ganglionnaire. Reconstruction : [pancréatico-jéjunostomie termino-latérale selon Blumgart / pancréatico-gastrostomie] + [hépatico-jéjunostomie termino-latérale] + [gastro-jéjunostomie termino-latérale]. Jéjunostomie d'alimentation associée.",
+      incidents: "[Difficultés de dissection vasculaire]. Aucun incident vasculaire majeur.",
+      drainage: "Drain de Blake [X] × 2 au contact des anastomoses pancréatique et biliaire. Dosage amylase J1 et J3.",
+      fermeture: "Fermeture pariétale aponévrotique au PDS 1. Suture cutanée par agrafes.",
+      pertes: "Estimées à [X] mL. [Transfusion : X CGR].",
+      suites: "Suites prévisibles complexes. Protocole ERAS. Surveillance fistule pancréatique (amylase drain J3 > 3× LSN). Drainage biliaire [si]. Reprise alimentaire progressive. Jéjunostomie démarrée à H24.",
+      traitement: "Analgésie multimodale (péridurale, AINS, paracétamol). Anticoagulation préventive. IPP. Nutrition entérale par jéjunostomie. Surveillance biologique quotidienne. Antibioprophylaxie peropératoire.",
+      conclusion: "Duodéno-pancréatectomie céphalique selon Whipple pour [diagnostic] résécable. Résection R0 / R1 à préciser après anatomopathologie."
+    }
+  },
+  hepatectomie: {
+    name: 'Hépatectomie',
+    code: 'HEP',
+    defaults: {
+      motif: "Tumeur hépatique [CHC / métastase colorectale / cholangiocarcinome intrahépatique / autre] candidate à la résection chirurgicale.",
+      antecedents: "Cirrhose [Child A/B] / NASH / hépatite virale B ou C. Score ASA [X]. Traitement oncologique antérieur [chimiothérapie / TACE]. Volumétrie hépatique préopératoire.",
+      examen: "Patient en bon état général. Pas d'ictère / ictère modéré. Foie [non palpable / de consistance dure]. Ascite [absente / minime]. Score Child-Pugh [X], score MELD [X].",
+      biologie: "Bilan hépatique complet : ASAT [X], ALAT [X], PAL [X], bilirubine [X], TP [X]%, albumine [X] g/L, plaquettes [X]. Alphafœtoprotéine [X]. ACE, CA 19-9. NFS, hémostase. Groupe-RAI.",
+      imagerie: "IRM hépatique avec gadolinium : [description lésion(s), taille, segment(s) de Couinaud, rapports vasculaires]. Volumétrie : foie total [X] mL, foie résiduel estimé [X] mL ([X]%). TDM TAP : pas de métastase extrahépatique. Bilan d'extension complet.",
+      diagnostic: "[CHC / Métastase hépatique / Cholangiocarcinome] — segment(s) [II/III/IV/V/VI/VII/VIII] — résécable.",
+      indication: "Hépatectomie [droite / gauche / droite élargie / gauche élargie / segmentectomie / bisegmentectomie / tumorectomie atypique] après concertation multidisciplinaire du [date].",
+      anesthesie: "Anesthésie générale. Monitoring invasif (PA invasive, VVC, SvO2). Sonde nasogastrique. Sonde urinaire. PVC basse (< 5 mmHg) durante resectione.",
+      voie: "laparotomie",
+      voie_detail: "Laparotomie bi-sous-costale / médiane xipho-pubienne. Écarteur de Thompson. [OU] Coelioscopie pour résection mineure (segmentectomie).",
+      constatations: "Exploration de la cavité : pas de carcinose péritonéale, pas de métastase extrahépatique visible. Foie [normal / cirrhotique / stéatosique]. Lésion de [X] mm au niveau du / des segment(s) [X], à [X] mm du pédicule [glissonien / sus-hépatique]. Rapport avec les veines [sus-hépatiques / VCI / VMS].",
+      geste: "Mobilisation hépatique par section des ligaments triangulaires et coronaires [droit/gauche]. Dissection du pédicule hépatique. Contrôle sélectif du pédicule glissonien du secteur réséqué ([clampage de Pringle X min / clampage sélectif]). Repérage de la ligne de section par électrocoagulation / échographie per-opératoire. Parenchymotomie au bistouri à ultrasons (CUSA) / à la pince bipolaire sous aspiration. Contrôle biliaire et vasculaire intraparenchymateux. Section de la / des veine(s) sus-hépatique(s) droite(s)/gauche(s). Vérification de la vascularisation du foie restant. Hémostase et biliostase soigneuses. Coagulation de surface au plasma argon. Application d'hémostatique local [Surgicel/Tachosil].",
+      incidents: "Clampage de Pringle [X] min au total. Saignement contrôlé. Aucune complication vasculaire majeure.",
+      drainage: "Drain de Blake [X] au niveau du lit d'hépatectomie.",
+      fermeture: "Fermeture pariétale au PDS 1. Suture cutanée par agrafes.",
+      pertes: "Estimées à [X] mL. [Transfusion : X CGR. Cell-saver : X mL récupérés].",
+      suites: "Surveillance clinicobiologique : transaminases, TP, bilirubine quotidiens. Prévention de l'insuffisance hépatique postopératoire. Protocole ERAS si applicable.",
+      traitement: "Analgésie multimodale. Anticoagulation. Soutien nutritionnel. Surveillance biliaire (dosage bilirubine drain). Reprise alimentaire précoce.",
+      conclusion: "Hépatectomie [type] pour [diagnostic] — résection [anatomique / atypique]. Marges à préciser par l'anatomopathologie."
     }
   }
 };
@@ -1869,10 +2153,12 @@ const SECTIONS = [
   {
     id: 'preop',
     title: 'Préparation opératoire',
+    special: 'team',
     fields: [
       { id: 'mon_role', label: 'Mon rôle', type: 'select', options: ['', 'Opérateur', '1er aide', '2e aide', '3e aide', 'Observateur'], dictTargets: ['rôle', 'role'] },
       { id: 'anesthesie', label: 'Type d\'anesthésie', type: 'textarea', dictTargets: ['anesthésie'] },
-      { id: 'equipe', label: 'Équipe opératoire', type: 'textarea', dictTargets: ['équipe', 'opérateur', 'aide'] }
+      // Champ libre legacy / complément (rétrocompatibilité + saisie libre)
+      { id: 'equipe', label: 'Équipe', type: 'textarea', team: 'extra', placeholder: 'Notes complémentaires sur l\'équipe (facultatif)…', dictTargets: ['équipe', 'opérateur', 'aide'] }
     ]
   },
   {
@@ -1902,6 +2188,16 @@ const SECTIONS = [
     title: 'Suites et conclusion',
     fields: [
       { id: 'suites', label: 'Suites postopératoires prévues', type: 'textarea', dictTargets: ['suite', 'suites', 'postopératoire'] },
+      { id: 'clavien', label: 'Classification de Clavien-Dindo', type: 'select', conditional: 'complication', options: [
+          '',
+          'Grade I — Écart aux suites normales sans traitement (sauf antalgiques, antipyrétiques, antiémétiques, diurétiques, électrolytes, kiné)',
+          'Grade II — Traitement médicamenteux autre, transfusion, nutrition parentérale',
+          'Grade IIIa — Intervention chirurgicale/endoscopique/radiologique sans anesthésie générale',
+          'Grade IIIb — Intervention chirurgicale/endoscopique/radiologique sous anesthésie générale',
+          'Grade IVa — Complication menaçant la vie : défaillance d\'un organe',
+          'Grade IVb — Complication menaçant la vie : défaillance multiviscérale',
+          'Grade V — Décès du patient'
+        ], dictTargets: ['clavien', 'dindo', 'complication', 'grade'] },
       { id: 'traitement', label: 'Traitement postopératoire', type: 'textarea', dictTargets: ['traitement', 'prescription'] },
       { id: 'conclusion', label: 'Conclusion', type: 'textarea', dictTargets: ['conclusion'] }
     ]
@@ -2260,7 +2556,9 @@ const App = {
       },
       tags: [],
       photos_perop: [],     // [{dataUrl, caption}]
-      imagerie_files: []    // [{dataUrl, caption}]
+      imagerie_files: [],   // [{dataUrl, caption}]
+      team: { operateur: '', aides: [], instrumentiste: '', observateurs: [], anesthesiste: '', assistants: [] },
+      complication_flag: false
     };
     this.currentTemplate = 'none';
     this.currentExportTpl = 'classique';
@@ -2275,10 +2573,10 @@ const App = {
   async _prefillTeam() {
     try {
       const surgeon = await DB.getSetting('surgeon');
-      if (surgeon && this.currentCRO && !this.currentCRO.fields.equipe) {
-        this.currentCRO.fields.equipe = 'Opérateur : ' + surgeon;
-        const el = document.getElementById('field-equipe');
-        if (el) el.value = this.currentCRO.fields.equipe;
+      const t = this._team();
+      if (surgeon && t && !t.operateur) {
+        t.operateur = surgeon;
+        this._refreshTeamUI();
       }
     } catch(e) {}
   },
@@ -2289,6 +2587,20 @@ const App = {
     this.currentCRO = cro;
     if (!this.currentCRO.photos_perop) this.currentCRO.photos_perop = [];
     if (!this.currentCRO.imagerie_files) this.currentCRO.imagerie_files = [];
+    // Migration équipe : si pas de structure team mais ancien champ texte
+    if (!this.currentCRO.team) {
+      this.currentCRO.team = { operateur: '', aides: [], instrumentiste: '', observateurs: [], anesthesiste: '', assistants: [] };
+      // Tentative d'extraction depuis l'ancien texte "equipe"
+      const old = (this.currentCRO.fields && this.currentCRO.fields.equipe) || '';
+      const mOp = old.match(/Op[ée]rateur\s*:\s*([^.\n]+)/i);
+      const mAn = old.match(/Anesth[ée]siste\s*:\s*([^.\n]+)/i);
+      if (mOp) this.currentCRO.team.operateur = mOp[1].trim();
+      if (mAn) this.currentCRO.team.anesthesiste = mAn[1].trim();
+    }
+    // flag complication déduit
+    if (this.currentCRO.complication_flag === undefined) {
+      this.currentCRO.complication_flag = this._hasComplication();
+    }
     this.currentTemplate = cro.template || 'none';
     this.currentExportTpl = this.currentExportTpl || 'classique';
     document.getElementById('btn-delete').style.display = '';
@@ -2639,30 +2951,48 @@ const App = {
         </div>`;
       }
 
+      // --- Section ÉQUIPE : rendu dynamique (chirurgie / anesthésie) ---
+      if (section.special === 'team') {
+        const buildInput = (field) => this._renderFieldInput(field);
+        const general = section.fields.filter(f => !f.team);
+        const extra = section.fields.filter(f => f.team === 'extra');
+
+        inner += '<div class="field-grid">' + general.map(buildInput).join('') + '</div>';
+        inner += this._renderTeamUI();
+        inner += '<div class="field-grid">' + extra.map(buildInput).join('') + '</div>';
+
+        return `
+          <div class="form-section ${isCollapsed ? 'collapsed' : ''}" data-section="${section.id}">
+            <div class="form-section-header" onclick="this.parentElement.classList.toggle('collapsed')">
+              <div class="form-section-title">
+                <span class="form-section-number">§ ${idx + 1}</span>
+                ${section.title}
+              </div>
+              <div class="form-section-toggle">▾</div>
+            </div>
+            <div class="form-section-body">${inner}</div>
+          </div>`;
+      }
+
       inner += '<div class="field-grid">';
       section.fields.forEach(field => {
-        const val = this.escape(this.currentCRO.fields[field.id] || '');
-        const isFullWidth = field.type === 'textarea';
-        const style = isFullWidth ? ' style="grid-column: 1 / -1"' : '';
-
-        let input = '';
-        if (field.type === 'textarea') {
-          input = `<textarea id="field-${field.id}" rows="3" oninput="App.updateField('${field.id}', this.value)">${val}</textarea>`;
-        } else if (field.type === 'select') {
-          input = `<select id="field-${field.id}" onchange="App.updateField('${field.id}', this.value)">` +
-            field.options.map(o => `<option value="${o}" ${o === this.currentCRO.fields[field.id] ? 'selected' : ''}>${o || '—'}</option>`).join('') +
-            `</select>`;
-        } else {
-          input = `<input type="${field.type}" id="field-${field.id}" value="${val}" oninput="App.updateField('${field.id}', this.value)">`;
-        }
-
-        inner += `
-          <div class="field" data-field="${field.id}"${style}>
-            <label class="field-label" for="field-${field.id}">${field.label}<span class="field-target">● dictée</span></label>
-            ${input}
-          </div>`;
+        // Champs conditionnels (ex: Clavien-Dindo seulement si complication)
+        if (field.conditional === 'complication' && !this._hasComplication()) return;
+        inner += this._renderFieldInput(field);
       });
       inner += '</div>';
+
+      // Bascule "complication survenue ?" dans la section Suites
+      if (section.id === 'postop') {
+        const checked = this._hasComplication() ? 'checked' : '';
+        inner = `<div class="compl-toggle">
+            <label class="compl-check">
+              <input type="checkbox" ${checked} onchange="App.toggleComplication(this.checked)">
+              <span>Une complication post-opératoire est survenue</span>
+            </label>
+            <p class="compl-hint">Cochez pour documenter la complication et sa classification de Clavien-Dindo.</p>
+          </div>` + inner;
+      }
 
       return `
         <div class="form-section ${isCollapsed ? 'collapsed' : ''}" data-section="${section.id}">
@@ -2679,6 +3009,234 @@ const App = {
 
     this.renderTags();
     this.updateCompleteness();
+  },
+
+  // ---- Rendu d'un champ (input/select/textarea + bouton puce) ----
+  _renderFieldInput(field) {
+    const val = this.escape(this.currentCRO.fields[field.id] || '');
+    const isFullWidth = field.type === 'textarea';
+    const style = isFullWidth ? ' style="grid-column: 1 / -1"' : '';
+
+    let input = '';
+    let bulletBtn = '';
+    const ph = field.placeholder ? ` placeholder="${this.escape(field.placeholder)}"` : '';
+    if (field.type === 'textarea') {
+      input = `<textarea id="field-${field.id}" rows="3"${ph} oninput="App.updateField('${field.id}', this.value)">${val}</textarea>`;
+      bulletBtn = `<button type="button" class="bullet-btn" title="Insérer une puce" onclick="App.insertBullet('${field.id}')">• Puce</button>`;
+    } else if (field.type === 'select') {
+      input = `<select id="field-${field.id}" onchange="App.updateField('${field.id}', this.value)">` +
+        field.options.map(o => `<option value="${this.escape(o)}" ${o === this.currentCRO.fields[field.id] ? 'selected' : ''}>${this.escape(o) || '—'}</option>`).join('') +
+        `</select>`;
+    } else {
+      input = `<input type="${field.type}" id="field-${field.id}" value="${val}"${ph} oninput="App.updateField('${field.id}', this.value)">`;
+    }
+
+    const dictTag = field.dictTargets ? '<span class="field-target">● dictée</span>' : '';
+    return `
+      <div class="field" data-field="${field.id}"${style}>
+        <label class="field-label" for="field-${field.id}">${field.label}${dictTag}${bulletBtn}</label>
+        ${input}
+      </div>`;
+  },
+
+  // ---- Insertion d'une puce dans un textarea (nouvelle ligne à puce) ----
+  insertBullet(fieldId) {
+    const ta = document.getElementById('field-' + fieldId);
+    if (!ta) return;
+    const BULLET = '• ';
+    const start = ta.selectionStart ?? ta.value.length;
+    const val = ta.value;
+    const lineStart = val.lastIndexOf('\n', start - 1) + 1;
+    const beforeOnLine = val.slice(lineStart, start);
+
+    let newVal, newCaret;
+    if (beforeOnLine.trim() === '') {
+      // Ligne vide ou curseur en début de ligne : insère la puce ici même
+      newVal = val.slice(0, lineStart) + BULLET + val.slice(lineStart);
+      newCaret = lineStart + BULLET.length;
+    } else {
+      // Sinon : commence une nouvelle ligne à puce
+      newVal = val.slice(0, start) + '\n' + BULLET + val.slice(start);
+      newCaret = start + 1 + BULLET.length;
+    }
+    ta.value = newVal;
+    this.updateField(fieldId, newVal);
+    ta.focus();
+    try { ta.setSelectionRange(newCaret, newCaret); } catch(e) {}
+  },
+
+  // ---- Résumé textuel de l'équipe (pour exports narratifs) ----
+  // ================================================================
+  // ÉQUIPE OPÉRATOIRE — modèle dynamique
+  // Structure : currentCRO.team = {
+  //   operateur: '', aides: ['', ...], instrumentiste: '', observateurs: ['', ...],
+  //   anesthesiste: '', assistants: ['', ...]
+  // }
+  // ================================================================
+  _team() {
+    if (!this.currentCRO) return null;
+    if (!this.currentCRO.team) {
+      // Migration depuis l'ancien champ texte "equipe" si présent
+      this.currentCRO.team = {
+        operateur: '', aides: [], instrumentiste: '',
+        observateurs: [], anesthesiste: '', assistants: []
+      };
+    }
+    const t = this.currentCRO.team;
+    // garantit la présence des tableaux
+    t.aides = t.aides || [];
+    t.observateurs = t.observateurs || [];
+    t.assistants = t.assistants || [];
+    return t;
+  },
+
+  _renderTeamUI() {
+    const t = this._team();
+    const esc = (s) => this.escape(s || '');
+
+    // Ligne simple (rôle unique)
+    const single = (key, label) => `
+      <div class="field">
+        <label class="field-label">${label}</label>
+        <input type="text" value="${esc(t[key])}" oninput="App.updateTeamSingle('${key}', this.value)" placeholder="Nom…">
+      </div>`;
+
+    // Liste dynamique (aides, observateurs, assistants)
+    const list = (key, labelSing, addLabel) => {
+      const rows = (t[key] || []).map((v, i) => `
+        <div class="team-row">
+          <input type="text" value="${esc(v)}" oninput="App.updateTeamList('${key}', ${i}, this.value)" placeholder="${labelSing} ${i+1}…">
+          <button type="button" class="team-del" title="Retirer" onclick="App.removeTeamMember('${key}', ${i})">✕</button>
+        </div>`).join('');
+      return `
+        <div class="team-list" data-team-list="${key}">
+          <div class="field-label" style="margin-bottom:6px">${labelSing}${(t[key]||[]).length > 1 ? 's' : ''}</div>
+          ${rows || '<p class="team-empty">Aucun pour le moment</p>'}
+          <button type="button" class="team-add" onclick="App.addTeamMember('${key}')">+ ${addLabel}</button>
+        </div>`;
+    };
+
+    return `
+      <div class="team-block">
+        <div class="team-block-title">🔪 Équipe chirurgicale</div>
+        <div class="field-grid">${single('operateur', 'Opérateur')}${single('instrumentiste', 'Instrumentiste / panseur')}</div>
+        ${list('aides', 'Aide', 'Ajouter un aide')}
+        ${list('observateurs', 'Observateur', 'Ajouter un observateur')}
+      </div>
+      <div class="team-block">
+        <div class="team-block-title">💉 Équipe d'anesthésie</div>
+        <div class="field-grid">${single('anesthesiste', 'Anesthésiste')}</div>
+        ${list('assistants', 'Assistant / IADE', 'Ajouter un assistant')}
+      </div>`;
+  },
+
+  updateTeamSingle(key, value) {
+    const t = this._team();
+    t[key] = value;
+    this._scheduleSave();
+  },
+  updateTeamList(key, idx, value) {
+    const t = this._team();
+    if (!t[key]) t[key] = [];
+    t[key][idx] = value;
+    this._scheduleSave();
+  },
+  addTeamMember(key) {
+    const t = this._team();
+    if (!t[key]) t[key] = [];
+    t[key].push('');
+    this._refreshTeamUI();
+  },
+  removeTeamMember(key, idx) {
+    const t = this._team();
+    if (!t[key]) return;
+    t[key].splice(idx, 1);
+    this._refreshTeamUI();
+  },
+  _refreshTeamUI() {
+    // re-render uniquement le bloc équipe en place pour ne pas perdre le focus ailleurs
+    const section = document.querySelector('.form-section[data-section="preop"] .form-section-body');
+    if (!section) { this.updateCompleteness(); return; }
+    // retire les anciens blocs équipe
+    section.querySelectorAll('.team-block').forEach(b => b.remove());
+    // ré-insère après le premier field-grid (mon rôle / anesthésie)
+    const firstGrid = section.querySelector('.field-grid');
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = this._renderTeamUI();
+    if (firstGrid && firstGrid.nextSibling) {
+      while (wrapper.firstChild) section.insertBefore(wrapper.firstChild, firstGrid.nextSibling);
+    } else {
+      while (wrapper.firstChild) section.appendChild(wrapper.firstChild);
+    }
+  },
+
+  // Résumé textuel de l'équipe pour les exports
+  _teamText(cro) {
+    const t = (cro && cro.team) || null;
+    const lines = [];
+    if (t) {
+      const chir = [];
+      if (t.operateur && t.operateur.trim()) chir.push('Opérateur : ' + t.operateur.trim());
+      (t.aides || []).filter(a => a && a.trim()).forEach((a, i) => chir.push((i+1) + (i===0?'er':'e') + ' aide : ' + a.trim()));
+      if (t.instrumentiste && t.instrumentiste.trim()) chir.push('Instrumentiste : ' + t.instrumentiste.trim());
+      const obs = (t.observateurs || []).filter(o => o && o.trim());
+      if (obs.length) chir.push('Observateur' + (obs.length>1?'s':'') + ' : ' + obs.join(', '));
+      const anesth = [];
+      if (t.anesthesiste && t.anesthesiste.trim()) anesth.push('Anesthésiste : ' + t.anesthesiste.trim());
+      const ass = (t.assistants || []).filter(a => a && a.trim());
+      if (ass.length) anesth.push('Assistant' + (ass.length>1?'s':'') + ' d\'anesthésie : ' + ass.join(', '));
+      if (chir.length) lines.push('Équipe chirurgicale — ' + chir.join(' ; ') + '.');
+      if (anesth.length) lines.push('Équipe d\'anesthésie — ' + anesth.join(' ; ') + '.');
+    }
+    const notes = cro && cro.fields && cro.fields.equipe;
+    if (notes && notes.trim()) lines.push(notes.trim() + (notes.trim().endsWith('.') ? '' : '.'));
+    return lines.join('\n');
+  },
+
+  // Forme courte de Clavien-Dindo (ex: "Clavien-Dindo grade II")
+  _clavienShort(f) {
+    if (!f.clavien || !f.clavien.trim()) return '';
+    const m = f.clavien.match(/Grade\s+([IVab]+)/i);
+    return m ? 'Clavien-Dindo grade ' + m[1] : f.clavien;
+  },
+
+  // Renvoie une copie des champs prête pour l'export :
+  // l'équipe structurée est repliée dans le champ "equipe" (multi-lignes),
+  // et le grade Clavien n'est conservé que si une complication est documentée.
+  _fieldsForExport(cro) {
+    const f = Object.assign({}, cro.fields);
+    const team = this._teamText(cro);
+    if (team) f.equipe = team;
+    const hasCompl = (cro.tags || []).includes('complication') || cro.complication_flag || (f.clavien && f.clavien.trim());
+    if (!hasCompl) delete f.clavien;
+    return f;
+  },
+
+  // ---- Gestion du flag complication ----
+  _hasComplication() {
+    if (!this.currentCRO) return false;
+    return (this.currentCRO.tags || []).includes('complication')
+      || !!this.currentCRO.complication_flag
+      || !!(this.currentCRO.fields && this.currentCRO.fields.clavien && this.currentCRO.fields.clavien.trim());
+  },
+  toggleComplication(on) {
+    if (!this.currentCRO) return;
+    this.currentCRO.complication_flag = !!on;
+    if (!on) {
+      // on efface le grade Clavien si on décoche
+      this.currentCRO.fields.clavien = '';
+    } else {
+      // ajoute le tag complication pour cohérence avec les stats
+      if (!this.currentCRO.tags) this.currentCRO.tags = [];
+      if (!this.currentCRO.tags.includes('complication')) this.currentCRO.tags.push('complication');
+    }
+    this.renderEditor();
+    window.scrollTo(0, document.querySelector('.form-section[data-section="postop"]')?.offsetTop || 0);
+  },
+
+  _scheduleSave() {
+    clearTimeout(this._compTimer);
+    this._compTimer = setTimeout(() => this.updateCompleteness(), 300);
   },
 
   // ---- Compteur de complétude ----
@@ -2732,8 +3290,8 @@ const App = {
     if (missing.length) warnings.push('Champs clés non renseignés : ' + missing.join(', ') + '.');
     if (!f.duree_min || !String(f.duree_min).trim())
       warnings.push('Durée opératoire non renseignée (utile pour vos statistiques).');
-    if ((this.currentCRO.tags || []).includes('complication') && !/complic|incident/i.test((f.incidents||'') + (f.suites||'')))
-      warnings.push('Tag « complication » présent mais aucune complication décrite dans Incidents ou Suites.');
+    if ((this.currentCRO.tags || []).includes('complication') && !/complic|incident/i.test((f.incidents||'') + (f.suites||'')) && !(f.clavien && f.clavien.trim()))
+      warnings.push('Tag « complication » présent mais aucune complication décrite dans Incidents/Suites ni de grade Clavien-Dindo renseigné.');
 
     return warnings;
   },
@@ -2788,19 +3346,24 @@ const App = {
     const patient = [f.patient_nom, f.patient_age ? f.patient_age + ' ans' : '', f.patient_sexe].filter(Boolean).join(' · ') || 'Patient non renseigné';
     const tags = (this.currentCRO.tags || []).map(t => `<span class="qr-tag">${this.escape(t)}</span>`).join('');
     const role = f.mon_role ? `<span class="qr-tag qr-role">${this.escape(f.mon_role)}</span>` : '';
+    const teamTxt = this._teamText(this.currentCRO);
+    const clavien = this._hasComplication() ? this._clavienShort(f) : '';
 
     const keyFields = [
       ['Diagnostic', f.diagnostic], ['Indication', f.indication],
+      ['Équipe', teamTxt],
       ['Voie d\'abord', approach.label + (f.voie_detail ? ' — ' + f.voie_detail : '')],
       ['Geste', f.geste], ['Constatations', f.constatations],
       ['Incidents', f.incidents], ['Drainage', f.drainage],
       ['Fermeture', f.fermeture],
       ['Pertes', f.pertes], ['Durée', f.duree_min ? f.duree_min + ' min' : ''],
-      ['Suites', f.suites], ['Conclusion', f.conclusion]
+      ['Suites', f.suites],
+      ['Complication', clavien],
+      ['Conclusion', f.conclusion]
     ].filter(([,v]) => v && String(v).trim());
 
     const body = keyFields.map(([k, v]) =>
-      `<div class="qr-line"><span class="qr-k">${this.escape(k)}</span><span class="qr-v">${this.escape(String(v))}</span></div>`
+      `<div class="qr-line"><span class="qr-k">${this.escape(k)}</span><span class="qr-v">${this.escape(String(v)).replace(/\n/g,'<br>')}</span></div>`
     ).join('');
 
     document.getElementById('reader-body').innerHTML = `
@@ -2959,7 +3522,7 @@ const App = {
   },
   // Renvoie [section, indexAffiché] pour les sections à inclure et non vides
   exportSections() {
-    return this.sectionsForFields(this.currentCRO.fields);
+    return this.sectionsForFields(this._fieldsForExport(this.currentCRO));
   },
   // Variante générique : pour un objet fields donné, respecte excludedSections
   sectionsForFields(f) {
@@ -3040,7 +3603,7 @@ const App = {
     if (!this.currentCRO) return '';
     const tpl = TEMPLATES[this.currentCRO.template] || TEMPLATES.none;
     const approach = APPROACHES.find(a => a.id === this.currentCRO.approach) || APPROACHES[0];
-    const f = this.currentCRO.fields;
+    const f = this._fieldsForExport(this.currentCRO);
 
     let txt = `COMPTE RENDU OPÉRATOIRE\n`;
     txt += `${'='.repeat(50)}\n\n`;
@@ -3083,7 +3646,7 @@ const App = {
     const { jsPDF } = window.jspdf;
     const tpl = TEMPLATES[this.currentCRO.template] || TEMPLATES.none;
     const approach = APPROACHES.find(a => a.id === this.currentCRO.approach) || APPROACHES[0];
-    const f = this.currentCRO.fields;
+    const f = this._fieldsForExport(this.currentCRO);
     const surgeon = await DB.getSetting('surgeon') || '';
     const hospital = await DB.getSetting('hospital') || '';
     const exportTpl = this.currentExportTpl || 'classique';
@@ -3225,13 +3788,18 @@ const App = {
       doc.setTextColor(0); doc.setDrawColor(180); doc.line(margin, y, pageWidth-margin, y); y += 7;
 
       // Build narrative text
-      const narrativeOrder = ['motif','antecedents','examen','biologie','imagerie','diagnostic','indication','anesthesie','equipe','voie_detail','constatations','geste','incidents','drainage','fermeture','pertes','suites','traitement','conclusion'];
+      const teamTxt = this._teamText(this.currentCRO).replace(/\n/g, ' ');
+      const narrativeOrder = ['motif','antecedents','examen','biologie','imagerie','diagnostic','indication','anesthesie','__team__','voie_detail','constatations','geste','incidents','drainage','fermeture','pertes','suites','__clavien__','traitement','conclusion'];
       doc.setFont('helvetica','normal'); doc.setFontSize(10.5);
       let para = '';
       narrativeOrder.forEach(id => {
-        if (f[id] && f[id].trim()) {
-          para += (para ? ' ' : '') + f[id].trim();
-          if (!f[id].trim().endsWith('.')) para += '.';
+        let chunk = '';
+        if (id === '__team__') chunk = teamTxt;
+        else if (id === '__clavien__') { const c = this._clavienShort(f); chunk = c ? 'Complication classée ' + c + '.' : ''; }
+        else if (f[id] && f[id].trim()) chunk = f[id].trim();
+        if (chunk) {
+          para += (para ? ' ' : '') + chunk;
+          if (!chunk.endsWith('.')) para += '.';
         }
       });
       const lines = doc.splitTextToSize(para, maxWidth);
@@ -3385,7 +3953,7 @@ const App = {
     this.closeExportModal();
     const tpl = TEMPLATES[this.currentCRO.template] || TEMPLATES.none;
     const approach = APPROACHES.find(a => a.id === this.currentCRO.approach) || APPROACHES[0];
-    const f = this.currentCRO.fields;
+    const f = this._fieldsForExport(this.currentCRO);
     const surgeon = await DB.getSetting('surgeon') || '';
     const hospital = await DB.getSetting('hospital') || '';
     const surgeonTitle = await DB.getSetting('title') || '';
@@ -3995,7 +4563,7 @@ const Cahier = {
     const avgDuration = durations.length ? Math.round(durations.reduce((a,b)=>a+b,0)/durations.length) : null;
     let nbOp = 0, nbAide = 0, nbObs = 0;
     cros.forEach(c => { const cat = this._roleCategory(c); if (cat==='operateur') nbOp++; else if (cat==='aide') nbAide++; else if (cat==='observateur') nbObs++; });
-    const nbCompl = cros.filter(c => (c.tags||[]).includes('complication')).length;
+    const nbCompl = cros.filter(c => (c.tags||[]).includes('complication') || (c.fields && c.fields.clavien && c.fields.clavien.trim())).length;
     const complRate = cros.length ? Math.round(100 * nbCompl / cros.length) : 0;
     return { total: cros.length, avgDuration, nbOp, nbAide, nbObs, nbCompl, complRate };
   },
@@ -4083,7 +4651,7 @@ const Cahier = {
 
     // Chaque CRO
     cros.forEach((c, i) => {
-      const f = c.fields;
+      const f = App._fieldsForExport(c);
       const tpl = TEMPLATES[c.template] || TEMPLATES.none;
       const approach = APPROACHES.find(a => a.id === c.approach) || APPROACHES[0];
       body += D.heading(`${i+1}. ${tpl.name} — ${f.patient_nom || 'Patient'}`, { color: '0A1628', size: 26, border: true, pageBreakBefore: true });
@@ -4174,7 +4742,7 @@ const Cahier = {
     // Chaque CRO
     cros.forEach((c, i) => {
       doc.addPage(); y = margin;
-      const f = c.fields;
+      const f = App._fieldsForExport(c);
       const tpl = TEMPLATES[c.template] || TEMPLATES.none;
       const approach = APPROACHES.find(a => a.id === c.approach) || APPROACHES[0];
       // bandeau titre
